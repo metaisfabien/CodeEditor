@@ -12,9 +12,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 
 CONFIG(debug, debug|release) {
-LIBS+=  -L../../lib/debug -lCore -lqscintilla2
+LIBS+=  -L../../lib/debug -lCore
 } else {
-LIBS+=  -L../../lib/release -lCore -lqscintilla2
+LIBS+=  -L../../lib/release -lCore
 }
 
 INCLUDEPATH +=  ../../Core

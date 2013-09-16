@@ -14,7 +14,7 @@ class PluginManager
 public:
     PluginManager();
     void loadPlugins();
-    void loadPlugin(QObject *plugin);
+    void loadPlugin(QObject* plugin);
 
 private:
     std::map<QString, PluginInterface*> plugins;

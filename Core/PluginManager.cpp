@@ -9,7 +9,7 @@ namespace PHPEditor {
 PluginManager::PluginManager()
 {
     qDebug() << "PluginManager instanced";
-    ConfigManager *configManager = Core::getConfigManager();
+    ConfigManager* configManager = Core::getConfigManager();
     configManager->loadConfig("plugins");
 }
 
@@ -24,7 +24,7 @@ void PluginManager::loadPlugins()
     foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
         qDebug() << "Load plugin " << fileName;
         QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
-        QObject *plugin = loader.instance();
+        QObject* plugin = loader.instance();
         if (plugin) {
             loadPlugin(plugin);
         } else {
@@ -34,9 +34,9 @@ void PluginManager::loadPlugins()
 }
 
 
-void PluginManager::loadPlugin(QObject *plugin)
+void PluginManager::loadPlugin(QObject* plugin)
 {
-    PluginInterface *_plugin = qobject_cast<PluginInterface *>(plugin);
+    PluginInterface* _plugin = qobject_cast<PluginInterface *>(plugin);
     if (_plugin) {
         _plugin->load();
         plugins.insert(std::make_pair<QString, PluginInterface*>(_plugin->getId(), _plugin));

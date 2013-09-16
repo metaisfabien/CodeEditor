@@ -10,8 +10,6 @@
 #include <QAction>
 #include <QTextBrowser>
 
-#include <Qsci/qsciscintilla.h>
-
 #include <QDebug>
 
 namespace PHPEditor {

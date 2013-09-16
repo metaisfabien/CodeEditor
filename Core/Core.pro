@@ -6,6 +6,7 @@ TEMPLATE = lib
 #CONFIG+= staticlib
 # Input
 UI_DIR = ui
+#LIBS+= -lqscintilla
 
 HEADERS += \
     PluginManager.h \
@@ -27,6 +28,9 @@ SOURCES += \
     Core.cpp \
     NewProjectDialog.cpp
 
+FORMS += \
+    NewProjectDialog.ui
+
 DEFINES += CORE_LIBRARY
 
 Release:DESTDIR = ../lib/release
@@ -39,6 +43,3 @@ Debug:DESTDIR = ../lib/debug
 Debug:OBJECTS_DIR = ../lib/debug/.obj
 Debug:MOC_DIR = ../lib/debug/.moc
 Debug:RCC_DIR = ../lib/debug/.rcc
-
-FORMS += \
-    NewProjectDialog.ui
