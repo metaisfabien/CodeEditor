@@ -1,0 +1,14 @@
+INPUT(
+./../lib/release/.obj/PluginManager.o
+./../lib/release/.obj/MainWindow.o
+./../lib/release/.obj/ConfigManager.o
+./../lib/release/.obj/LogBrowser.o
+./../lib/release/.obj/LogBrowserDialog.o
+./../lib/release/.obj/Core.o
+./../lib/release/.obj/NewProjectDialog.o
+./../lib/release/.obj/moc_MainWindow.o
+./../lib/release/.obj/moc_LogBrowser.o
+./../lib/release/.obj/moc_LogBrowserDialog.o
+./../lib/release/.obj/moc_Core.o
+./../lib/release/.obj/moc_NewProjectDialog.o
+);

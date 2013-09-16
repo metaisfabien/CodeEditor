@@ -1,0 +1,18 @@
+XUP.QT_VERSION = Qt System (5.1.1)
+XUP.WIN_PLATFORM_TARGET_RELEASE = bin/PHPEditor.exe
+XUP.WIN_PLATFORM_TARGET_DEBUG = bin/PHPEditor_debug.exe
+XUP.WIN_PLATFORM_TARGET_DEFAULT = bin/PHPEditor_debug.exe
+XUP.MAC_PLATFORM_TARGET_RELEASE = bin/PHPEditor.app
+XUP.MAC_PLATFORM_TARGET_DEBUG = bin/PHPEditor_debug.app
+XUP.MAC_PLATFORM_TARGET_DEFAULT = bin/PHPEditor_debug.app
+XUP.OTHERS_PLATFORM_TARGET_RELEASE = bin/PHPEditor
+XUP.OTHERS_PLATFORM_TARGET_DEBUG = bin/PHPEditor_debug
+XUP.OTHERS_PLATFORM_TARGET_DEFAULT = bin/PHPEditor_debug
+
+# include install script
+TEMPLATE = subdirs
+CONFIG *= ordered
+
+SUBDIRS = Core \
+    Application \
+    Plugins
