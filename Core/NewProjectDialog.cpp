@@ -26,6 +26,22 @@ NewProjectDialog::~NewProjectDialog()
     delete ui;
 }
 
+void NewProjectDialog::clean()
+{
+    ui->projectName->setText("");
+    ui->location->setText("");
+}
+
+QString NewProjectDialog::getName()
+{
+    return ui->projectName->text();
+}
+
+QString NewProjectDialog::getLocation()
+{
+    return ui->location->text();
+}
+
 void NewProjectDialog::browseLocation()
 {
     QString location = QFileDialog::getExistingDirectory (this, "Select the location directory", getenv("HOME"), QFileDialog::ShowDirsOnly);
@@ -35,8 +51,7 @@ void NewProjectDialog::browseLocation()
 
 void NewProjectDialog::validate()
 {
-    qDebug() << "validate";
-    if (ui->projectName->text() != "" && ui->location->text() != "" && QDir(ui->location->text()).exists()) {
+    if (getName() != "" && getLocation() != "" && QDir(getLocation()).exists()) {
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
     } else {
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
@@ -45,7 +60,16 @@ void NewProjectDialog::validate()
 
 void NewProjectDialog::accept()
 {
-    qDebug() << "accept";
-    Core::getProjectManager()->createNewProject(ui->projectName->text(), ui->location->text());
+    qDebug() << "accept()";
+    Core::getProjectManager()->createNewProject(getName(), getLocation());
+    clean();
+    QDialog::accept();
+
+}
+
+void NewProjectDialog::reject()
+{
+    clean();
+    QDialog::reject();
 }
 }
