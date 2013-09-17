@@ -1,5 +1,6 @@
 #include "Core.h"
 #include "ConfigManager.h"
+#include "ProjectManager.h"
 #include "MainWindow.h"
 #include "PluginManager.h"
 
@@ -7,17 +8,21 @@
 
 namespace PHPEditor {
 ConfigManager* Core::configManager;
+ProjectManager* Core::projectManager;
 MainWindow* Core::mainWindow;
 PluginManager* Core::pluginManager;
 
 /**
  * @brief PHPEditor::MonkeyCore::init
- * Crée la fenètre principal
+ *
+ * Initialize all requier componement for PHPEditor
+ * and show the main window
  */
 void Core::init()
 {
     qDebug() << "PHPEditor init";
     configManager = new ConfigManager;
+    projectManager = new ProjectManager;
     mainWindow = new MainWindow;
     pluginManager = new PluginManager;
     pluginManager->loadPlugins();
@@ -26,8 +31,10 @@ void Core::init()
 
 /**
  * @brief PHPEditor::getConfigManager
- * Renvoi l'instance du gestionnaire de configuration
- * @return
+ *
+ * Return the project manager instance
+ *
+ * @return ConfigManager*
  */
 ConfigManager* Core::getConfigManager()
 {
@@ -35,8 +42,22 @@ ConfigManager* Core::getConfigManager()
 }
 
 /**
+ * @brief Core::getProjectManager
+ *
+ * Return the project manager instance
+ *
+ * @return ProjectManager*
+ */
+ProjectManager* Core::getProjectManager()
+{
+    return projectManager;
+}
+
+/**
  * @brief PHPEditor::getMainWindow
- * Renvoi l'instance de la fenètre principal
+ *
+ * Return the main window instance
+ *
  * @return MainWindow*
  */
 MainWindow* Core::getMainWindow()
@@ -46,7 +67,9 @@ MainWindow* Core::getMainWindow()
 
 /**
  * @brief PHPEditor::getPluginManager
- * Renvoi l'instance du gestionnaire de plugin
+ *
+ * Return the plugin manager instance
+ *
  * @return PluginManager*
  */
 PluginManager* Core::getPluginManager()

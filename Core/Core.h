@@ -8,6 +8,7 @@
 namespace PHPEditor {
 
 class ConfigManager;
+class ProjectManager;
 class MainWindow;
 class PluginManager;
 
@@ -17,11 +18,12 @@ class PHPEDITOR_EXPORT Core : public QObject
 public:
     static void init();
     static ConfigManager* getConfigManager();
+    static ProjectManager* getProjectManager();
     static MainWindow* getMainWindow();
     static PluginManager* getPluginManager();
-    static void test();
 
     static ConfigManager *configManager;
+    static ProjectManager *projectManager;
     static MainWindow *mainWindow;
     static PluginManager *pluginManager;
 };

@@ -10,18 +10,7 @@ ConfigManager::ConfigManager()
 {
     //On récupère le path du dossier des plugins
     configsDir = QDir(QApplication::applicationDirPath());
-
-    #if defined(Q_OS_WIN)
-        if (configsDir.dirName().toLower() == "debug" || configsDir.dirName().toLower() == "release")
-            configsDir.cdUp();
-    #elif defined(Q_OS_MAC)
-        if (configsDir.dirName() == "MacOS") {
-            configsDir.cdUp();
-            configsDir.cdUp();
-            configsDir.cdUp();
-        }
-    #endif
-    configsDir.cd("config");
+    configsDir.cd("data");
 }
 
 bool ConfigManager::loadConfig(QString filename)

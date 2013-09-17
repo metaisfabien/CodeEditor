@@ -8,7 +8,6 @@ public:
    //virtual PluginInterface();
     virtual ~PluginInterface() {}
 
-
     virtual bool load() = 0;
     virtual bool unLoad() = 0;
 

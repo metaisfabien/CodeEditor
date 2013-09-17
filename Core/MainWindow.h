@@ -11,9 +11,6 @@ public:
      MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-private slots:
-    void newProject();
-
 private:
     void createMenu();
     void createMainToolBar();

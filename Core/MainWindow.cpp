@@ -1,5 +1,6 @@
 #include "MainWindow.h"
-#include "NewProjectDialog.h"
+#include "Core.h"
+#include "ProjectManager.h"
 
 #include <QCoreApplication>
 #include <QTabWidget>
@@ -52,7 +53,8 @@ void MainWindow::createActions()
 
     newProjectAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/php_project.png"), tr("&PHP project"), this);
     newProjectAction->setStatusTip(tr("project"));
-    connect(newProjectAction, SIGNAL(triggered()), this, SLOT(newProject()));
+
+    connect(newProjectAction, SIGNAL(triggered()), Core::getProjectManager(), SLOT(showNewProjectDialog()));
 
     //Ouvrir fichier
     openFileAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/open.png"), tr("&Open file"), this);
@@ -111,11 +113,5 @@ void MainWindow::createMainToolBar()
 
     //Configuration
     mainToolBar->addAction(settingsAction);
-}
-
-void MainWindow::newProject()
-{
-    NewProjectDialog *newProjectDialog = new NewProjectDialog;
-    newProjectDialog->show();
 }
 }

@@ -18,6 +18,11 @@ public:
 
 private:
     Ui::NewProjectDialog *ui;
+
+public slots:
+    void browseLocation();
+    void validate();
+    void accept();
 };
 }
 

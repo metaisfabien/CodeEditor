@@ -28,11 +28,11 @@ class Ui_NewProjectDialog
 public:
     QGridLayout *gridLayout;
     QDialogButtonBox *buttonBox;
-    QLabel *label_project_name;
-    QLineEdit *lineEdit;
-    QPushButton *browse_location;
-    QLabel *label_location;
-    QLineEdit *project_name;
+    QLabel *labelProjectName;
+    QLineEdit *location;
+    QPushButton *browseLocation;
+    QLabel *labelLocation;
+    QLineEdit *projectName;
 
     void setupUi(QDialog *NewProjectDialog)
     {
@@ -50,30 +50,30 @@ public:
 
         gridLayout->addWidget(buttonBox, 8, 0, 1, 4);
 
-        label_project_name = new QLabel(NewProjectDialog);
-        label_project_name->setObjectName(QStringLiteral("label_project_name"));
+        labelProjectName = new QLabel(NewProjectDialog);
+        labelProjectName->setObjectName(QStringLiteral("labelProjectName"));
 
-        gridLayout->addWidget(label_project_name, 0, 0, 1, 1);
+        gridLayout->addWidget(labelProjectName, 0, 0, 1, 1);
 
-        lineEdit = new QLineEdit(NewProjectDialog);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        location = new QLineEdit(NewProjectDialog);
+        location->setObjectName(QStringLiteral("location"));
 
-        gridLayout->addWidget(lineEdit, 4, 1, 1, 1);
+        gridLayout->addWidget(location, 4, 1, 1, 1);
 
-        browse_location = new QPushButton(NewProjectDialog);
-        browse_location->setObjectName(QStringLiteral("browse_location"));
+        browseLocation = new QPushButton(NewProjectDialog);
+        browseLocation->setObjectName(QStringLiteral("browseLocation"));
 
-        gridLayout->addWidget(browse_location, 4, 2, 1, 1);
+        gridLayout->addWidget(browseLocation, 4, 2, 1, 1);
 
-        label_location = new QLabel(NewProjectDialog);
-        label_location->setObjectName(QStringLiteral("label_location"));
+        labelLocation = new QLabel(NewProjectDialog);
+        labelLocation->setObjectName(QStringLiteral("labelLocation"));
 
-        gridLayout->addWidget(label_location, 4, 0, 1, 1);
+        gridLayout->addWidget(labelLocation, 4, 0, 1, 1);
 
-        project_name = new QLineEdit(NewProjectDialog);
-        project_name->setObjectName(QStringLiteral("project_name"));
+        projectName = new QLineEdit(NewProjectDialog);
+        projectName->setObjectName(QStringLiteral("projectName"));
 
-        gridLayout->addWidget(project_name, 0, 1, 1, 2);
+        gridLayout->addWidget(projectName, 0, 1, 1, 2);
 
 
         retranslateUi(NewProjectDialog);
@@ -86,9 +86,9 @@ public:
     void retranslateUi(QDialog *NewProjectDialog)
     {
         NewProjectDialog->setWindowTitle(QApplication::translate("NewProjectDialog", "New PHP project", 0));
-        label_project_name->setText(QApplication::translate("NewProjectDialog", "Project name", 0));
-        browse_location->setText(QApplication::translate("NewProjectDialog", "Browse..", 0));
-        label_location->setText(QApplication::translate("NewProjectDialog", "Location", 0));
+        labelProjectName->setText(QApplication::translate("NewProjectDialog", "Project name", 0));
+        browseLocation->setText(QApplication::translate("NewProjectDialog", "Browse..", 0));
+        labelLocation->setText(QApplication::translate("NewProjectDialog", "Location", 0));
     } // retranslateUi
 
 };

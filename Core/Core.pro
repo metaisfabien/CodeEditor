@@ -17,7 +17,8 @@ HEADERS += \
     LogBrowserDialog.h \
     Export.h \
     Core.h \
-    NewProjectDialog.h
+    NewProjectDialog.h \
+    ProjectManager.h
 
 SOURCES += \
     PluginManager.cpp \
@@ -26,7 +27,8 @@ SOURCES += \
     LogBrowser.cpp \
     LogBrowserDialog.cpp \
     Core.cpp \
-    NewProjectDialog.cpp
+    NewProjectDialog.cpp \
+    ProjectManager.cpp
 
 FORMS += \
     NewProjectDialog.ui
