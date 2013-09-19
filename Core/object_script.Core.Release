@@ -5,13 +5,10 @@ INPUT(
 ./../lib/release/.obj/LogBrowser.o
 ./../lib/release/.obj/LogBrowserDialog.o
 ./../lib/release/.obj/Core.o
-./../lib/release/.obj/NewProjectDialog.o
-./../lib/release/.obj/ProjectManager.o
-./../lib/release/.obj/Project.o
+./../lib/release/.obj/Workspace.o
+./../lib/release/.obj/Perspective.o
 ./../lib/release/.obj/moc_MainWindow.o
 ./../lib/release/.obj/moc_LogBrowser.o
 ./../lib/release/.obj/moc_LogBrowserDialog.o
 ./../lib/release/.obj/moc_Core.o
-./../lib/release/.obj/moc_NewProjectDialog.o
-./../lib/release/.obj/moc_ProjectManager.o
 );

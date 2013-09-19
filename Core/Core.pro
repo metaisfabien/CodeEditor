@@ -17,9 +17,9 @@ HEADERS += \
     LogBrowserDialog.h \
     Export.h \
     Core.h \
-    NewProjectDialog.h \
-    ProjectManager.h \
-    Project.h
+    Workspace/Workspace.h \
+    Workspace/Dock.h \
+    Workspace/Perspective.h
 
 SOURCES += \
     PluginManager.cpp \
@@ -28,12 +28,8 @@ SOURCES += \
     LogBrowser.cpp \
     LogBrowserDialog.cpp \
     Core.cpp \
-    NewProjectDialog.cpp \
-    ProjectManager.cpp \
-    Project.cpp
-
-FORMS += \
-    NewProjectDialog.ui
+    Workspace/Workspace.cpp \
+    Workspace/Perspective.cpp
 
 DEFINES += CORE_LIBRARY
 

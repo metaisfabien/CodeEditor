@@ -1,6 +1,5 @@
 #include "MainWindow.h"
 #include "Core.h"
-#include "ProjectManager.h"
 
 #include <QCoreApplication>
 #include <QTabWidget>
@@ -34,7 +33,6 @@ MainWindow::~MainWindow()
     delete toggleSearchAction;
     delete saveAction;
     delete openFileAction,
-    delete newProjectAction;
     delete newFileAction;
     delete tabWidget;
 }
@@ -50,11 +48,6 @@ void MainWindow::createActions()
     newFileAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/new.png"), tr("&File"), this);
     newFileAction->setShortcuts(QKeySequence::New);
     newFileAction->setStatusTip(tr("File"));
-
-    newProjectAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/php_project.png"), tr("&PHP project"), this);
-    newProjectAction->setStatusTip(tr("project"));
-
-    connect(newProjectAction, SIGNAL(triggered()), Core::getProjectManager(), SLOT(showNewProjectDialog()));
 
     //Ouvrir fichier
     openFileAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/open.png"), tr("&Open file"), this);
@@ -80,9 +73,8 @@ void MainWindow::createMenu()
 {
     fileMenu = menuBar()->addMenu(tr("&File"));
 
-    QMenu* newFileMenu = fileMenu->addMenu(tr("&New"));
-    newFileMenu->addAction(newFileAction);
-    newFileMenu->addAction(newProjectAction);
+    newMenu = fileMenu->addMenu(tr("&New"));
+    newMenu->addAction(newFileAction);
 
 
     fileMenu->addAction(openFileAction);
@@ -114,4 +106,5 @@ void MainWindow::createMainToolBar()
     //Configuration
     mainToolBar->addAction(settingsAction);
 }
+
 }

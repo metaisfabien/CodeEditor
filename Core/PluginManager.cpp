@@ -1,5 +1,6 @@
 #include "PluginManager.h"
 #include "ConfigManager.h"
+#include "PluginInterface.h"
 #include "Core.h"
 
 #include <QApplication>

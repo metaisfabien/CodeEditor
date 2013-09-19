@@ -1,0 +1,13 @@
+INPUT(
+./../../bin/debug/plugins/.obj/PHPProject.o
+./../../bin/debug/plugins/.obj/ProjectManager.o
+./../../bin/debug/plugins/.obj/ProjectExplorer.o
+./../../bin/debug/plugins/.obj/NewProjectDialog.o
+./../../bin/debug/plugins/.obj/Project.o
+./../../bin/debug/plugins/.obj/ProjectTreeModel.o
+./../../bin/debug/plugins/.obj/ProjectTreeItem.o
+./../../bin/debug/plugins/.obj/moc_PHPProject.o
+./../../bin/debug/plugins/.obj/moc_ProjectManager.o
+./../../bin/debug/plugins/.obj/moc_NewProjectDialog.o
+./../../bin/debug/plugins/.obj/moc_ProjectTreeModel.o
+);

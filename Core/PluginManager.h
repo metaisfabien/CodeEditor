@@ -6,9 +6,8 @@
 #include <QObject>
 #include <QPluginLoader>
 
-#include "PluginInterface.h"
-
 namespace PHPEditor {
+class PluginInterface;
 class PluginManager
 {
 public:

@@ -11,6 +11,7 @@ public:
      MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+     QMenu* getNewMenu() { return newMenu; }
 private:
     void createMenu();
     void createMainToolBar();
@@ -27,6 +28,8 @@ private:
     QTabWidget *tabWidget;
 
     QMenu *fileMenu;
+    QMenu *newMenu;
+
     QToolBar *mainToolBar;
 
 };
