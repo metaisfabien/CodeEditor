@@ -3,14 +3,9 @@
 
 #include <QStringList>
 
-ProjectTreeModel::ProjectTreeModel(QObject *parent) : QAbstractItemModel(parent)
+ProjectTreeModel::ProjectTreeModel(QString name, QString path, QObject *parent) : QAbstractItemModel(parent)
 {
-    QList<QVariant> rootData;
-    rootData << "";
-    rootItem = new ProjectTreeItem(rootData);
-    QStringList test;
-    test << "aaaa" << "bbbb";
-    setupModelData(test, rootItem);
+    rootItem = new ProjectTreeItem(name, path);
 }
 
 ProjectTreeModel::~ProjectTreeModel()
@@ -117,7 +112,7 @@ int ProjectTreeModel::rowCount(const QModelIndex &parent) const
 }
 //! [8]
 
-void ProjectTreeModel::setupModelData(const QStringList &lines, ProjectTreeItem *parent)
+/*void ProjectTreeModel::setupModelData(const QStringList &lines, ProjectTreeItem *parent)
 {
     QList<ProjectTreeItem*> parents;
     QList<int> indentations;
@@ -164,4 +159,4 @@ void ProjectTreeModel::setupModelData(const QStringList &lines, ProjectTreeItem 
 
         ++number;
     }
-}
+}*/

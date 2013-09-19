@@ -64,8 +64,8 @@ bool PHPProject::load()
         QVBoxLayout *layout = new QVBoxLayout(container);
         vector<Project*>::const_iterator projectIterator;
         for(projectIterator = projects.begin(); projectIterator != projects.end(); ++projectIterator) {
-            qDebug() << "Add project " << (*projectIterator)->getLocation();
-            ProjectTreeModel *model = new ProjectTreeModel;
+            qDebug() << "Add project " << (*projectIterator)->getName() << (*projectIterator)->getLocation();
+            ProjectTreeModel *model = new ProjectTreeModel((*projectIterator)->getName(), (*projectIterator)->getLocation());
 
            // model->setRootPath((*projectIterator)->getLocation());//;
             QTreeView *tree = new QTreeView;

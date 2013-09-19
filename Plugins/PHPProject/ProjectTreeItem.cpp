@@ -1,65 +1,55 @@
 #include <QStringList>
+#include <QDir>
+#include <QDirIterator>
+#include <QDebug>
 
 #include "ProjectTreeItem.h"
 
-//! [0]
-ProjectTreeItem::ProjectTreeItem(const QList<QVariant> &data, ProjectTreeItem *parent)
+ProjectTreeItem::ProjectTreeItem(QString name, QString path, ProjectTreeItem *parent)
 {
     parentItem = parent;
-    itemData = data;
+    mName = name;
+    mPath = path;
+    mHasLoadChidren = false;
 }
-//! [0]
 
-//! [1]
 ProjectTreeItem::~ProjectTreeItem()
 {
     qDeleteAll(childItems);
 }
-//! [1]
 
-//! [2]
 void ProjectTreeItem::appendChild(ProjectTreeItem *item)
 {
     childItems.append(item);
 }
-//! [2]
 
-//! [3]
 ProjectTreeItem *ProjectTreeItem::child(int row)
 {
+    loadChildren();
     return childItems.value(row);
 }
-//! [3]
 
-//! [4]
-int ProjectTreeItem::childCount() const
+int ProjectTreeItem::childCount()
 {
+    loadChildren();
     return childItems.count();
 }
-//! [4]
 
-//! [5]
 int ProjectTreeItem::columnCount() const
 {
     return itemData.count();
 }
-//! [5]
 
-//! [6]
 QVariant ProjectTreeItem::data(int column) const
 {
     return itemData.value(column);
 }
-//! [6]
 
-//! [7]
 ProjectTreeItem *ProjectTreeItem::parent()
 {
     return parentItem;
 }
-//! [7]
 
-//! [8]
 int ProjectTreeItem::row() const
 {
     if (parentItem)
@@ -67,4 +57,19 @@ int ProjectTreeItem::row() const
 
     return 0;
 }
-//! [8]
+
+void ProjectTreeItem::loadChildren()
+{
+    if (!mHasLoadChidren) {
+        if (mIsDir) {
+            QStringList children;
+            QDirIterator directories(mPath, QDir::Dirs | QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+            while(directories.hasNext()){
+                directories.next();
+                qDebug() << directories.filePath();
+            }
+        }
+        mHasLoadChidren = true;
+    }
+}
+

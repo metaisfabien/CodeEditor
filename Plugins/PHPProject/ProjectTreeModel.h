@@ -8,7 +8,7 @@ class ProjectTreeModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:
-    ProjectTreeModel(QObject *object = 0);
+    ProjectTreeModel(QString name, QString path, QObject *object = 0);
     ~ProjectTreeModel();
 
     QVariant data(const QModelIndex &index, int role) const;

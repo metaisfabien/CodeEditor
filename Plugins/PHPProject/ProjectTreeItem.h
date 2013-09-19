@@ -1,30 +1,38 @@
-#ifndef TREEITEM_H
-#define TREEITEM_H
+#ifndef PROJECTTREEITEM_H
+#define PROJECTTREEITEM_H
 
 #include <QList>
 #include <QVariant>
 
-//! [0]
 class ProjectTreeItem
 {
 public:
-    explicit ProjectTreeItem(const QList<QVariant> &data, ProjectTreeItem *parent = 0);
+    explicit ProjectTreeItem(QString name, QString path, ProjectTreeItem *parent = 0);
     ~ProjectTreeItem();
 
     void appendChild(ProjectTreeItem *child);
 
     ProjectTreeItem *child(int row);
-    int childCount() const;
+    int childCount();
     int columnCount() const;
     QVariant data(int column) const;
     int row() const;
     ProjectTreeItem *parent();
 
+    bool isDir() const { return mIsDir; }
+    bool hasLoadChidren() const { return mHasLoadChidren; }
+    void loadChildren();
+
 private:
     QList<ProjectTreeItem*> childItems;
     QList<QVariant> itemData;
     ProjectTreeItem *parentItem;
-};
-//! [0]
 
-#endif // TREEITEM_H
+    bool mIsDir;
+    bool mHasLoadChidren;
+
+    QString mName;
+    QString mPath;
+};
+
+#endif // PROJECTTREEITEM_H
