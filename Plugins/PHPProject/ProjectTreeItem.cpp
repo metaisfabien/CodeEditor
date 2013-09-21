@@ -7,9 +7,12 @@
 
 ProjectTreeItem::ProjectTreeItem(QString name, QString path, ProjectTreeItem *parent)
 {
+    qDebug() << "Create item " << name << " " << path;
     parentItem = parent;
     mName = name;
     mPath = path;
+    mIsDir = QDir(path).exists();
+    mIsExtend = false;
     mHasLoadChidren = false;
 }
 
@@ -37,12 +40,14 @@ int ProjectTreeItem::childCount()
 
 int ProjectTreeItem::columnCount() const
 {
+    return 1;
     return itemData.count();
 }
 
 QVariant ProjectTreeItem::data(int column) const
 {
-    return itemData.value(column);
+    //return itemData.value(column);
+    return mName;
 }
 
 ProjectTreeItem *ProjectTreeItem::parent()
@@ -60,13 +65,19 @@ int ProjectTreeItem::row() const
 
 void ProjectTreeItem::loadChildren()
 {
-    if (!mHasLoadChidren) {
+   if (!mHasLoadChidren && (!parent() || !parent()->parent() ||  parent()->parent()->isExtend())) {
+        qDebug() << "loadChildren of item " << mName << " " << mPath;
         if (mIsDir) {
-            QStringList children;
-            QDirIterator directories(mPath, QDir::Dirs | QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
-            while(directories.hasNext()){
-                directories.next();
-                qDebug() << directories.filePath();
+            QDir dir = QDir(mPath);
+            QStringList children = dir.entryList();
+
+            int i = 0;
+            while (i < children.count()) {
+                if (children[i] != "." && children[i] != "..") {
+                    ProjectTreeItem *item = new ProjectTreeItem(children[i], mPath + "/" + children[i], this);
+                    appendChild(item);
+                }
+                ++i;
             }
         }
         mHasLoadChidren = true;

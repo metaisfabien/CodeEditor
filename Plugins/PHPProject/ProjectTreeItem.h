@@ -23,12 +23,15 @@ public:
     bool hasLoadChidren() const { return mHasLoadChidren; }
     void loadChildren();
 
+    bool isExtend() const { return mIsExtend; }
+
 private:
     QList<ProjectTreeItem*> childItems;
     QList<QVariant> itemData;
     ProjectTreeItem *parentItem;
 
     bool mIsDir;
+    bool mIsExtend;
     bool mHasLoadChidren;
 
     QString mName;

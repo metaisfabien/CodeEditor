@@ -71,12 +71,15 @@ QModelIndex ProjectTreeModel::index(int row, int column, const QModelIndex &pare
         parentItem = rootItem;
     else
         parentItem = static_cast<ProjectTreeItem*>(parent.internalPointer());
-
-    ProjectTreeItem *childItem = parentItem->child(row);
-    if (childItem)
-        return createIndex(row, column, childItem);
-    else
-        return QModelIndex();
+    
+    if (!parentItem->parent() || parentItem->parent()->isExtend()) {
+      ProjectTreeItem *childItem = parentItem->child(row);
+      if (childItem)
+          return createIndex(row, column, childItem);
+      else
+          return QModelIndex();
+    }
+    
 }
 //! [6]
 

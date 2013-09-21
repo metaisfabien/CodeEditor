@@ -5,6 +5,8 @@
 #include <qapplication.h>
 #include <QPointer>
 #include <QDebug>
+#include <QFile>
+#include <QDir>
 
 using namespace PHPEditor;
 
@@ -14,6 +16,18 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 {
     if(logBrowser)
         logBrowser->outputMessage( type, msg );
+
+
+    QDir logDir = QDir(QApplication::applicationDirPath());
+
+
+    QFile file(logDir.absoluteFilePath("debug.log"));
+    file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append);
+    QTextStream out(&file);
+    out << msg << "\n";
+
+      // optional, as QFile destructor will already do it:
+      file.close();
 }
 
 using namespace PHPEditor;
