@@ -1,6 +1,7 @@
 #include "ui_NewProjectDialog.h"
 #include "NewProjectDialog.h"
 #include "ProjectManager.h"
+#include "PHPProject.h"
 
 #include "Core.h"
 
@@ -9,10 +10,11 @@
 
 using namespace PHPEditor;
 
-NewProjectDialog::NewProjectDialog(QWidget *parent) :
+NewProjectDialog::NewProjectDialog(PHPProject *phpProject, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NewProjectDialog)
 {
+    mPhpProject = phpProject;
     ui->setupUi(this);
     connect(ui->projectName, SIGNAL(textChanged(const QString&)), this, SLOT(validate()));
     connect(ui->location, SIGNAL(textChanged(const QString&)), this, SLOT(validate()));
@@ -61,8 +63,7 @@ void NewProjectDialog::validate()
 
 void NewProjectDialog::accept()
 {
-    qDebug() << "accept()";
-   // Core::getProjectManager()->createNewProject(getName(), getLocation());
+    mPhpProject->createNewProject(getName(), getLocation());
     clean();
     QDialog::accept();
 

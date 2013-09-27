@@ -9,8 +9,8 @@ UI_DIR = ui
 #LIBS+= -lqscintilla
 
 HEADERS += \
-    PluginManager.h \
-    PluginInterface.h \
+    Plugin/PluginManager.h \
+    Plugin/PluginInterface.h \
     MainWindow.h \
     ConfigManager.h \
     LogBrowser.h \
@@ -19,17 +19,23 @@ HEADERS += \
     Core.h \
     Workspace/Workspace.h \
     Workspace/Dock.h \
-    Workspace/Perspective.h
+    Workspace/Perspective.h \
+    Plugin/PluginsDialog.h \
+    Plugin/PluginItem.h \
+    Plugin/PluginData.h
 
 SOURCES += \
-    PluginManager.cpp \
+    Plugin/PluginManager.cpp \
     MainWindow.cpp \
     ConfigManager.cpp \
     LogBrowser.cpp \
     LogBrowserDialog.cpp \
     Core.cpp \
     Workspace/Workspace.cpp \
-    Workspace/Perspective.cpp
+    Workspace/Perspective.cpp \
+    Plugin/PluginsDialog.cpp \
+    Plugin/PluginItem.cpp \
+    Plugin/PluginData.cpp
 
 DEFINES += CORE_LIBRARY
 
@@ -43,3 +49,7 @@ Debug:DESTDIR = ../lib/debug
 Debug:OBJECTS_DIR = ../lib/debug/.obj
 Debug:MOC_DIR = ../lib/debug/.moc
 Debug:RCC_DIR = ../lib/debug/.rcc
+
+FORMS += \
+    Plugin/PluginsDialog.ui \
+    Plugin/PluginItem.ui

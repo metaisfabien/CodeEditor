@@ -6,7 +6,6 @@
 
 using namespace std;
 
-class NewProjectDialog;
 class Project;
 class ProjectManager : public QObject
 {
@@ -17,14 +16,10 @@ public:
     void createNewProject(QString name, QString location);
     vector<Project*> getProjects() const;
 
-public slots:
-    void showNewProjectDialog();
-
 private:
     void updateProjectsFile();
     void loadProjects();
 
-    NewProjectDialog *newProjectDialog;
     vector<Project*> projects;
 };
 

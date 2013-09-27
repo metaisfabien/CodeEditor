@@ -4,13 +4,15 @@
 #include <QAbstractItemModel>
 
 class ProjectTreeItem;
+class ProjectManager;
 class ProjectTreeModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:
-    ProjectTreeModel(QString name, QString path, QObject *object = 0);
+    ProjectTreeModel(ProjectManager *projectManager, QObject *parent = 0);
     ~ProjectTreeModel();
 
+    void addProject(QString name, QString location);
     QVariant data(const QModelIndex &index, int role) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QVariant headerData(int section, Qt::Orientation orientation,
@@ -20,10 +22,13 @@ public:
     QModelIndex parent(const QModelIndex &index) const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
-private:
 
-    void setupModelData(const QStringList &lines, ProjectTreeItem *parent);
-    ProjectTreeItem *rootItem;
+    bool canFetchMore(const QModelIndex &parent) const;
+    void fetchMore(const QModelIndex &parent);
+
+private:
+    ProjectTreeItem *mRootItem;
+    ProjectManager *mProjectManager;
 };
 
 #endif // PROJECTTREEMODEL_H

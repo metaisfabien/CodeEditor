@@ -1,7 +1,7 @@
 #include "Core.h"
 #include "ConfigManager.h"
 #include "MainWindow.h"
-#include "PluginManager.h"
+#include "Plugin/PluginManager.h"
 #include "Workspace/Workspace.h"
 
 

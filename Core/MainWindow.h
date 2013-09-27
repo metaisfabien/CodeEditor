@@ -11,26 +11,28 @@ public:
      MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-     QMenu* getNewMenu() { return newMenu; }
+     QMenu* getNewMenu() const { return mNewMenu; }
+     QMenu* getOptionsMenu() const { return mOptionsMenu; }
 private:
     void createMenu();
     void createMainToolBar();
     void createActions();
 
     //actions
-    QAction *newFileAction;
-    QAction *newProjectAction;
-    QAction *openFileAction;
-    QAction *saveAction;
-    QAction *toggleSearchAction;
-    QAction *settingsAction;
+    QAction *mNewFileAction;
+    QAction *mNewProjectAction;
+    QAction *mOpenFileAction;
+    QAction *mSaveAction;
+    QAction *mToggleSearchAction;
+    QAction *mSettingsAction;
 
-    QTabWidget *tabWidget;
+    QTabWidget *mTabWidget;
 
-    QMenu *fileMenu;
-    QMenu *newMenu;
+    QMenu *mFileMenu;
+    QMenu *mNewMenu;
+    QMenu * mOptionsMenu;
 
-    QToolBar *mainToolBar;
+    QToolBar *mMainToolBar;
 
 };
 }

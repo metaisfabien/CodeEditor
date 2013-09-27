@@ -7,8 +7,14 @@ INPUT(
 ./../lib/release/.obj/Core.o
 ./../lib/release/.obj/Workspace.o
 ./../lib/release/.obj/Perspective.o
+./../lib/release/.obj/PluginsDialog.o
+./../lib/release/.obj/PluginItem.o
+./../lib/release/.obj/PluginData.o
+./../lib/release/.obj/moc_PluginManager.o
 ./../lib/release/.obj/moc_MainWindow.o
 ./../lib/release/.obj/moc_LogBrowser.o
 ./../lib/release/.obj/moc_LogBrowserDialog.o
 ./../lib/release/.obj/moc_Core.o
+./../lib/release/.obj/moc_PluginsDialog.o
+./../lib/release/.obj/moc_PluginItem.o
 );

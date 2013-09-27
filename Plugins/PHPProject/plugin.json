@@ -1,0 +1,11 @@
+{
+    "id": "php_core",
+    "name": "PHPCore",
+    "decription": "Core plugin for the php edi",
+    "version": "0.0.1",
+    "PHPEditorVersionMin": "0.0.1",
+    "dependencies":
+    [
+        "editor_manager"
+    ]
+}

@@ -1,4 +1,3 @@
-#include "NewProjectDialog.h"
 #include "ProjectManager.h"
 #include "Project.h"
 
@@ -13,7 +12,6 @@
 
 ProjectManager::ProjectManager()
 {
-    newProjectDialog = 0;
     loadProjects();
 }
 
@@ -23,7 +21,6 @@ ProjectManager::~ProjectManager()
     for(projectIterator = projects.begin(); projectIterator != projects.end(); ++projectIterator) {
         delete (*projectIterator);
     }
-    delete newProjectDialog;
 }
 
 /**
@@ -49,19 +46,6 @@ void ProjectManager::loadProjects()
             }
         }
     }
-}
-
-/**
- * @brief ProjectManager::showNewProjectDialog
- *
- * Show the dialog window to create a new project
- */
-void ProjectManager::showNewProjectDialog()
-{
-    if (!newProjectDialog) {
-        newProjectDialog = new NewProjectDialog;
-    }
-    newProjectDialog->show();
 }
 
 void ProjectManager::createNewProject(QString name, QString location)

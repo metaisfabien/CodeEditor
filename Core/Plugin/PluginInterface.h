@@ -1,6 +1,9 @@
 #ifndef PLUGININTERFACE_H
 #define PLUGININTERFACE_H
 
+#include <QString>
+#include <QPluginLoader>
+
 namespace PHPEditor {
 class PluginInterface
 {

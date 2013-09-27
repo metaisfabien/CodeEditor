@@ -1,7 +1,7 @@
 #include "PHPProject.h"
 #include "ProjectManager.h"
-#include "Project.h"
 #include "ProjectTreeModel.h"
+#include "NewProjectDialog.h"
 
 #include "Core.h"
 #include "MainWindow.h"
@@ -17,10 +17,6 @@
 #include <QMenu>
 #include <QDockWidget>
 #include <QTreeWidget>
-
-#include <QFileSystemModel>
-#include <QVBoxLayout>
-#include <QDirModel>
 #include <QTreeView>
 #include <QHeaderView>
 
@@ -30,27 +26,28 @@ PHPProject::PHPProject()
 {
     id = "php_project";
 
-    projectManager = 0;
-    newProjectAction = 0;
+    mProjectManager = 0;
+    mNewProjectAction = 0;
+    mNewProjectDialog = 0;
 }
 
 PHPProject::~PHPProject()
 {
-    if (newProjectAction) delete newProjectAction;
-    if (projectManager) delete projectManager;
-
+    if (mNewProjectAction) delete mNewProjectAction;
+    if (mProjectManager) delete mProjectManager;
+    if (mNewProjectDialog) delete mNewProjectDialog;
 }
 
 bool PHPProject::load()
 {
-    projectManager = new ProjectManager;
+    mProjectManager = new ProjectManager;
 
-    newProjectAction = new QAction(QIcon(QApplication::applicationDirPath() +"/images/php_project.png"), tr("&PHP project"), this);
-    newProjectAction->setStatusTip(tr("project"));
+    mNewProjectAction = new QAction(QIcon(QApplication::applicationDirPath() +"/images/php_project.png"), tr("&PHP project"), this);
+    mNewProjectAction->setStatusTip(tr("project"));
 
-    connect(newProjectAction, SIGNAL(triggered()), projectManager, SLOT(showNewProjectDialog()));
+    connect(mNewProjectAction, SIGNAL(triggered()), this, SLOT(showNewProjectDialog()));
 
-    Core::getMainWindow()->getNewMenu()->addAction(newProjectAction);
+    Core::getMainWindow()->getNewMenu()->addAction(mNewProjectAction);
 
     Dock* ProjectExplorerDock = Core::getWorkspace()->getCurrentPerspective()->getDock("project_explorer");
     if (ProjectExplorerDock) {
@@ -58,25 +55,14 @@ bool PHPProject::load()
         QDockWidget *dockWidget = new QDockWidget(tr("Project explorer"), Core::getMainWindow());
         dockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
 
-        vector<Project*> projects = projectManager->getProjects();
+        mProjectTreeModel = new ProjectTreeModel(mProjectManager);
+        QTreeView *tree = new QTreeView;
+        //hide the tree header
+        tree->header()->close();
+        tree->setModel(mProjectTreeModel);
+        tree->setStyleSheet(QString("QTreeView::branch { border-image: none; }"));
 
-        QWidget *container = new QWidget(dockWidget);
-        QVBoxLayout *layout = new QVBoxLayout(container);
-        vector<Project*>::const_iterator projectIterator;
-        for(projectIterator = projects.begin(); projectIterator != projects.end(); ++projectIterator) {
-            qDebug() << "Add project " << (*projectIterator)->getName() << (*projectIterator)->getLocation();
-            ProjectTreeModel *model = new ProjectTreeModel((*projectIterator)->getName(), (*projectIterator)->getLocation());
-
-           // model->setRootPath((*projectIterator)->getLocation());//;
-            QTreeView *tree = new QTreeView;
-            tree->header()->close();
-            tree->setModel(model);
-           // tree->setRootIndex(model->index((*projectIterator)->getLocation()));
-
-            layout->addWidget(tree);
-        }
-
-        dockWidget->setWidget(container);
+        dockWidget->setWidget(tree);
         Core::getMainWindow()->addDockWidget(Qt::RightDockWidgetArea, dockWidget);
     }
 
@@ -88,3 +74,26 @@ bool PHPProject::unLoad()
     return true;
 }
 
+/**
+ * @brief PHPProject::showNewProjectDialog
+ *
+ * Show the dialog window to create a new project
+ */
+void PHPProject::showNewProjectDialog()
+{
+    if (!mNewProjectDialog) {
+        mNewProjectDialog = new NewProjectDialog(this);
+    }
+    mNewProjectDialog->show();
+}
+
+/**
+ * @brief PHPProject::createNewProject
+ *
+ *
+ */
+void PHPProject::createNewProject(QString name,QString location)
+{
+    mProjectManager->createNewProject(name, location);
+    mProjectTreeModel->addProject(name, location);
+}

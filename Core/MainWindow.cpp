@@ -19,22 +19,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     createMenu();
     createMainToolBar();
 
-    tabWidget = new QTabWidget();
+    mTabWidget = new QTabWidget();
 /*
     QsciScintilla *scintilla = new QsciScintilla(this);
     tabWidget->addTab(scintilla,"TAB 1");
 */
-    setCentralWidget(tabWidget);
+    setCentralWidget(mTabWidget);
 }
 
 MainWindow::~MainWindow()
 {
-    delete settingsAction;
-    delete toggleSearchAction;
-    delete saveAction;
-    delete openFileAction,
-    delete newFileAction;
-    delete tabWidget;
+    delete mSettingsAction;
+    delete mToggleSearchAction;
+    delete mSaveAction;
+    delete mOpenFileAction,
+    delete mNewFileAction;
+    delete mTabWidget;
 }
 
 /**
@@ -45,40 +45,47 @@ MainWindow::~MainWindow()
 void MainWindow::createActions()
 {
     //Nouveau
-    newFileAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/new.png"), tr("&File"), this);
-    newFileAction->setShortcuts(QKeySequence::New);
-    newFileAction->setStatusTip(tr("File"));
+    mNewFileAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/new.png"), tr("&File"), this);
+    mNewFileAction->setShortcuts(QKeySequence::New);
+    mNewFileAction->setStatusTip(tr("File"));
 
     //Ouvrir fichier
-    openFileAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/open.png"), tr("&Open file"), this);
-    openFileAction->setShortcuts(QKeySequence::Open);
-    openFileAction->setStatusTip(tr("Open file"));
+    mOpenFileAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/open.png"), tr("&Open file"), this);
+    mOpenFileAction->setShortcuts(QKeySequence::Open);
+    mOpenFileAction->setStatusTip(tr("Open file"));
 
     //Sauvegarder
-    saveAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/save.png"), tr("&Sauvegarder"), this);
-    saveAction->setShortcuts(QKeySequence::Save);
-    saveAction->setStatusTip(tr("Sauvegarder"));
+    mSaveAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/save.png"), tr("&Sauvegarder"), this);
+    mSaveAction->setShortcuts(QKeySequence::Save);
+    mSaveAction->setStatusTip(tr("Sauvegarder"));
 
     //Rechercher
-    toggleSearchAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/search.png"), tr("&Chercher"), this);
-    toggleSearchAction->setShortcuts(QKeySequence::Find);
-    toggleSearchAction->setStatusTip(tr("Chercher"));
+    mToggleSearchAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/search.png"), tr("&Chercher"), this);
+    mToggleSearchAction->setShortcuts(QKeySequence::Find);
+    mToggleSearchAction->setStatusTip(tr("Chercher"));
 
-    settingsAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/setting.png"), tr("&Configuration"), this);
-    settingsAction->setStatusTip(tr("configuration"));
+    mSettingsAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/setting.png"), tr("&Configuration"), this);
+    mSettingsAction->setStatusTip(tr("configuration"));
 
 }
 
+/**
+ * @brief MainWindow::createMenu
+ *
+ * Create the default main menu
+ */
 void MainWindow::createMenu()
 {
-    fileMenu = menuBar()->addMenu(tr("&File"));
+    mFileMenu = menuBar()->addMenu(tr("&File"));
 
-    newMenu = fileMenu->addMenu(tr("&New"));
-    newMenu->addAction(newFileAction);
+    mNewMenu = mFileMenu->addMenu(tr("&New"));
+    mNewMenu->addAction(mNewFileAction);
 
+    mFileMenu->addAction(mOpenFileAction);
+    mFileMenu->addAction(mSaveAction);
 
-    fileMenu->addAction(openFileAction);
-    fileMenu->addAction(saveAction);
+    mOptionsMenu = menuBar()->addMenu(tr("&Options"));
+    mOptionsMenu->addAction(mSettingsAction);
 }
 
 /**
@@ -88,23 +95,20 @@ void MainWindow::createMenu()
 void MainWindow::createMainToolBar()
 {
     //creation de la toolbar
-    mainToolBar = new QToolBar;
-    addToolBar(Qt::TopToolBarArea, mainToolBar);
+    mMainToolBar = new QToolBar;
+    addToolBar(Qt::TopToolBarArea, mMainToolBar);
 
     //Nouveau fichier
-    mainToolBar->addAction(newFileAction);
+    mMainToolBar->addAction(mNewFileAction);
 
     //Ouvrir fichier
-    mainToolBar->addAction(openFileAction);
+    mMainToolBar->addAction(mOpenFileAction);
 
     //Sauvegarde
-    mainToolBar->addAction(saveAction);
+    mMainToolBar->addAction(mSaveAction);
 
     //Recherche simple
-    mainToolBar->addAction(toggleSearchAction);
-
-    //Configuration
-    mainToolBar->addAction(settingsAction);
+    mMainToolBar->addAction(mToggleSearchAction);
 }
 
 }

@@ -7,7 +7,7 @@
 class ProjectTreeItem
 {
 public:
-    explicit ProjectTreeItem(QString name, QString path, ProjectTreeItem *parent = 0);
+    explicit ProjectTreeItem(ProjectTreeItem *parent = 0);
     ~ProjectTreeItem();
 
     void appendChild(ProjectTreeItem *child);
@@ -19,20 +19,23 @@ public:
     int row() const;
     ProjectTreeItem *parent();
 
-    bool isDir() const { return mIsDir; }
     bool hasLoadChidren() const { return mHasLoadChidren; }
+    bool hasLoadSubChildren() const { return mHasLoadSubChildren; }
+    void setHasLoadSubChildren(bool _hasLoadSubChildren) { mHasLoadSubChildren = _hasLoadSubChildren; }
+    void setName(QString name) { mName = name; }
+    QString getName() const { return mName; }
+    void setPath(QString path) { mPath = path; }
+    QString getPath() const { return mPath; }
     void loadChildren();
-
-    bool isExtend() const { return mIsExtend; }
+    void loadSubChildren();
 
 private:
     QList<ProjectTreeItem*> childItems;
     QList<QVariant> itemData;
-    ProjectTreeItem *parentItem;
+    ProjectTreeItem *mParentItem;
 
-    bool mIsDir;
-    bool mIsExtend;
     bool mHasLoadChidren;
+    bool mHasLoadSubChildren;
 
     QString mName;
     QString mPath;
