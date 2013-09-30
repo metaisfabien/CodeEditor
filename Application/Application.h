@@ -9,7 +9,7 @@ class Application : public QApplication
 {
     Q_OBJECT
     public:
-        Application(int, char *[]);
+        Application(int &argc, char **argv);
         ~Application();
 
         bool haveAnotherInstance();

@@ -2,7 +2,7 @@
 
 #include <QMetaType>
 
-#include "logbrowserdialog.h"
+#include "LogBrowserDialog.h"
 
 namespace PHPEditor {
 LogBrowser::LogBrowser(QObject *parent) :

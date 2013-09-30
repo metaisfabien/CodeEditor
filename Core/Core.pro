@@ -39,17 +39,42 @@ SOURCES += \
 
 DEFINES += CORE_LIBRARY
 
-Release:DESTDIR = ../lib/release
-Release:OBJECTS_DIR = ../lib/release/.obj
-Release:MOC_DIR = ../lib/release/.moc
-Release:RCC_DIR = ../lib/release/.rcc
-
-
-Debug:DESTDIR = ../lib/debug
-Debug:OBJECTS_DIR = ../lib/debug/.obj
-Debug:MOC_DIR = ../lib/debug/.moc
-Debug:RCC_DIR = ../lib/debug/.rcc
 
 FORMS += \
     Plugin/PluginsDialog.ui \
     Plugin/PluginItem.ui
+
+CONFIG(debug, debug|release) {
+    DESTDIR = ../lib/debug
+    OBJECTS_DIR = ../lib/debug/.obj
+    MOC_DIR = ../lib/debug/.moc
+    RCC_DIR = ../lib/debug/.rcc
+} else {
+    DESTDIR = ../lib/release
+    OBJECTS_DIR = ../lib/release/.obj
+    MOC_DIR = ../lib/release/.moc
+    RCC_DIR = ../lib/release/.rcc
+}
+
+win32 {
+    CONFIG(debug, debug|release) {
+        LIB_FILES += ../lib/debug/Core.dll
+    } else {
+        LIB_FILES += ../lib/release/Core.dll
+    }
+}
+
+unix {
+    CONFIG(debug, debug|release) {
+        LIB_FILES += ../lib/debug/libCore.so
+    } else {
+        LIB_FILES += ../lib/release/libCore.so
+    }
+}
+
+## Define what files are 'extra_libs' and where to put them
+extra_libs.files = $$LIB_FILES
+extra_libs.path = $$DESTDIR
+
+## Tell qmake to add the moving of them to the 'install' target
+INSTALLS += extra_libs

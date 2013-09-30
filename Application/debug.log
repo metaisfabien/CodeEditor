@@ -1,0 +1,80 @@
+PHPEditor init 
+Load workspace 
+data directory not exist, load workspace fail 
+PluginManager instanced 
+load plugins data 
+"/home/fabien/Projets/Qt/PHPEditor/Application/plugin.json" 
+"/home/fabien/Projets/Qt/PHPEditor/plugin.json" 
+"/home/fabien/Projets/Qt/PHPEditor/Application/debug/plugin.json" 
+"/home/fabien/Projets/Qt/PHPEditor/Application/release/plugin.json" 
+Load plugins 
+Load plugin  "Application.cpp" 
+Can't' load plugin  "Application.cpp" 
+Load plugin  "Application.h" 
+Can't' load plugin  "Application.h" 
+Load plugin  "Application.o" 
+Can't' load plugin  "Application.o" 
+Load plugin  "Application.pro" 
+Can't' load plugin  "Application.pro" 
+Load plugin  "debug.log" 
+Can't' load plugin  "debug.log" 
+Load plugin  "main.cpp" 
+Can't' load plugin  "main.cpp" 
+Load plugin  "main.o" 
+Can't' load plugin  "main.o" 
+Load plugin  "Makefile" 
+Can't' load plugin  "Makefile" 
+Load plugin  "Makefile.Debug" 
+Can't' load plugin  "Makefile.Debug" 
+Load plugin  "Makefile.Release" 
+Can't' load plugin  "Makefile.Release" 
+Load plugin  "moc_Application.cpp" 
+Can't' load plugin  "moc_Application.cpp" 
+Load plugin  "moc_Application.o" 
+Can't' load plugin  "moc_Application.o" 
+Load plugin  "PHPEditor" 
+Can't' load plugin  "PHPEditor" 
+PHPEditor init 
+Load workspace 
+data directory not exist, load workspace fail 
+PluginManager instanced 
+load plugins data 
+"/home/fabien/Projets/Qt/PHPEditor/Application/plugin.json" 
+"/home/fabien/Projets/Qt/PHPEditor/plugin.json" 
+"/home/fabien/Projets/Qt/PHPEditor/Application/debug/plugin.json" 
+"/home/fabien/Projets/Qt/PHPEditor/Application/release/plugin.json" 
+Load plugins 
+Load plugin  "Application.cpp" 
+Can't' load plugin  "Application.cpp" 
+Load plugin  "Application.h" 
+Can't' load plugin  "Application.h" 
+Load plugin  "Application.o" 
+Can't' load plugin  "Application.o" 
+Load plugin  "Application.pro" 
+Can't' load plugin  "Application.pro" 
+Load plugin  "debug.log" 
+Can't' load plugin  "debug.log" 
+Load plugin  "main.cpp" 
+Can't' load plugin  "main.cpp" 
+Load plugin  "main.o" 
+Can't' load plugin  "main.o" 
+Load plugin  "Makefile" 
+Can't' load plugin  "Makefile" 
+Load plugin  "Makefile.Debug" 
+Can't' load plugin  "Makefile.Debug" 
+Load plugin  "Makefile.Release" 
+Can't' load plugin  "Makefile.Release" 
+Load plugin  "moc_Application.cpp" 
+Can't' load plugin  "moc_Application.cpp" 
+Load plugin  "moc_Application.o" 
+Can't' load plugin  "moc_Application.o" 
+Load plugin  "PHPEditor" 
+Can't' load plugin  "PHPEditor" 
+PHPEditor init 
+Load workspace 
+data directory not exist, load workspace fail 
+PHPEditor init 
+Load workspace 
+data directory not exist, load workspace fail 
+PHPEditor init 
+PHPEditor init 
