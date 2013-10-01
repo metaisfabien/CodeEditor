@@ -32,7 +32,8 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 
 using namespace PHPEditor;
 
-int main(int argc, char** argv)
+//int main(int argc, char** argv)
+int main(int argc, char *argv[])
 {
     Application application(argc, argv);
 

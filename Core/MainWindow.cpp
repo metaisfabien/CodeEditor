@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     createMenu();
     createMainToolBar();
 
-  //  mTabWidget = new QTabWidget();
+    mTabWidget = new QTabWidget();
 /*
     QsciScintilla *scintilla = new QsciScintilla(this);
     tabWidget->addTab(scintilla,"TAB 1");
