@@ -35,7 +35,7 @@
     <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QListWidget" name="listWidget">
+  <widget class="QListWidget" name="pluginsList">
    <property name="geometry">
     <rect>
      <x>19</x>

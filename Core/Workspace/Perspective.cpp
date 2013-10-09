@@ -3,10 +3,10 @@
 
 using namespace std;
 namespace PHPEditor {
-Perspective::Perspective(QString _name, QString _icone)
+Perspective::Perspective(QString name, QString icone)
 {
-    name = _name;
-    icone = _icone;
+    mName = name;
+    mIcone = icone;
 }
 /**
  * @brief Perspective::~Perspective
@@ -16,8 +16,8 @@ Perspective::Perspective(QString _name, QString _icone)
  */
 Perspective::~Perspective()
 {
-    map<string, Dock*>::iterator dockIterator;
-    for(dockIterator = docks.begin(); dockIterator != docks.end(); ++dockIterator) {
+    map<QString, Dock*>::iterator dockIterator;
+    for(dockIterator = mDocks.begin(); dockIterator != mDocks.end(); ++dockIterator) {
         delete dockIterator->second;
     }
 }
@@ -31,8 +31,7 @@ Perspective::~Perspective()
  */
 void Perspective::addDock(Dock *dock)
 {
-    string id = dock->getId().toStdString();
-    docks.insert(make_pair<string, Dock*>(id , dock));
+    mDocks.insert(make_pair<QString, Dock*>(dock->getId() , dock));
 }
 
 /**
@@ -46,11 +45,10 @@ void Perspective::addDock(Dock *dock)
  */
 Dock* Perspective::getDock(QString id)
 {
-    string stdId = id.toStdString();
-    map<string, Dock*>::iterator dockIterator;
-    dockIterator = docks.find(stdId);
+    map<QString, Dock*>::iterator dockIterator;
+    dockIterator = mDocks.find(id);
 
-    if (dockIterator != docks.end()) {
+    if (dockIterator != mDocks.end()) {
         return dockIterator->second;
     }
     return 0;

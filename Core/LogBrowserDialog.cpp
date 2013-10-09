@@ -101,6 +101,8 @@ void LogBrowserDialog::save()
 
 void LogBrowserDialog::closeEvent(QCloseEvent *e)
 {
+    e->accept();
+    /*
     QMessageBox::StandardButton answer = QMessageBox::question(
                 this,
                 tr("Close Log Browser?"),
@@ -111,7 +113,7 @@ void LogBrowserDialog::closeEvent(QCloseEvent *e)
     if (answer == QMessageBox::Yes)
         e->accept();
     else
-        e->ignore();
+        e->ignore();*/
 }
 
 

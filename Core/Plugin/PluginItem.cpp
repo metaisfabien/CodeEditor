@@ -1,14 +1,16 @@
 #include "PluginItem.h"
-#include "ui_PluginItem.h"
+#include "Plugin/PluginData.h"
 
-PluginItem::PluginItem(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::PluginItem)
+namespace PHPEditor {
+PluginItem::PluginItem(PluginData *pluginData, QWidget *parent)
+    : QWidget(parent)
 {
-    ui->setupUi(this);
+    setupUi(this);
+    name->setText(pluginData->getId());
 }
 
 PluginItem::~PluginItem()
 {
-    delete ui;
+
+}
 }

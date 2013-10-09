@@ -2,21 +2,20 @@
 #define PLUGINITEM_H
 
 #include <QWidget>
+#include "ui_PluginItem.h"
 
-namespace Ui {
-class PluginItem;
-}
 
-class PluginItem : public QWidget
+namespace PHPEditor{
+class PluginData;
+class PluginItem : public QWidget, public Ui::PluginItem
 {
     Q_OBJECT
 
 public:
-    explicit PluginItem(QWidget *parent = 0);
+    explicit PluginItem(PluginData *pluginData, QWidget *parent = 0);
     ~PluginItem();
 
-private:
-    Ui::PluginItem *ui;
 };
+}
 
 #endif // PLUGINITEM_H

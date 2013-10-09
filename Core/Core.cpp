@@ -1,6 +1,7 @@
 #include "Core.h"
-#include "ConfigManager.h"
+#include "Setting/SettingManager.h"
 #include "MainWindow.h"
+#include "Editor/EditorManager.h"
 #include "Plugin/PluginManager.h"
 #include "Workspace/Workspace.h"
 
@@ -8,10 +9,11 @@
 #include <QDebug>
 
 namespace PHPEditor {
-ConfigManager* Core::configManager;
+SettingManager* Core::mSettingManager;
 MainWindow* Core::mainWindow;
 PluginManager* Core::pluginManager;
 Workspace* Core::workspace;
+EditorManager* Core::mEditorManager;
 
 /**
  * @brief PHPEditor::MonkeyCore::init
@@ -22,11 +24,11 @@ Workspace* Core::workspace;
 void Core::init()
 {
     qDebug() << "PHPEditor init";
-    configManager = new ConfigManager;
+    mSettingManager = new SettingManager;
     workspace = new Workspace;
     mainWindow = new MainWindow;
+    mEditorManager = new EditorManager;
     pluginManager = new PluginManager;
-    pluginManager->loadPlugins();
 
     mainWindow->show();
 }
@@ -38,9 +40,9 @@ void Core::init()
  *
  * @return ConfigManager*
  */
-ConfigManager* Core::getConfigManager()
+SettingManager* Core::getSettingManager()
 {
-    return configManager;
+    return mSettingManager;
 }
 
 /**
@@ -55,6 +57,10 @@ MainWindow* Core::getMainWindow()
     return mainWindow;
 }
 
+EditorManager* Core::getEditorManager()
+{
+    return mEditorManager;
+}
 /**
  * @brief PHPEditor::getPluginManager
  *

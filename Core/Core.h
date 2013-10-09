@@ -7,8 +7,9 @@
 
 namespace PHPEditor {
 
-class ConfigManager;
+class SettingManager;
 class MainWindow;
+class EditorManager;
 class PluginManager;
 class Workspace;
 
@@ -17,13 +18,15 @@ class PHPEDITOR_EXPORT Core : public QObject
     Q_OBJECT
 public:
     static void init();
-    static ConfigManager* getConfigManager();
+    static SettingManager* getSettingManager();
     static MainWindow* getMainWindow();
+    static EditorManager* getEditorManager();
     static PluginManager* getPluginManager();
     static Workspace* getWorkspace();
 
-    static ConfigManager *configManager;
+    static SettingManager *mSettingManager;
     static MainWindow *mainWindow;
+    static EditorManager *mEditorManager;
     static PluginManager *pluginManager;
     static Workspace *workspace;
 };

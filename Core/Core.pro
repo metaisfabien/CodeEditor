@@ -5,14 +5,12 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TEMPLATE = lib
 #CONFIG+= staticlib
 # Input
-UI_DIR = ui
-#LIBS+= -lqscintilla
+LIBS+= -lqscintilla2
 
 HEADERS += \
     Plugin/PluginManager.h \
     Plugin/PluginInterface.h \
     MainWindow.h \
-    ConfigManager.h \
     LogBrowser.h \
     LogBrowserDialog.h \
     Export.h \
@@ -22,12 +20,16 @@ HEADERS += \
     Workspace/Perspective.h \
     Plugin/PluginsDialog.h \
     Plugin/PluginItem.h \
-    Plugin/PluginData.h
+    Plugin/PluginData.h \
+    Editor/EditorManager.h \
+    Editor/Editor.h \
+    Setting/SettingManager.h \
+    Setting/SettingsDialog.h \
+    Setting/SettingsTreeItem.h
 
 SOURCES += \
     Plugin/PluginManager.cpp \
     MainWindow.cpp \
-    ConfigManager.cpp \
     LogBrowser.cpp \
     LogBrowserDialog.cpp \
     Core.cpp \
@@ -35,14 +37,20 @@ SOURCES += \
     Workspace/Perspective.cpp \
     Plugin/PluginsDialog.cpp \
     Plugin/PluginItem.cpp \
-    Plugin/PluginData.cpp
+    Plugin/PluginData.cpp \
+    Editor/EditorManager.cpp \
+    Editor/Editor.cpp \
+    Setting/SettingManager.cpp \
+    Setting/SettingsDialog.cpp \
+    Setting/SettingsTreeItem.cpp
 
 DEFINES += CORE_LIBRARY
 
 
 FORMS += \
     Plugin/PluginsDialog.ui \
-    Plugin/PluginItem.ui
+    Plugin/PluginItem.ui \
+    SettingsDialog.ui
 
 CONFIG(debug, debug|release) {
     DESTDIR = ../lib/debug
@@ -62,15 +70,7 @@ win32 {
     } else {
         LIB_FILES += ../lib/release/Core.dll
     }
-}
 
-unix {
-    CONFIG(debug, debug|release) {
-        LIB_FILES += ../lib/debug/libCore.so
-    } else {
-        LIB_FILES += ../lib/release/libCore.so
-    }
-}
 
 ## Define what files are 'extra_libs' and where to put them
 extra_libs.files = $$LIB_FILES
@@ -78,3 +78,33 @@ extra_libs.path = $$DESTDIR
 
 ## Tell qmake to add the moving of them to the 'install' target
 INSTALLS += extra_libs
+}
+
+install_files.files = plugins.json workspace.json
+    CONFIG(debug, debug|release) {
+        install_files.path = ../bin/debug/data
+    } else {
+        install_files.path = ../bin/release/data
+    }
+
+## Tell qmake to add the moving of them to the 'install' target
+INSTALLS += install_files
+
+#unix {
+#    CONFIG(debug, debug|release) {
+#        LIB_FILES += ../lib/debug/libCore.so
+#    } else {
+#        LIB_FILES += ../lib/release/libCore.so
+#    }
+#}
+
+## Define what files are 'extra_libs' and where to put them
+#extra_libs.files = $$LIB_FILES
+#extra_libs.path = $$DESTDIR
+
+## Tell qmake to add the moving of them to the 'install' target
+#INSTALLS += extra_libs
+
+OTHER_FILES += \
+    plugins.json \
+    workspace.json

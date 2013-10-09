@@ -1,6 +1,9 @@
 #include "MainWindow.h"
 #include "Core.h"
 
+#include "Plugin/PluginManager.h"
+#include "Setting/SettingManager.h"
+
 #include <QCoreApplication>
 #include <QTabWidget>
 #include <QMenu>
@@ -20,15 +23,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     createMainToolBar();
 
     mTabWidget = new QTabWidget();
-/*
-    QsciScintilla *scintilla = new QsciScintilla(this);
-    tabWidget->addTab(scintilla,"TAB 1");
-*/
-   setCentralWidget(mTabWidget);
+
+    setCentralWidget(mTabWidget);
 }
 
 MainWindow::~MainWindow()
 {
+
+    delete mPluginsAction;
     delete mSettingsAction;
     delete mToggleSearchAction;
     delete mSaveAction;
@@ -47,26 +49,31 @@ void MainWindow::createActions()
     //Nouveau
     mNewFileAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/new.png"), tr("&File"), this);
     mNewFileAction->setShortcuts(QKeySequence::New);
-    mNewFileAction->setStatusTip(tr("File"));
+    mNewFileAction->setStatusTip(tr("file"));
 
     //Ouvrir fichier
     mOpenFileAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/open.png"), tr("&Open file"), this);
     mOpenFileAction->setShortcuts(QKeySequence::Open);
-    mOpenFileAction->setStatusTip(tr("Open file"));
+    mOpenFileAction->setStatusTip(tr("open file"));
 
     //Sauvegarder
-    mSaveAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/save.png"), tr("&Sauvegarder"), this);
+    mSaveAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/save.png"), tr("&Save"), this);
     mSaveAction->setShortcuts(QKeySequence::Save);
-    mSaveAction->setStatusTip(tr("Sauvegarder"));
+    mSaveAction->setStatusTip(tr("save"));
 
     //Rechercher
-    mToggleSearchAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/search.png"), tr("&Chercher"), this);
+    mToggleSearchAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/search.png"), tr("&Search"), this);
     mToggleSearchAction->setShortcuts(QKeySequence::Find);
-    mToggleSearchAction->setStatusTip(tr("Chercher"));
+    mToggleSearchAction->setStatusTip(tr("search"));
 
-    mSettingsAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/setting.png"), tr("&Configuration"), this);
-    mSettingsAction->setStatusTip(tr("configuration"));
+    mSettingsAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/setting.png"), tr("&Settings"), this);
+    mSettingsAction->setStatusTip(tr("settings"));
+    QObject::connect(mSettingsAction, SIGNAL(triggered()), Core::getSettingManager(), SLOT(showSettingsDialog()));
 
+
+    mPluginsAction = new QAction(QIcon(QCoreApplication::applicationDirPath() +"/images/setting.png"), tr("&Plugins"), this);
+    mPluginsAction->setStatusTip(tr("Plugins"));
+    QObject::connect(mPluginsAction, SIGNAL(triggered()), Core::getPluginManager(), SLOT(showPluginsDialog()));
 }
 
 /**
@@ -84,8 +91,9 @@ void MainWindow::createMenu()
     mFileMenu->addAction(mOpenFileAction);
     mFileMenu->addAction(mSaveAction);
 
-    mOptionsMenu = menuBar()->addMenu(tr("&Options"));
-    mOptionsMenu->addAction(mSettingsAction);
+    mToolsMenu = menuBar()->addMenu(tr("&Tools"));
+    mToolsMenu->addAction(mSettingsAction);
+    mToolsMenu->addAction(mPluginsAction);
 }
 
 /**

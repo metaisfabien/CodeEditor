@@ -25,25 +25,24 @@ class PluginManager : public QObject
     Q_OBJECT
 public:
     PluginManager();
-    void loadPlugins();
-    void loadPlugin(QObject* plugin);
+    ~PluginManager();
 
     map<QString, PluginData*> getPluginsData() const { return mPluginsData; }
     PluginData* getPluginData(QString id);
 
     bool pluginDataExist(QString id);
-    void createActions();
 
 public slots:
     void showPluginsDialog();
 
 private:
     void loadPluginsData();
-    void loadPluginData(QFile pluginConfigFile);
+    void loadPluginData(QFile *pluginConfigFile, QString path);
+    void loadPlugins();
+    void loadPlugin(PluginData* pluginData);
 
     map<QString, PluginData*> mPluginsData;
     map<QString, PluginInterface*> mPlugins;
-    QAction *mPluginsAction;
     PluginsDialog *mPluginsDialog;
 };
 }

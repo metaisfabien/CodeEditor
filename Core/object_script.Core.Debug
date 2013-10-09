@@ -1,7 +1,6 @@
 INPUT(
 ./../lib/debug/.obj/PluginManager.o
 ./../lib/debug/.obj/MainWindow.o
-./../lib/debug/.obj/ConfigManager.o
 ./../lib/debug/.obj/LogBrowser.o
 ./../lib/debug/.obj/LogBrowserDialog.o
 ./../lib/debug/.obj/Core.o
@@ -10,6 +9,11 @@ INPUT(
 ./../lib/debug/.obj/PluginsDialog.o
 ./../lib/debug/.obj/PluginItem.o
 ./../lib/debug/.obj/PluginData.o
+./../lib/debug/.obj/EditorManager.o
+./../lib/debug/.obj/Editor.o
+./../lib/debug/.obj/SettingManager.o
+./../lib/debug/.obj/SettingsDialog.o
+./../lib/debug/.obj/SettingsTreeItem.o
 ./../lib/debug/.obj/moc_PluginManager.o
 ./../lib/debug/.obj/moc_MainWindow.o
 ./../lib/debug/.obj/moc_LogBrowser.o
@@ -17,4 +21,7 @@ INPUT(
 ./../lib/debug/.obj/moc_Core.o
 ./../lib/debug/.obj/moc_PluginsDialog.o
 ./../lib/debug/.obj/moc_PluginItem.o
+./../lib/debug/.obj/moc_EditorManager.o
+./../lib/debug/.obj/moc_SettingManager.o
+./../lib/debug/.obj/moc_SettingsDialog.o
 );

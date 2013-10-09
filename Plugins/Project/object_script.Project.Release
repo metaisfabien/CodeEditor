@@ -1,0 +1,15 @@
+INPUT(
+./../../bin/release/plugins/Project/.obj/Plugin.o
+./../../bin/release/plugins/Project/.obj/ProjectManager.o
+./../../bin/release/plugins/Project/.obj/ProjectExplorer.o
+./../../bin/release/plugins/Project/.obj/NewProjectDialog.o
+./../../bin/release/plugins/Project/.obj/Project.o
+./../../bin/release/plugins/Project/.obj/ProjectTreeModel.o
+./../../bin/release/plugins/Project/.obj/ProjectTreeItem.o
+./../../bin/release/plugins/Project/.obj/ProjectTreeView.o
+./../../bin/release/plugins/Project/.obj/moc_Plugin.o
+./../../bin/release/plugins/Project/.obj/moc_ProjectManager.o
+./../../bin/release/plugins/Project/.obj/moc_NewProjectDialog.o
+./../../bin/release/plugins/Project/.obj/moc_ProjectTreeModel.o
+./../../bin/release/plugins/Project/.obj/moc_ProjectTreeView.o
+);
