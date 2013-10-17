@@ -4,14 +4,14 @@
 
 #include "ProjectManager.h"
 
-#include "Core.h"
+#include "CodeEditor.h"
 #include "Editor/EditorManager.h"
 
 #include <QHeaderView>
 #include <QTreeWidget>
 #include <QDebug>
 
-namespace PHPEditor {
+namespace CE {
 namespace Project {
 ProjectTreeView::ProjectTreeView(ProjectManager *projectManager)
 {
@@ -29,7 +29,7 @@ void ProjectTreeView::onDoubleClick (const QModelIndex &index)
     if (index.isValid()) {
         ProjectTreeItem *item = static_cast<ProjectTreeItem*>(index.internalPointer());
         qDebug() << "Double click on item " + item->getPath();
-        Core::getEditorManager()->openFile(item->getPath());
+        CodeEditor::getEditorManager()->openFile(item->getPath());
     }
 }
 

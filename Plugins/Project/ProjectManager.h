@@ -6,12 +6,12 @@
 
 using namespace std;
 
-namespace PHPEditor {
+namespace CE {
 namespace Project {
 class Project;
 class ProjectManager : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 public:
     ProjectManager();
     ~ProjectManager();

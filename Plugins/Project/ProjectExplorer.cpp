@@ -1,6 +1,6 @@
 #include "ProjectExplorer.h"
 
-namespace PHPEditor {
+namespace CE {
 namespace Project {
 
 }

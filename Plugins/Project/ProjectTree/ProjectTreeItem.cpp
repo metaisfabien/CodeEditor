@@ -5,7 +5,7 @@
 
 #include "ProjectTreeItem.h"
 
-namespace PHPEditor {
+namespace CE {
 namespace Project {
 ProjectTreeItem::ProjectTreeItem(ProjectTreeItem *parent)
 {

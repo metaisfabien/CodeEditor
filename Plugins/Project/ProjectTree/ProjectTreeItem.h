@@ -4,7 +4,7 @@
 #include <QList>
 #include <QVariant>
 
-namespace PHPEditor {
+namespace CE {
 namespace Project {
 class ProjectTreeItem
 {

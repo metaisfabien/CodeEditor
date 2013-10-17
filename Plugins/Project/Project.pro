@@ -37,23 +37,21 @@ FORMS += \
 
 CONFIG(debug, debug|release) {
     DESTDIR = ../../bin/debug/plugins/$$PLUGINNAME
-    OBJECTS_DIR = ../../bin/debug/plugins/$$PLUGINNAME/.obj
-    MOC_DIR = ../../bin/debug/plugins/$$PLUGINNAME/.moc
-    RCC_DIR = ../../bin/debug/plugins/$$PLUGINNAME/.rcc
 } else {
     DESTDIR = ../../bin/release/plugins/$$PLUGINNAME
-    OBJECTS_DIR = ../../bin/release/plugins/$$PLUGINNAME/.obj
-    MOC_DIR = ../../bin/release/plugins/$$PLUGINNAME/.moc
-    RCC_DIR = ../../bin/release/plugins/$$PLUGINNAME/.rcc
 }
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../lib/release/ -lCore
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../lib/debug/ -lCore
-else:unix:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../lib/release -lCore
-else:unix:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../lib/debug -lCore
+OBJECTS_DIR = $$DESTDIR/.obj
+MOC_DIR = $$DESTDIR/.moc
+RCC_DIR = $$DESTDIR/.rcc
 
-INCLUDEPATH += $$PWD/../../Core
-DEPENDPATH += $$PWD/../../Core
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../lib/release/ -lCodeEditor
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../lib/debug/ -lCodeEditor
+else:unix:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../lib/release -lCodeEditor
+else:unix:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../lib/debug -lCodeEditor
+
+INCLUDEPATH += $$PWD/../../CodeEditor
+DEPENDPATH += $$PWD/../../CodeEditor
 
 install_files.files = plugin.json
 install_files.path = $$DESTDIR

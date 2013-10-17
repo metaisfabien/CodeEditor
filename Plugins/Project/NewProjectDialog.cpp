@@ -2,12 +2,12 @@
 #include "ProjectManager.h"
 #include "plugin.h"
 
-#include "Core.h"
+#include "CodeEditor.h"
 
 #include <QFileDialog>
 #include <QDebug>
 
-namespace PHPEditor {
+namespace CE {
 namespace Project {
 NewProjectDialog::NewProjectDialog(Plugin *phpPlugin, QWidget *parent) :
     QDialog(parent)

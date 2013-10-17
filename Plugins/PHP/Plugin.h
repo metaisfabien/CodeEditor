@@ -6,14 +6,14 @@
 
 #include "Plugin/PluginInterface.h"
 
-namespace PHPEditor {
+namespace CE {
 class SettingsDialog;
 namespace PHP {
 class Plugin : public QObject, PluginInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.PHPEditor.Default.PluginInterface" FILE "php.json")
-    Q_INTERFACES(PHPEditor::PluginInterface)
+    Q_INTERFACES(CE::PluginInterface)
     public:
         Plugin();
         ~Plugin();

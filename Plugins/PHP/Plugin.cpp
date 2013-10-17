@@ -1,13 +1,13 @@
 #include "Plugin.h"
 
-#include "Core.h"
+#include "CodeEditor.h"
 #include "Setting/SettingManager.h"
 #include "Setting/SettingsDialog.h"
 
 #include <QDebug>
 
 
-namespace PHPEditor {
+namespace CE {
 namespace PHP {
 Plugin::Plugin()
 {
@@ -31,7 +31,7 @@ bool Plugin::load()
 
     Core::getMainWindow()->getNewMenu()->addAction(mNewProjectAction);
 */
-    connect(Core::getSettingManager(), SIGNAL(createSettingDialog(SettingsDialog*)), this, SLOT(onCreateSettingDialog(SettingsDialog*)));
+    connect(CodeEditor::getSettingManager(), SIGNAL(createSettingDialog(SettingsDialog*)), this, SLOT(onCreateSettingDialog(SettingsDialog*)));
 
     return true;
 }

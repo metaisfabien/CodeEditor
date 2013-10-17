@@ -9,7 +9,7 @@ namespace Ui {
 class NewProjectDialog;
 }
 
-namespace PHPEditor {
+namespace CE {
 namespace Project {
 class Plugin;
 

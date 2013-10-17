@@ -3,7 +3,7 @@
 
 #include <QAbstractItemModel>
 
-namespace PHPEditor {
+namespace CE {
 namespace Project {
 class ProjectTreeItem;
 class ProjectManager;

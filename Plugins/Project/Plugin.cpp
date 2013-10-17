@@ -4,8 +4,10 @@
 
 #include "NewProjectDialog.h"
 
-#include "Core.h"
+#include "CodeEditor.h"
 #include "MainWindow.h"
+#include "MenuBar.h"
+
 #include "Workspace/Dock.h"
 #include "Workspace/Workspace.h"
 #include "Workspace/Perspective.h"
@@ -18,7 +20,7 @@
 #include <QMenu>
 #include <QDockWidget>
 
-namespace PHPEditor {
+namespace CE {
 namespace Project {
 Plugin::Plugin()
 {
@@ -49,17 +51,18 @@ bool Plugin::load()
 
     connect(mNewProjectAction, SIGNAL(triggered()), this, SLOT(showNewProjectDialog()));
 
-    Core::getMainWindow()->getNewMenu()->addAction(mNewProjectAction);
+    QMenu *newFileMenu = CodeEditor::getMainWindow()->menuBar()->menu("file/new");
+    newFileMenu->addAction(mNewProjectAction);
 
-    Dock* ProjectExplorerDock = Core::getWorkspace()->getCurrentPerspective()->getDock("project_explorer");
+    Dock* ProjectExplorerDock = CodeEditor::getWorkspace()->getCurrentPerspective()->getDock("project_explorer");
     if (ProjectExplorerDock) {
         //on crée le dock project manager
-        QDockWidget *dockWidget = new QDockWidget(tr("Project explorer"), Core::getMainWindow());
+        QDockWidget *dockWidget = new QDockWidget(tr("Project explorer"), CodeEditor::getMainWindow());
         dockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
 
         ProjectTreeView *mProjectTree = new ProjectTreeView(mProjectManager);
         dockWidget->setWidget(mProjectTree);
-        Core::getMainWindow()->addDockWidget(Qt::RightDockWidgetArea, dockWidget);
+        CodeEditor::getMainWindow()->addDockWidget(Qt::RightDockWidgetArea, dockWidget);
     }
 
     return true;

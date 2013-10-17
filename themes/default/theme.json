@@ -1,0 +1,8 @@
+{
+  "name": "Default",
+  "id": "default",
+  "variable": 
+  [
+    {"id": "text_edit_background", "value": "#000000"}
+  ]
+}

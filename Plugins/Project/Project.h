@@ -3,7 +3,7 @@
 
 #include <QString>
 
-namespace PHPEditor {
+namespace CE {
 namespace Project {
 class Project
 {

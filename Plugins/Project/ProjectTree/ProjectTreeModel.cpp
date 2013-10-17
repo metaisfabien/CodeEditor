@@ -6,7 +6,7 @@
 #include <QStringList>
 #include <QDebug>
 
-namespace PHPEditor {
+namespace CE {
 namespace Project {
 ProjectTreeModel::ProjectTreeModel(ProjectManager *projectManager, QObject *parent) : QAbstractItemModel(parent)
 {

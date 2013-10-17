@@ -4,7 +4,7 @@
 #include <QTreeView>
 #include <QString>
 
-namespace PHPEditor {
+namespace CE {
 namespace Project {
 class ProjectManager;
 class ProjectTreeModel;

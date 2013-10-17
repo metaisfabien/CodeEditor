@@ -9,7 +9,7 @@
 #include <QJsonValue>
 
 #include <QDebug>
-namespace PHPEditor {
+namespace CE {
 namespace Project {
 ProjectManager::ProjectManager()
 {

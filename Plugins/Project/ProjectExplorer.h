@@ -1,7 +1,7 @@
 #ifndef PROJECTEXPLORER_H
 #define PROJECTEXPLORER_H
 
-namespace PHPEditor {
+namespace CE {
 namespace Project {
 
 }

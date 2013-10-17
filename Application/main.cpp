@@ -1,4 +1,4 @@
-#include "Core.h"
+#include "CodeEditor.h"
 #include "Application.h"
 #include "LogBrowser.h"
 
@@ -8,7 +8,7 @@
 #include <QFile>
 #include <QDir>
 
-using namespace PHPEditor;
+using namespace CE;
 
 QPointer<LogBrowser> logBrowser;
 
@@ -30,7 +30,6 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
       file.close();
 }
 
-using namespace PHPEditor;
 
 int main(int argc, char** argv)
 //int main(int argc, char *argv[])
@@ -43,7 +42,7 @@ int main(int argc, char** argv)
     //si un instance est déja lancé on arrete celle ci
     if(application.haveAnotherInstance())return 0;
 
-    Core::init();
+    CodeEditor::init();
 
     return application.exec();
 }
