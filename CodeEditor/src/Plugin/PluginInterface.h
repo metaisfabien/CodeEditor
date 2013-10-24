@@ -1,13 +1,15 @@
 #ifndef PLUGININTERFACE_H
 #define PLUGININTERFACE_H
 
-#include <QString>
-#include <QPluginLoader>
-
 #include "Export.h"
 
+#include <QString>
+#include <QPluginLoader>
+#include <QHash>
+
 namespace CE {
-class PluginInterface
+class Dock;
+class CE_EXPORT PluginInterface
 {
 public:
     //virtual PluginInterface() = 0;
@@ -15,6 +17,7 @@ public:
 
     virtual bool load() = 0;
     virtual bool unLoad() = 0;
+    virtual QHash <QString, Dock*> getDocks() = 0;
 
     QString getId() const { return mId; }
     bool getIsLoaded() const { return mIsLoaded; }

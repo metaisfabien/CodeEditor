@@ -6,10 +6,12 @@
 #include "CodeEditor.h"
 #include "Editor/Editor.h"
 #include "Editor/EditorManager.h"
+#include "Setting/SettingManager.h"
 #include "Theme/ThemeManager.h"
 
 
 #include <QTreeWidget>
+#include <QSettings>
 #include <QDebug>
 #include <QObject>
 
@@ -29,7 +31,7 @@ SettingFileAssociationSection::SettingFileAssociationSection(QString id, Setting
 
 SettingFileAssociationSection::~SettingFileAssociationSection()
 {
-    if (mExtensionDialog) delete mExtensionDialog;
+//    if (mExtensionDialog) delete mExtensionDialog;
 }
 
 void SettingFileAssociationSection::setupUi(QWidget *widget)
@@ -37,6 +39,7 @@ void SettingFileAssociationSection::setupUi(QWidget *widget)
     mExtensionDialog = 0;
     Ui::SettingFileAssociationSection::setupUi(widget);
 
+    loadExtensions();
     //QSettings *settings = CodeEditor::getSettingManager()->getSettings();
     //showLineNumber->setChecked(settings->value("editors/show_line_number").toBool());
 
@@ -65,58 +68,93 @@ void SettingFileAssociationSection::setupUi(QWidget *widget)
 
 
     connect(add, SIGNAL(clicked()), this, SLOT(addNewExtension()));
+    connect(edit, SIGNAL(clicked()), this,SLOT(editCurrentExtension()));
     connect(remove, SIGNAL(clicked()), this,SLOT(removeCurrentExtension()));
-    connect(extensionsList, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(onCurrentExtensionChange(QListWidgetItem*,QListWidgetItem*)));
+    connect(extensionsTree, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(onCurrentExtensionChange(QTreeWidgetItem*,QTreeWidgetItem*)));
+    connect(mSettingsDialog, SIGNAL(updateSettings()), this , SLOT(updateSettings()));
+}
+
+void SettingFileAssociationSection::loadExtensions()
+{
+    QSettings *settings = CodeEditor::getSettingManager()->getSettings();
+    settings->beginGroup("file_association");
+
+    foreach (const QString &key, settings->childKeys()) {
+        qDebug() << "setting " + QString(key);
+        qDebug() << settings->value(key).toString();
+        QString EditorId = settings->value(key).toString();
+        Editor *editor = CodeEditor::getEditorManager()->getEditorById(EditorId);
+        if (editor) {
+            addExtensionItem(key, editor);
+        }
+    }
+
+    settings->endGroup();
+}
+
+void SettingFileAssociationSection::updateSettings()
+{
+
+    QSettings *settings = CodeEditor::getSettingManager()->getSettings();
+    settings->beginGroup("file_association");
+
+    QTreeWidgetItemIterator it(extensionsTree);
+    while (*it) {
+        SettingFileAssociationExtensionItem *item = dynamic_cast<SettingFileAssociationExtensionItem*>(*it);
+        settings->setValue(item->getExtension(), item->getEditor()->getId());
+        ++it;
+    }
+    settings->endGroup();
 }
 
 void SettingFileAssociationSection::addNewExtension()
 {
-    mExtensionDialog = new SettingFileAssociationExtensionDialog(mSettingsDialog);
+    mExtensionDialog = new SettingFileAssociationExtensionDialog(mSettingsDialog, this);
+    mExtensionDialog->setIsNewExtension(true);
     mExtensionDialog->show();
-    /**
-    ExtensionItem *item = 0;
-    if(extensionsList->count() != 0) {
-        QListWidgetItem *lastItem = extensionsList->item(extensionsList->count());
-        if (lastItem) {
-            item = dynamic_cast<ExtensionItem*>(lastItem);
-            if (item->getExtension() != "") {
-                item = addExtensionItem();
-            }
-        } else {
-            item = addExtensionItem();
-        }
-    } else {
-        item = addExtensionItem();
-    }
-    extensionsList->setCurrentItem(item);
-    extensionLineEdit->setFocus();
-    **/
 }
 
 SettingFileAssociationExtensionItem *SettingFileAssociationSection::addExtensionItem(QString extension, Editor *editor)
 {
-    SettingFileAssociationExtensionItem *item = new SettingFileAssociationExtensionItem(extension, editor);
-
-    item->setSizeHint(item->getWidget()->sizeHint());
-    extensionsList->addItem(item);
-    extensionsList->setItemWidget(item, item->getWidget());
-    item->getWidget()->show();
+    SettingFileAssociationExtensionItem *item = new SettingFileAssociationExtensionItem(extensionsTree);
+    item->setExtension(extension);
+    item->setEditor(editor);
     return item;
 }
 
-void SettingFileAssociationSection::onCurrentExtensionChange(QListWidgetItem* current,QListWidgetItem* last)
+void SettingFileAssociationSection::onCurrentExtensionChange(QTreeWidgetItem* current,QTreeWidgetItem* last)
 {
     if (current) {
-        //SettingFileAssociationExtensionItem *item = dynamic_cast<SettingFileAssociationExtensionItem*>(current);
         remove->setEnabled(true);
+        edit->setEnabled(true);
     }
+}
+
+void SettingFileAssociationSection::editCurrentExtension()
+{
+    QTreeWidgetItem *current = extensionsTree->currentItem();
+    SettingFileAssociationExtensionItem *item = dynamic_cast<SettingFileAssociationExtensionItem*>(current);
+
+    mExtensionDialog = new SettingFileAssociationExtensionDialog(mSettingsDialog, this);
+    mExtensionDialog->setEditor(item->getEditor());
+    mExtensionDialog->setExtension(item->getExtension());
+    mExtensionDialog->show();
 }
 
 void SettingFileAssociationSection::removeCurrentExtension()
 {
-   QListWidgetItem *item = extensionsList->currentItem();
+   QTreeWidgetItem *item = extensionsTree->currentItem();
    delete item;
 }
+
+void SettingFileAssociationSection::updateCurrentExtension(QString extension, Editor *editor)
+{
+    QTreeWidgetItem *current = extensionsTree->currentItem();
+    SettingFileAssociationExtensionItem *item = dynamic_cast<SettingFileAssociationExtensionItem*>(current);
+    item->setExtension(extension);
+    item->setEditor(editor);
+}
+
 
 }
 

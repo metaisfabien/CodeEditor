@@ -1,37 +1,47 @@
 #include "Workspace/Perspective.h"
-#include "Workspace/Dock.h"
+#include "Workspace/PerspectiveDock.h"
+#include "Dock/Dock.h"
 
 using namespace std;
 namespace CE {
 Perspective::Perspective(QString name, QString icone)
 {
     mName = name;
+    mIsCurrent = false;
     mIcone = icone;
+    mWindowState = Qt::WindowMaximized;
 }
+
 /**
  * @brief Perspective::~Perspective
  *
  * Detructor
- * Delete the docks in the docks map
+ * Delete the dockDatas in the dockDatas QHash
  */
 Perspective::~Perspective()
 {
-    map<QString, Dock*>::iterator dockIterator;
-    for(dockIterator = mDocks.begin(); dockIterator != mDocks.end(); ++dockIterator) {
-        delete dockIterator->second;
+    //clear dock hash but not delete because it's deleted by the dock manager
+    mPerspectiveDocks.clear();
+}
+
+void Perspective::setWindowSize(QString windowSize)
+{
+    QStringList splitedSize = windowSize.split("x");
+    if (splitedSize.at(0) != "" && splitedSize.at(1) != "") {
+        mWindowSize = QSize(splitedSize.at(0).toInt(), splitedSize.at(1).toInt());
     }
 }
 
 /**
  * @brief Perspective::addDock
  *
- * Add a dock to the docks map
+ * Add a dock to the docks QHash
  *
- * @param Dock* dock dock to addd to the docks map
+ * @param Dock* Dock to addd to the docks QHash
  */
-void Perspective::addDock(Dock *dock)
+void Perspective::addPerspectiveDock(PerspectiveDock *perspectiveDock)
 {
-    mDocks.insert(make_pair<QString, Dock*>(dock->getId() , dock));
+    mPerspectiveDocks[perspectiveDock->getId()] = perspectiveDock;
 }
 
 /**
@@ -43,15 +53,17 @@ void Perspective::addDock(Dock *dock)
  *
  * @return Dock*
  */
-Dock* Perspective::getDock(QString id)
+PerspectiveDock* Perspective::getPerspectiveDock(QString id)
 {
-    map<QString, Dock*>::iterator dockIterator;
-    dockIterator = mDocks.find(id);
-
-    if (dockIterator != mDocks.end()) {
-        return dockIterator->second;
+    if (mPerspectiveDocks.contains(id)) {
+        return mPerspectiveDocks[id];
     }
     return 0;
 }
 
+void Perspective::updateDockArea(QString id, Qt::DockWidgetArea area)
+{
+    PerspectiveDock *perspectiveDock = getPerspectiveDock(id);
+    perspectiveDock->setArea(area);
+}
 }

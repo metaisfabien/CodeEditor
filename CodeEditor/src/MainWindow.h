@@ -16,6 +16,17 @@ public:
      QTabWidget* getTab() const { return mTabWidget; }
 
      MenuBar* menuBar();
+
+signals:
+     void closeWindow();
+     void stateChange();
+     void windowResize(QSize size);
+
+protected:
+     void closeEvent(QCloseEvent *event);
+     void resizeEvent(QResizeEvent * event);
+     void changeEvent(QEvent* e);
+
 private:
     void createIcons();
     void createMenu();

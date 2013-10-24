@@ -18,23 +18,19 @@ class NewProjectDialog : public QDialog, public Ui::NewProjectDialog
     Q_OBJECT
 
 public:
-    NewProjectDialog(Plugin *phpPlugin, QWidget *parent = 0);
+    NewProjectDialog(Plugin *plugin, QWidget *parent = 0);
     ~NewProjectDialog();
 
     QString getName();
     QString getLocation();
 
 private:
-    void clean();
-
-    Ui::NewProjectDialog *ui;
-    Plugin *mPhpPlugin;
+    Plugin *mPlugin;
 
 public slots:
     void openBrowseLocationDialog();
     void validate();
     void accept();
-    void reject();
 };
 }
 }

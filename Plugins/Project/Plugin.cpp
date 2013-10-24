@@ -1,6 +1,6 @@
 #include "Plugin.h"
 #include "ProjectManager.h"
-#include "ProjectTree/ProjectTreeView.h"
+#include "ProjectExplorerDock.h"
 
 #include "NewProjectDialog.h"
 
@@ -8,7 +8,7 @@
 #include "MainWindow.h"
 #include "MenuBar.h"
 
-#include "Workspace/Dock.h"
+#include "Workspace/DockData.h"
 #include "Workspace/Workspace.h"
 #include "Workspace/Perspective.h"
 
@@ -27,7 +27,6 @@ Plugin::Plugin()
     mId = "project";
 
     mProjectManager = 0;
-    mProjectTree = 0;
     mNewProjectAction = 0;
     mNewProjectDialog = 0;
 }
@@ -37,7 +36,6 @@ Plugin::~Plugin()
     if (mNewProjectAction) delete mNewProjectAction;
     if (mProjectManager) delete mProjectManager;
     if (mNewProjectDialog) delete mNewProjectDialog;
-    if (mProjectTree) delete mProjectTree;
 }
 
 bool Plugin::load()
@@ -54,23 +52,20 @@ bool Plugin::load()
     QMenu *newFileMenu = CodeEditor::getMainWindow()->menuBar()->menu("file/new");
     newFileMenu->addAction(mNewProjectAction);
 
-    Dock* ProjectExplorerDock = CodeEditor::getWorkspace()->getCurrentPerspective()->getDock("project_explorer");
-    if (ProjectExplorerDock) {
-        //on crée le dock project manager
-        QDockWidget *dockWidget = new QDockWidget(tr("Project explorer"), CodeEditor::getMainWindow());
-        dockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-
-        ProjectTreeView *mProjectTree = new ProjectTreeView(mProjectManager);
-        dockWidget->setWidget(mProjectTree);
-        CodeEditor::getMainWindow()->addDockWidget(Qt::RightDockWidgetArea, dockWidget);
-    }
-
     return true;
 }
 
 bool Plugin::unLoad()
 {
     return true;
+}
+
+QHash <QString, Dock*> Plugin::getDocks()
+{
+    QHash <QString, Dock*> docks;
+    docks["project_explorer"] = new ProjectExplorerDock("project_explorer", tr("Project explorer"), mProjectManager);
+
+    return docks;
 }
 
 /**
@@ -80,9 +75,7 @@ bool Plugin::unLoad()
  */
 void Plugin::showNewProjectDialog()
 {
-    if (!mNewProjectDialog) {
-        mNewProjectDialog = new NewProjectDialog(this);
-    }
+    mNewProjectDialog = new NewProjectDialog(this);
     mNewProjectDialog->show();
 }
 
@@ -94,9 +87,9 @@ void Plugin::showNewProjectDialog()
 void Plugin::createNewProject(QString name,QString location)
 {
     mProjectManager->createNewProject(name, location);
-    if (mProjectTree) {
+   /* if (mProjectTree) {
         mProjectTree->addProject(name, location);
-    }
+    }*/
 }
 }
 }

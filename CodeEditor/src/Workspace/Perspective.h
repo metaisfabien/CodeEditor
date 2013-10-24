@@ -4,25 +4,45 @@
 #include "Export.h"
 
 #include <QString>
-
-#include <map>
-#include <string>
+#include <QStringList>
+#include <QHash>
+#include <QSize>
 
 namespace CE {
-class Dock;
+class PerspectiveDock;
 class CE_EXPORT Perspective
 {
 public:
     Perspective(QString name, QString icone);
     ~Perspective();
 
-    void addDock(Dock *dock);
-    Dock* getDock(QString id);
+    QString getName() const { return mName; }
 
+    bool isCurrent() const { return mIsCurrent; }
+
+    void addPerspectiveDock(PerspectiveDock *perspectiveDock);
+    PerspectiveDock* getPerspectiveDock(QString id);
+    QHash<QString, PerspectiveDock*> getPerspectiveDocks() const { return mPerspectiveDocks; }
+
+    void setWindowState(Qt::WindowState windowState) { mWindowState = windowState; }
+    Qt::WindowState getWindowState() const { return mWindowState; }
+
+    void setWindowSize(int width, int height) { mWindowSize = QSize(width, height); }
+    void setWindowSize(QSize size) { mWindowSize = size; }
+    void setWindowSize(QString windowSize);
+    QSize getWindowSize() const { return mWindowSize; }
+
+    void updateDockArea(QString id, Qt::DockWidgetArea area);
 private:
-    std::map<QString, Dock*> mDocks;
+    QHash<QString, PerspectiveDock*> mPerspectiveDocks;
     QString mName;
+    bool mIsCurrent;
     QString mIcone;
+
+    QSize mWindowSize;
+
+    Qt::WindowState mWindowState;
+
 };
 }
 

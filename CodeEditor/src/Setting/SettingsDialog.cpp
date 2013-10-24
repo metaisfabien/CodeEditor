@@ -16,6 +16,8 @@ SettingsDialog::SettingsDialog(MainWindow *parent) :
 {
     setupUi(this);
 
+    setAttribute(Qt::WA_DeleteOnClose);
+
     SettingGeneralSection *generalSection = new SettingGeneralSection("general", settingsTree, this);
     generalSection->setTitle("General");
     stackedWidget->addWidget(generalSection);
@@ -99,13 +101,12 @@ void SettingsDialog::onTreeItemClicked(QTreeWidgetItem * item, int column)
 
 void SettingsDialog::accept()
 {
-    qDebug() << "accept";
     saveSettings();
+    QDialog::accept();
 }
 
 void SettingsDialog::apply()
 {
-    qDebug() << "apply";
     saveSettings();
 }
 

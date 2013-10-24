@@ -1,11 +1,12 @@
 {
-  "window_size": "fullscreen",
   "perspectives": 
   [
       {
           "name": "PHP",
           "icone": "php",
           "current": true,
+  	  "window_state": "2",
+	  "window_size": "800x600",
           "docks":
           [
             {"id": "project_explorer", "position": "left"},
@@ -15,6 +16,8 @@
       {
           "name": "Debug",
           "icone": "debug",
+  	  "window_state": "0",
+	  "window_size": "800x600",
           "docks":
           [
             {"id": "project_explorer", "position": "right"},

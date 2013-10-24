@@ -1,33 +1,49 @@
 #ifndef WORKSPACE_H
 #define WORKSPACE_H
 
+
+#include "Export.h"
 #include <vector>
 
 #include <QString>
 #include <QJsonObject>
+#include <QObject>
+#include <QSize>
 
-#include "Export.h"
 
 using namespace std;
 
 namespace CE {
 class Perspective;
-class CE_EXPORT Workspace
+class MainWindow;
+class DockManager;
+class CE_EXPORT Workspace : public QObject
 {
+    Q_OBJECT
 public:
-    Workspace();
+    Workspace(MainWindow *mainWindow, DockManager *dockManager);
     ~Workspace();
     void load();
 
-    void test();
     Perspective* getCurrentPerspective();
 
+public slots:
+    void save();
+    void updateWindowState();
+    void updateWindowSize(QSize windowSize);
+
 private:
+    void restoreWindowSize();
+    void addDocks();
+
     void loadPerspectives(QJsonArray perspectives);
     void addDocksToPerpective(QJsonObject perspectiveObject, Perspective* perspective);
+    void addDocksToPerpectiveObject(QJsonObject *perspectiveObject, Perspective *perspective);
 
-    std::vector<Perspective*> perspectives;
-    Perspective *currentPerspective;
+    std::vector<Perspective*> mPerspectives;
+    Perspective *mCurrentPerspective;
+    MainWindow *mMainWindow;
+    DockManager *mDockManager;
 };
 }
 #endif // WORKSPACE_H

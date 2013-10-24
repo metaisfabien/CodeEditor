@@ -4,6 +4,8 @@
 #include "Plugin/PluginManager.h"
 #include "Setting/SettingManager.h"
 #include "Theme/ThemeManager.h"
+#include "Workspace/Workspace.h"
+#include "Workspace/Perspective.h"
 #include "MenuBar.h"
 
 #include <QCoreApplication>
@@ -14,12 +16,14 @@
 #include <QToolBar>
 #include <QAction>
 #include <QTextBrowser>
+#include <QWindowStateChangeEvent>
 
 #include <QDebug>
 
 namespace CE {
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
+    qDebug() << "MainWindow::MainWindow";
     // set menu bar
     setMenuBar(new MenuBar());
 
@@ -136,5 +140,25 @@ void MainWindow::createMainToolBar()
 MenuBar* MainWindow::menuBar()
 {
     return qobject_cast<MenuBar*>( QMainWindow::menuBar() );
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    emit closeWindow();
+    QMainWindow::closeEvent(event);
+}
+
+void MainWindow::resizeEvent(QResizeEvent * event)
+{
+    emit windowResize(size());
+    QMainWindow::resizeEvent(event);
+}
+
+void MainWindow::changeEvent(QEvent* e)
+{
+    if(e->type() == QEvent::WindowStateChange) {
+        emit stateChange();
+    }
+    QMainWindow::changeEvent(e);
 }
 }

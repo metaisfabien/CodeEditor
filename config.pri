@@ -11,7 +11,7 @@ CONFIG(debug, debug|release) {
 }
 
 # temporary path for building
-PACKAGE_BUILD_PATH  = $$PWD/build/CodeEditor/$$BUILD_DIR
+PACKAGE_BUILD_PATH  = $$PROJECT_PATH/build/CodeEditor/$$BUILD_DIR
 RAMDISK_PATH = /media/ramdisk
 
 exists( $$RAMDISK_PATH ) {

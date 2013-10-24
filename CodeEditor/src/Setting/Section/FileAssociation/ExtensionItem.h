@@ -1,31 +1,29 @@
 #ifndef SettingSectionExtensionItem_h
 #define SettingSectionExtensionItem_h
 
-#include <QListWidgetItem>
+#include <QTreeWidgetItem>
 
 QT_BEGIN_NAMESPACE
-class QLabel;
+class QTreeWidget;
 QT_END_NAMESPACE
 
 namespace CE{
 
 class Editor;
-class SettingFileAssociationExtensionItem : public QListWidgetItem
+class SettingFileAssociationExtensionItem : public QTreeWidgetItem
 {
 public:
-    SettingFileAssociationExtensionItem (const QString &extension = QString::null, Editor *editor = 0);
+    SettingFileAssociationExtensionItem (QTreeWidget *parent);
 
     Editor *getEditor() const { return mEditor; }
-    QWidget *getWidget() const { return mWidget; }
-    QLabel *getExtensionLabel() const { return mExtensionLabel; }
     QString getExtension() const;
-    QLabel *getEditorLabel() const { return mEditorLabel; }
+
+    void setEditor(Editor *editor);
+    void setExtension (QString extension);
+
 
 private:
     Editor *mEditor;
-    QWidget *mWidget;
-    QLabel *mExtensionLabel;
-    QLabel *mEditorLabel;
 };
 }
 

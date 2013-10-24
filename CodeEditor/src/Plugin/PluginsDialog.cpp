@@ -14,12 +14,11 @@ namespace CE {
 PluginsDialog::PluginsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::PluginsDialog)
 {
     ui->setupUi(this);
-    map<QString, PluginData*> pluginsData = CodeEditor::getPluginManager()->getPluginsData();
 
-    map<QString, PluginData*>::iterator pluginDataIterator;
-    for(pluginDataIterator = pluginsData.begin(); pluginDataIterator != pluginsData.end(); ++pluginDataIterator) {
-        PluginData *pluginData = pluginDataIterator->second;
-        PluginItem *pluginItem = new PluginItem(pluginData, this);
+    QHashIterator<QString, PluginData*> pluginDataIterator(CodeEditor::getPluginManager()->getPluginsData());
+    while (pluginDataIterator.hasNext()) {
+        pluginDataIterator.next();
+        PluginItem *pluginItem = new PluginItem(pluginDataIterator.value(), this);
         QListWidgetItem* item = new QListWidgetItem(ui->pluginsList);
         item->setSizeHint(pluginItem->sizeHint());
         ui->pluginsList->addItem(item);

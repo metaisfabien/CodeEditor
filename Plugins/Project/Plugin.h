@@ -1,8 +1,9 @@
-#ifndef PROJECTPLUGIN_H
-#define PROJECTPLUGIN_H
+#ifndef PROJECT_PLUGIN_H
+#define PROJECT_PLUGIN_H
 
 #include <QObject>
 #include <QtPlugin>
+#include <QHash>
 
 #include "Plugin/PluginInterface.h"
 
@@ -27,6 +28,7 @@ public:
     ~Plugin();
     bool load();
     bool unLoad();
+    QHash <QString, Dock*> getDocks();
 
 public slots:
     void showNewProjectDialog();
@@ -36,7 +38,6 @@ private:
     QAction *mNewProjectAction;
     ProjectManager *mProjectManager;
     NewProjectDialog *mNewProjectDialog;
-    ProjectTreeView *mProjectTree;
 };
 }
 }

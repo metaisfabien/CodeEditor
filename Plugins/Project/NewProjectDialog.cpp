@@ -9,11 +9,14 @@
 
 namespace CE {
 namespace Project {
-NewProjectDialog::NewProjectDialog(Plugin *phpPlugin, QWidget *parent) :
+NewProjectDialog::NewProjectDialog(Plugin *plugin, QWidget *parent) :
     QDialog(parent)
 {
-    mPhpPlugin = phpPlugin;
+    mPlugin = plugin;
+
+    setAttribute(Qt::WA_DeleteOnClose);
     setupUi(this);
+
     connect(projectName, SIGNAL(textChanged(const QString&)), this, SLOT(validate()));
     connect(location, SIGNAL(textChanged(const QString&)), this, SLOT(validate()));
     connect(location, SIGNAL(textEdited(const QString&)), this, SLOT(validate()));
@@ -25,12 +28,6 @@ NewProjectDialog::NewProjectDialog(Plugin *phpPlugin, QWidget *parent) :
 NewProjectDialog::~NewProjectDialog()
 {
 
-}
-
-void NewProjectDialog::clean()
-{
-    projectName->setText("");
-    location->setText("");
 }
 
 QString NewProjectDialog::getName()
@@ -60,16 +57,8 @@ void NewProjectDialog::validate()
 
 void NewProjectDialog::accept()
 {
-    mPhpPlugin->createNewProject(getName(), getLocation());
-    clean();
+    mPlugin->createNewProject(getName(), getLocation());
     QDialog::accept();
-
-}
-
-void NewProjectDialog::reject()
-{
-    clean();
-    QDialog::reject();
 }
 }
 }

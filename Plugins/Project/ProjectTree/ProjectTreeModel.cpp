@@ -136,10 +136,10 @@ bool ProjectTreeModel::canFetchMore(const QModelIndex &parent) const
         parentItem = static_cast<ProjectTreeItem*>(parent.internalPointer());
 
     if (parentItem->hasLoadSubChildren()) {
-        qDebug() << "can't FetchMore " << parentItem->getName();
+       // qDebug() << "can't FetchMore " << parentItem->getName();
         return false;
     } else {
-        qDebug() << "can FetchMore " << parentItem->getName();
+       // qDebug() << "can FetchMore " << parentItem->getName();
         return true;
     }
 }
@@ -152,7 +152,7 @@ void ProjectTreeModel::fetchMore(const QModelIndex &parent)
     else
         parentItem = static_cast<ProjectTreeItem*>(parent.internalPointer());
 
-    qDebug() << "fetchMore " << parentItem->getName();
+    //qDebug() << "fetchMore " << parentItem->getName();
     parentItem->loadSubChildren();
 
 }

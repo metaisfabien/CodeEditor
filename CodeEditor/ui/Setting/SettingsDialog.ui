@@ -14,7 +14,7 @@
    <string>Dialog</string>
   </property>
   <property name="modal">
-   <bool>true</bool>
+   <bool>false</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="3" colspan="3">
@@ -85,7 +85,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>556</width>
+        <width>563</width>
         <height>386</height>
        </rect>
       </property>

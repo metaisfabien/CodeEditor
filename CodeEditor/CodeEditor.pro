@@ -1,4 +1,5 @@
 BUILD_DIR = CodeEditor
+
 # include config file
 include( ../config.pri )
 
@@ -32,7 +33,6 @@ HEADERS += \
     src/Export.h \
     src/CodeEditor.h \
     src/Workspace/Workspace.h \
-    src/Workspace/Dock.h \
     src/Workspace/Perspective.h \
     src/Plugin/PluginsDialog.h \
     src/Plugin/PluginItem.h \
@@ -51,7 +51,10 @@ HEADERS += \
     src/Setting/Section/Editors.h \
     src/Setting/Section/FileAssociation.h \
     src/Setting/Section/General.h \
-    src/Setting/Section/Theme.h
+    src/Setting/Section/Theme.h \
+    src/Dock/Dock.h \
+    src/Dock/DockManager.h \
+    src/Workspace/PerspectiveDock.h
 
 SOURCES += \
     src/Plugin/PluginManager.cpp \
@@ -76,7 +79,10 @@ SOURCES += \
     src/Setting/Section/FileAssociation.cpp \
     src/Setting/Section/General.cpp \
     src/Setting/Section/Theme.cpp \
-    src/Theme/Theme.cpp
+    src/Theme/Theme.cpp \
+    src/Dock/DockManager.cpp \
+    src/Dock/Dock.cpp \
+    src/Workspace/PerspectiveDock.cpp
 
 FORMS += \
     ui/Plugin/PluginsDialog.ui \

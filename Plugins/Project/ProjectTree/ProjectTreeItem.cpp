@@ -69,7 +69,7 @@ int ProjectTreeItem::row() const
 void ProjectTreeItem::loadChildren()
 {
    if (!mHasLoadChidren && parent()) {
-        //qDebug() << "loadChildren of item " << mName << " " << mPath;
+       qDebug() << "loadChildren of item " + mName + " " + mPath;
        //if is a folder load child
         if (QDir(mPath).exists()) {
             QDir dir = QDir(mPath);

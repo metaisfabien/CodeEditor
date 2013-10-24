@@ -36,7 +36,7 @@ SettingsDialogSection::SettingsDialogSection(QString id, SettingsDialogSection *
 
 SettingsDialogSection::~SettingsDialogSection()
 {
-    delete mTreeItem;
+    //delete mTreeItem;
 }
 
 /**

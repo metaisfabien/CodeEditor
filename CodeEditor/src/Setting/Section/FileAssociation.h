@@ -28,13 +28,19 @@ public:
     void setupUi(QWidget *widget);
 
     SettingFileAssociationExtensionItem *addExtensionItem(QString extension = QString::null, Editor *editor = 0);
+    void updateCurrentExtension(QString extension, Editor *editor);
+
 
 public slots:
     void addNewExtension();
-    void onCurrentExtensionChange(QListWidgetItem* current,QListWidgetItem* last);
+    void onCurrentExtensionChange(QTreeWidgetItem* current,QTreeWidgetItem* last);
     void removeCurrentExtension();
+    void editCurrentExtension();
+    void updateSettings();
 
 private:
+    void loadExtensions();
+
     SettingFileAssociationExtensionDialog *mExtensionDialog;
 };
 }

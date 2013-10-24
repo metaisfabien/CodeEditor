@@ -40,19 +40,19 @@ PluginManager::PluginManager()
 
 PluginManager::~PluginManager()
 {
-    map<QString, PluginInterface*>::iterator pluginIterator;
-    for(pluginIterator = mPlugins.begin(); pluginIterator != mPlugins.end(); ++pluginIterator) {
-        delete pluginIterator->second;
+    QHashIterator<QString, PluginInterface*> pluginIterator(mPlugins);
+    while (pluginIterator.hasNext()) {
+        pluginIterator.next();
+        delete pluginIterator.value();
     }
+    mPlugins.clear();
 
-    map<QString, PluginData*>::iterator pluginDataIterator;
-    for(pluginDataIterator = mPluginsData.begin(); pluginDataIterator != mPluginsData.end(); ++pluginDataIterator) {
-        delete pluginDataIterator->second;
+    QHashIterator<QString, PluginData*> pluginDataIterator(mPluginsData);
+    while (pluginDataIterator.hasNext()) {
+        pluginDataIterator.next();
+        delete pluginDataIterator.value();
     }
-
-    if (mPluginsDialog) {
-        delete mPluginsDialog;
-    }
+    mPluginsData.clear();
 }
 
 /**
@@ -115,7 +115,7 @@ void PluginManager::loadPluginData(QFile *pluginConfigFile, QString pluginPath)
                     pluginData->addDependency(dependencies[i].toString());
                 }
 
-                mPluginsData.insert(std::make_pair<QString, PluginData*>(pluginId, pluginData));
+                mPluginsData[pluginId] = pluginData;
             } else {
                 qDebug() << "Plugin " + pluginId + " already exist in the plugin data map";
             }
@@ -138,11 +138,8 @@ void PluginManager::loadPluginData(QFile *pluginConfigFile, QString pluginPath)
  */
 PluginData* PluginManager::getPluginData(QString id)
 {
-    map<QString, PluginData*>::iterator pluginDataIterator;
-    pluginDataIterator = mPluginsData.find(id);
-
-    if (pluginDataIterator != mPluginsData.end()) {
-        return pluginDataIterator->second;
+    if (mPluginsData.contains(id)) {
+        return mPluginsData[id];
     }
     return 0;
 }
@@ -157,11 +154,7 @@ PluginData* PluginManager::getPluginData(QString id)
  */
 bool PluginManager::pluginDataExist(QString id)
 {
-    if (getPluginData(id)) {
-        return true;
-    } else {
-        return false;
-    }
+    return mPluginsData.contains(id);
 }
 
 /**
@@ -225,7 +218,7 @@ void PluginManager::loadPlugin(PluginData *pluginData)
         PluginInterface* _plugin = qobject_cast<PluginInterface *>(plugin);
         if (_plugin) {
             _plugin->load();
-            mPlugins.insert(std::make_pair<QString, PluginInterface*>(_plugin->getId(), _plugin));
+            mPlugins[_plugin->getId()] = _plugin;
         } else {
             qDebug() << "Plugin " + pluginData->getPath() + "/" + pluginData->getFileName() + " is'nt valid";
         }

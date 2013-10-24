@@ -1,8 +1,9 @@
-#ifndef PHPPLUGIN_H
-#define PHPPLUGIN_H
+#ifndef PHP_PLUGIN_H
+#define PHP_PLUGIN_H
 
 #include <QObject>
 #include <QtPlugin>
+#include <QHash>
 
 #include "Plugin/PluginInterface.h"
 
@@ -20,10 +21,12 @@ class Plugin : public QObject, PluginInterface
         bool load();
         bool unLoad();
 
+        QHash <QString, Dock*> getDocks();
+
     public slots:
         void onCreateSettingDialog(SettingsDialog *SettingsDialog);
 };
 }
 }
 
-#endif // PHPPLUGIN_H
+#endif //PHP_PLUGIN_H

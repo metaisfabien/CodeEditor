@@ -20,15 +20,14 @@ SettingManager::SettingManager()
 
 SettingManager::~SettingManager()
 {
+    //if (mSettingsDialog) delete mSettingsDialog;
     delete mSettings;
 }
 
 void SettingManager::showSettingsDialog()
 {
-    if (!mSettingsDialog) {
-        mSettingsDialog = new SettingsDialog(CodeEditor::getMainWindow());
-        emit createSettingDialog(mSettingsDialog);
-    }
+    mSettingsDialog = new SettingsDialog(CodeEditor::getMainWindow());
+    emit createSettingDialog(mSettingsDialog);
     mSettingsDialog->show();
 }
 }

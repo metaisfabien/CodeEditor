@@ -1,11 +1,10 @@
 #ifndef PLUGINMANAGER_H
 #define PLUGINMANAGER_H
 
-#include <map>
-
 #include <qglobal.h>
 #include <QObject>
 #include <QFile>
+#include <QHash>
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -27,9 +26,10 @@ public:
     PluginManager();
     ~PluginManager();
 
-    map<QString, PluginData*> getPluginsData() const { return mPluginsData; }
+    QHash<QString, PluginData*> getPluginsData() const { return mPluginsData; }
     PluginData* getPluginData(QString id);
 
+    QHash <QString, PluginInterface*> getPlugins() const { return mPlugins; }
     bool pluginDataExist(QString id);
 
 public slots:
@@ -41,8 +41,8 @@ private:
     void loadPlugins();
     void loadPlugin(PluginData* pluginData);
 
-    map<QString, PluginData*> mPluginsData;
-    map<QString, PluginInterface*> mPlugins;
+    QHash<QString, PluginData*> mPluginsData;
+    QHash<QString, PluginInterface*> mPlugins;
     PluginsDialog *mPluginsDialog;
 
     QAction *mPluginsAction;

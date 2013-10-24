@@ -4,6 +4,7 @@
 #include "MainWindow.h"
 #include "Editor/EditorManager.h"
 #include "Plugin/PluginManager.h"
+#include "Dock/DockManager.h"
 #include "Workspace/Workspace.h"
 
 
@@ -16,6 +17,7 @@ MainWindow* CodeEditor::mMainWindow;
 PluginManager* CodeEditor::mPluginManager;
 Workspace* CodeEditor::mWorkspace;
 EditorManager* CodeEditor::mEditorManager;
+DockManager* CodeEditor::mDockManager;
 
 /**
  * @brief CodeEditor::MonkeyCodeEditor::init
@@ -28,10 +30,13 @@ void CodeEditor::init()
     qDebug() << "CodeEditor init";
     mSettingManager = new SettingManager;
     mThemeManager = new ThemeManager();
-    mWorkspace = new Workspace;
     mMainWindow = new MainWindow;
-    mEditorManager = new EditorManager;
+
     mPluginManager = new PluginManager;
+    mDockManager = new DockManager(mPluginManager);
+    mWorkspace = new Workspace(mMainWindow, mDockManager);
+
+    mEditorManager = new EditorManager;
 
     mMainWindow->show();
 }

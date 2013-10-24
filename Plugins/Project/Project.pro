@@ -15,7 +15,8 @@ SOURCES += Plugin.cpp \
     Project.cpp \
     ProjectTree/ProjectTreeModel.cpp \
     ProjectTree/ProjectTreeItem.cpp \
-    ProjectTree/ProjectTreeView.cpp
+    ProjectTree/ProjectTreeView.cpp \
+    ProjectExplorerDock.cpp
 HEADERS += Plugin.h \
     ProjectManager.h \
     ProjectExplorer.h \
@@ -23,7 +24,8 @@ HEADERS += Plugin.h \
     Project.h \
     ProjectTree/ProjectTreeModel.h \
     ProjectTree/ProjectTreeItem.h \
-    ProjectTree/ProjectTreeView.h
+    ProjectTree/ProjectTreeView.h \
+    ProjectExplorerDock.h
 
 OTHER_FILES += \
     project.json \
