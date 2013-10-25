@@ -20,19 +20,18 @@ public:
     ~ThemeManager();
     void loadThemes();
     void loadTheme(QFile *configFile, QString path);
+
     bool themeExist(QString id);
     Theme* getTheme(QString id);
     map<QString, Theme*> getThemes() const { return mThemes; }
 
-    void addIcon(QString id, QString fileName);
-    QIcon getIcon(QString id);
+    QIcon getIcon(QString fileName);
+    QIcon getExtensionIcon(QString fileName);
 
 private:
-    QIcon getThemeIcon(QString fileName);
 
     Theme *mCurrentTheme;
     map<QString, Theme*> mThemes;
-    map<QString, QString> mIcons;
 };
 }
 

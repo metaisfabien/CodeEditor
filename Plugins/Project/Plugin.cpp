@@ -6,7 +6,7 @@
 
 #include "CodeEditor.h"
 #include "MainWindow.h"
-#include "MenuBar.h"
+#include "Menu/MenuBar.h"
 
 #include "Workspace/DockData.h"
 #include "Workspace/Workspace.h"

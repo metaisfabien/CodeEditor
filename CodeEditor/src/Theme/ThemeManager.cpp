@@ -91,37 +91,21 @@ Theme* ThemeManager::getTheme(QString id)
     return 0;
 }
 
-void ThemeManager::addIcon(QString id, QString fileName)
+
+QIcon ThemeManager::getIcon(QString fileName)
 {
-    mIcons.insert(std::make_pair<QString, QString>(id, fileName));
+    return QIcon(QApplication::applicationDirPath() + "/icons/" + fileName);
 }
 
-QIcon ThemeManager::getThemeIcon(QString fileName)
+QIcon ThemeManager::getExtensionIcon(QString fileName)
 {
-    QFile currentThemeIconeFile(mCurrentTheme->getPath() + "/icons/" + fileName);
-
-    if (!currentThemeIconeFile.exists()) {
-        if ( mCurrentTheme->getId() != "default") {
-            QFile defaultThemeIconeFile(getTheme("default")->getPath() + "/icons/" + fileName);
-            if (defaultThemeIconeFile.exists()) {
-                return QIcon(defaultThemeIconeFile.fileName());
-            }
-        }
-        return QIcon(getTheme("default")->getPath() + "/icons/default.png");
+    QString iconPath = QApplication::applicationDirPath() + "/icons/extensions/" + fileName;
+    if (QFile(iconPath).exists()) {
+        return QIcon(iconPath);
     } else {
-        return QIcon(currentThemeIconeFile.fileName());
+        return QIcon(QApplication::applicationDirPath() + "/icons/extensions/default.png");
     }
-}
 
-QIcon ThemeManager::getIcon(QString id)
-{
-    map<QString, QString>::iterator iconIterator;
-    iconIterator = mIcons.find(id);
-
-    if (iconIterator != mIcons.end()) {
-        return getThemeIcon(iconIterator->second);
-    }
-    return getThemeIcon("default.png");
 }
 
 }

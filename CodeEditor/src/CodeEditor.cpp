@@ -6,6 +6,7 @@
 #include "Plugin/PluginManager.h"
 #include "Dock/DockManager.h"
 #include "Workspace/Workspace.h"
+#include "Action/Manager.h"
 
 
 #include <QDebug>
@@ -18,6 +19,7 @@ PluginManager* CodeEditor::mPluginManager;
 Workspace* CodeEditor::mWorkspace;
 EditorManager* CodeEditor::mEditorManager;
 DockManager* CodeEditor::mDockManager;
+ActionManager* CodeEditor::mActionManager;
 
 /**
  * @brief CodeEditor::MonkeyCodeEditor::init
@@ -30,7 +32,9 @@ void CodeEditor::init()
     qDebug() << "CodeEditor init";
     mSettingManager = new SettingManager;
     mThemeManager = new ThemeManager();
-    mMainWindow = new MainWindow;
+    mActionManager = new ActionManager();
+
+    mMainWindow = new MainWindow(mActionManager);
 
     mPluginManager = new PluginManager;
     mDockManager = new DockManager(mPluginManager);
@@ -41,60 +45,4 @@ void CodeEditor::init()
     mMainWindow->show();
 }
 
-/**
- * @brief CodeEditor::getConfigManager
- *
- * Return the project manager instance
- *
- * @return ConfigManager*
- */
-SettingManager* CodeEditor::getSettingManager()
-{
-    return mSettingManager;
-}
-
-ThemeManager* CodeEditor::getThemeManager()
-{
-    return mThemeManager;
-}
-
-/**
- * @brief CodeEditor::getMainWindow
- *
- * Return the main window instance
- *
- * @return MainWindow*
- */
-MainWindow* CodeEditor::getMainWindow()
-{
-    return mMainWindow;
-}
-
-EditorManager* CodeEditor::getEditorManager()
-{
-    return mEditorManager;
-}
-/**
- * @brief CodeEditor::getPluginManager
- *
- * Return the plugin manager instance
- *
- * @return PluginManager*
- */
-PluginManager* CodeEditor::getPluginManager()
-{
-    return mPluginManager;
-}
-
-/**
- * @brief CodeEditor::getWorkspace
- *
- * Return the workspace instance
- *
- * @return Workspace*
- */
-Workspace* CodeEditor::getWorkspace()
-{
-    return mWorkspace;
-}
 }

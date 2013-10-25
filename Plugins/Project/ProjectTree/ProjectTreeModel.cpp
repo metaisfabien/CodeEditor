@@ -3,16 +3,23 @@
 #include "ProjectManager.h"
 #include "Project.h"
 
+#include "CodeEditor.h"
+#include "Theme/ThemeManager.h"
+
 #include <QStringList>
 #include <QDebug>
+#include <QIcon>
 
 namespace CE {
 namespace Project {
 ProjectTreeModel::ProjectTreeModel(ProjectManager *projectManager, QObject *parent) : QAbstractItemModel(parent)
 {
     mProjectManager = projectManager;
+
+    //Create the root item
     mRootItem = new ProjectTreeItem();
     mRootItem->setName("Root");
+
     //add the projects to the tree
     vector<Project*> projects = projectManager->getProjects();
     vector<Project*>::const_iterator projectIterator;
@@ -31,11 +38,13 @@ void ProjectTreeModel::addProject(QString name, QString location)
 {
     qDebug() << "Add project " << name << ":" << location;
     beginInsertRows(QModelIndex(), mRootItem->childCount() + 1, mRootItem->childCount() + 1);
-    ProjectTreeItem *projectItem = new ProjectTreeItem(mRootItem);
+
+    ProjectTreeItem *projectItem = new ProjectTreeItem(mRootItem, location);
     projectItem->setName(name);
-    projectItem->setPath(location);
     projectItem->loadChildren();
+
     mRootItem->appendChild(projectItem);
+
     endInsertRows();
 }
 
@@ -52,12 +61,18 @@ QVariant ProjectTreeModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    if (role != Qt::DisplayRole)
+
+    if (role != Qt::DisplayRole && role != Qt::DecorationRole) {
         return QVariant();
+    }
 
     ProjectTreeItem *item = static_cast<ProjectTreeItem*>(index.internalPointer());
 
-    return item->data(index.column());
+    if (role == Qt::DecorationRole) {
+        return item->getIcon();
+    } else {
+        return item->getName();
+    }
 }
 
 Qt::ItemFlags ProjectTreeModel::flags(const QModelIndex &index) const
@@ -71,9 +86,6 @@ Qt::ItemFlags ProjectTreeModel::flags(const QModelIndex &index) const
 QVariant ProjectTreeModel::headerData(int section, Qt::Orientation orientation,
                                int role) const
 {
-    if (orientation == Qt::Horizontal && role == Qt::DisplayRole)
-        return mRootItem->data(section);
-
     return QVariant();
 }
 

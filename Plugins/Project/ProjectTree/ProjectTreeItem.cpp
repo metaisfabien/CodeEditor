@@ -1,17 +1,39 @@
+#include "ProjectTreeItem.h"
+#include "CodeEditor.h"
+#include "Theme/ThemeManager.h"
+
 #include <QStringList>
 #include <QDir>
 #include <QDirIterator>
 #include <QDebug>
-
-#include "ProjectTreeItem.h"
+#include <QIcon>
 
 namespace CE {
 namespace Project {
-ProjectTreeItem::ProjectTreeItem(ProjectTreeItem *parent)
+
+ProjectTreeItem::ProjectTreeItem(ProjectTreeItem *parent, QString path)
 {
     mParentItem = parent;
+    mPath = path;
+    mIsExpand = false;
     mHasLoadChidren = false;
     mHasLoadSubChildren = false;
+
+    //if item have no parent it's the root item
+    if (!mParentItem) {
+        mType = RootItemType;
+    //if parent item is the root item it's a project
+    } else if (mParentItem->getType() == RootItemType) {
+        mType = ProjectItemType;
+    } else {
+        //if is a directory
+        if (QDir(mPath).exists()) {
+            mType = DirectoryItemType;
+        //if is not a directory it's a file
+        } else {
+            mType = FileItemType;
+        }
+    }
 }
 
 ProjectTreeItem::~ProjectTreeItem()
@@ -19,10 +41,16 @@ ProjectTreeItem::~ProjectTreeItem()
     qDeleteAll(childItems);
 }
 
+/**
+ * @brief ProjectTreeItem::appendChild
+ *
+ * Append a child ProjectTreeItem
+ *
+ * @param item
+ */
 void ProjectTreeItem::appendChild(ProjectTreeItem *item)
 {
     childItems.append(item);
-    //qDebug() << "Add item " << item->getName() << ":" << item->getPath() << " to " << getName();
 }
 
 ProjectTreeItem *ProjectTreeItem::child(int row)
@@ -37,15 +65,16 @@ int ProjectTreeItem::childCount()
     return childItems.count();
 }
 
+/**
+ * @brief ProjectTreeItem::columnCount
+ *
+ * Force the number of column to 1
+ *
+ * @return
+ */
 int ProjectTreeItem::columnCount() const
 {
     return 1;
-    return itemData.count();
-}
-
-QVariant ProjectTreeItem::data(int column) const
-{
-    return mName;
 }
 
 ProjectTreeItem *ProjectTreeItem::parent()
@@ -63,21 +92,23 @@ int ProjectTreeItem::row() const
 
 /**
  * @brief ProjectTreeItem::loadChildren
+ *
+ * Load child items
+ *
  * if an item has'nt load child and have a parent
  * it's load child files and folder of the item
  */
 void ProjectTreeItem::loadChildren()
 {
    if (!mHasLoadChidren && parent()) {
-       qDebug() << "loadChildren of item " + mName + " " + mPath;
-       //if is a folder load child
-        if (QDir(mPath).exists()) {
+       //if is a folder load children
+       if (getType() == ProjectItemType || getType() == DirectoryItemType) {
+            qDebug() << "loadChildren of item " + mName + " " + mPath;
             QDir dir = QDir(mPath);
-            foreach (QString dirName, dir.entryList()) {
-                if (dirName != "." && dirName != "..") {
-                    ProjectTreeItem *item = new ProjectTreeItem(this);
-                    item->setName(dirName);
-                    item->setPath(dir.absolutePath() +  "/" + dirName);
+            foreach (QString childName, dir.entryList(QDir::NoFilter, QDir::DirsFirst)) {
+                if (childName != "." && childName != "..") {
+                    ProjectTreeItem *item = new ProjectTreeItem(this, dir.absolutePath() +  "/" + childName);
+                    item->setName(childName);
                     appendChild(item);
                 }
             }
@@ -103,5 +134,21 @@ void ProjectTreeItem::loadSubChildren()
         ++i;
     }
 }
+
+QIcon ProjectTreeItem::getIcon()
+{
+    if (getType() == ProjectItemType) {
+        return CodeEditor::getThemeManager()->getIcon("project.png");
+    } else if (getType() == DirectoryItemType) {
+        if (isExpand()) {
+            return CodeEditor::getThemeManager()->getIcon("folder-open.png");
+        } else {
+            return CodeEditor::getThemeManager()->getIcon("folder.png");
+        }
+    } else {
+        return CodeEditor::getThemeManager()->getExtensionIcon(QFileInfo(getName()).suffix());
+    }
+}
+
 }
 }

@@ -6,10 +6,11 @@
 #include "Theme/ThemeManager.h"
 #include "Workspace/Workspace.h"
 #include "Workspace/Perspective.h"
-#include "MenuBar.h"
+#include "Menu/MenuBar.h"
+#include "Action/Manager.h"
+#include "Widget/TabWidget.h"
 
 #include <QCoreApplication>
-#include <QTabWidget>
 #include <QMenu>
 #include <QDir>
 #include <QMenuBar>
@@ -19,22 +20,34 @@
 #include <QWindowStateChangeEvent>
 
 #include <QDebug>
+#include <QSplitter>
 
 namespace CE {
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
+MainWindow::MainWindow(ActionManager *actionManager, QWidget *parent) : QMainWindow(parent)
 {
     qDebug() << "MainWindow::MainWindow";
+
+    mActionManager = actionManager;
+
     // set menu bar
     setMenuBar(new MenuBar());
 
-    createIcons();
     createActions();
     createMenu();
     createMainToolBar();
 
-    mTabWidget = new QTabWidget();
+    QSplitter *splitter = new QSplitter(parent);
 
-    setCentralWidget(mTabWidget);
+
+    mTabWidget = new TabWidget();
+    mTabWidget->setTabsClosable(true);
+
+    splitter->addWidget(mTabWidget);
+    TabWidget *tb = new TabWidget();
+    tb->addTab(new QWidget(),"tab 1");
+    tb->addTab(new QWidget(), "Tab 2");
+    splitter->addWidget(tb);
+    setCentralWidget(splitter);
 }
 
 MainWindow::~MainWindow()
@@ -47,20 +60,6 @@ MainWindow::~MainWindow()
     delete mTabWidget;
 }
 
-void MainWindow::createIcons()
-{
-   ThemeManager* themeManager = CodeEditor::getThemeManager();
-   themeManager->addIcon("new", "new.png");
-   themeManager->addIcon("open", "open.png");
-   themeManager->addIcon("save", "save.png");
-   themeManager->addIcon("search", "search.png");
-   themeManager->addIcon("setting", "setting.png");
-   themeManager->addIcon("plugin", "plugin.png");
-   themeManager->addIcon("add", "add.png");
-   themeManager->addIcon("remove", "remove.png");
-   themeManager->addIcon("edit", "edit.png");
-
-}
 
 /**
  * Crée les actions du programme
@@ -70,26 +69,27 @@ void MainWindow::createIcons()
 void MainWindow::createActions()
 {
     //Nouveau
-    mNewFileAction = new QAction(CodeEditor::getThemeManager()->getIcon("new"), tr("&File"), this);
+
+    mNewFileAction = mActionManager->createAction("new_file", tr("&File"), this, CodeEditor::getThemeManager()->getIcon("new.png"));
     mNewFileAction->setShortcuts(QKeySequence::New);
     mNewFileAction->setStatusTip(tr("file"));
 
     //Ouvrir fichier
-    mOpenFileAction = new QAction(CodeEditor::getThemeManager()->getIcon("open"), tr("&Open file"), this);
+    mOpenFileAction = new QAction(CodeEditor::getThemeManager()->getIcon("open.png"), tr("&Open file"), this);
     mOpenFileAction->setShortcuts(QKeySequence::Open);
     mOpenFileAction->setStatusTip(tr("open file"));
 
     //Sauvegarder
-    mSaveAction = new QAction(CodeEditor::getThemeManager()->getIcon("save"), tr("&Save"), this);
+    mSaveAction = new QAction(CodeEditor::getThemeManager()->getIcon("save.png"), tr("&Save"), this);
     mSaveAction->setShortcuts(QKeySequence::Save);
     mSaveAction->setStatusTip(tr("save"));
 
     //Rechercher
-    mToggleSearchAction = new QAction(CodeEditor::getThemeManager()->getIcon("search"), tr("&Search"), this);
+    mToggleSearchAction = new QAction(CodeEditor::getThemeManager()->getIcon("search.png"), tr("&Search"), this);
     mToggleSearchAction->setShortcuts(QKeySequence::Find);
     mToggleSearchAction->setStatusTip(tr("search"));
 
-    mSettingsAction = new QAction(CodeEditor::getThemeManager()->getIcon("setting"), tr("&Settings"), this);
+    mSettingsAction = new QAction(CodeEditor::getThemeManager()->getIcon("setting.png"), tr("&Settings"), this);
     mSettingsAction->setStatusTip(tr("settings"));
     QObject::connect(mSettingsAction, SIGNAL(triggered()), CodeEditor::getSettingManager(), SLOT(showSettingsDialog()));
 }
@@ -105,7 +105,7 @@ void MainWindow::createMenu()
     menuBar()->menu("file", tr("&File"));
     QMenu *newFileMenu = menuBar()->menu("file/new", tr("&New"));
 
-    newFileMenu->addAction(mNewFileAction);
+    newFileMenu->addAction(mActionManager->getAction("new_file"));
 
     newFileMenu->addAction(mOpenFileAction);
     newFileMenu->addAction(mSaveAction);

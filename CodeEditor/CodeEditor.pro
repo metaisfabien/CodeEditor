@@ -41,7 +41,6 @@ HEADERS += \
     src/Editor/Editor.h \
     src/Theme/ThemeManager.h \
     src/Theme/Theme.h \
-    src/MenuBar.h \
     src/Setting/SettingManager.h \
     src/Setting/SettingsDialog.h \
     src/Setting/SettingsTreeItem.h\
@@ -54,7 +53,12 @@ HEADERS += \
     src/Setting/Section/Theme.h \
     src/Dock/Dock.h \
     src/Dock/DockManager.h \
-    src/Workspace/PerspectiveDock.h
+    src/Workspace/PerspectiveDock.h \
+    src/Menu/Menu.h \
+    src/Menu/MenuBar.h \
+    src/Action/Manager.h \
+    src/Widget/TabBar.h \
+    src/Widget/TabWidget.h
 
 SOURCES += \
     src/Plugin/PluginManager.cpp \
@@ -68,7 +72,6 @@ SOURCES += \
     src/Editor/EditorManager.cpp \
     src/Editor/Editor.cpp \
     src/Theme/ThemeManager.cpp \
-    src/MenuBar.cpp \
     src/Setting/SettingManager.cpp \
     src/Setting/SettingsDialog.cpp \
     src/Setting/SettingsTreeItem.cpp \
@@ -82,7 +85,12 @@ SOURCES += \
     src/Theme/Theme.cpp \
     src/Dock/DockManager.cpp \
     src/Dock/Dock.cpp \
-    src/Workspace/PerspectiveDock.cpp
+    src/Workspace/PerspectiveDock.cpp \
+    src/Menu/Menu.cpp \
+    src/Menu/MenuBar.cpp \
+    src/Action/Manager.cpp \
+    src/Widget/TabBar.cpp \
+    src/Widget/TabWidget.cpp
 
 FORMS += \
     ui/Plugin/PluginsDialog.ui \
@@ -112,8 +120,11 @@ data_files.path = $$PACKAGE_DESTDIR/data
 theme_files.files = $$PWD/themes/*
 theme_files.path = $$PACKAGE_DESTDIR/themes
 
+icons_files.files = $$PWD/icons/*
+icons_files.path = $$PACKAGE_DESTDIR/icons
+
 ## Tell qmake to add the moving of them to the 'install' target
-INSTALLS += data_files theme_files
+INSTALLS += data_files theme_files icons_files
 
 
 

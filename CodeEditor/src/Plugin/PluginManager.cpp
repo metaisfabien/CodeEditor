@@ -7,7 +7,7 @@
 
 #include "CodeEditor.h"
 #include "MainWindow.h"
-#include "MenuBar.h"
+#include "Menu/MenuBar.h"
 
 #include <QApplication>
 #include <QMenu>

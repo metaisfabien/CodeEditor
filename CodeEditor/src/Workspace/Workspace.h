@@ -3,6 +3,7 @@
 
 
 #include "Export.h"
+
 #include <vector>
 
 #include <QString>
