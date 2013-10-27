@@ -18,6 +18,7 @@ class Plugin : public QObject, PluginInterface
     public:
         Plugin();
         ~Plugin();
+
         bool load();
         bool unLoad();
 

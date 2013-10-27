@@ -3,12 +3,18 @@
 
 #include <QTabBar>
 
+
+QT_BEGIN_NAMESPACE
+class QDrag;
+QT_END_NAMESPACE
+
 namespace CE {
+class TabWidget;
 class TabBar : public QTabBar
 {
 Q_OBJECT
 public:
-    TabBar(QWidget* parent=0);
+    TabBar(TabWidget* parent);
 
 protected:
     void mousePressEvent(QMouseEvent* event);
@@ -18,10 +24,12 @@ protected:
 
 signals:
     void tabMoveRequested(int fromIndex, int toIndex);
+    void startDrag(QDrag* drag);
 
 private:
     QPoint mDragStartPos;
     int mDragCurrentIndex;
+    TabWidget *mParent;
 };
 }
 #endif // WIDGET_TABBAR_H

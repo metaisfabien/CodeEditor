@@ -112,39 +112,39 @@ void ProjectTreeView::showContextMenu(ProjectTreeItem *item, const QPoint& globa
 
     //Project type item
     if (item->getType() == ProjectTreeItem::ProjectItemType) {
-        QMenu *newMenu = contextMenu->path("new", tr("&New"));
+        QMenu *newMenu = contextMenu->menu("new", tr("&New"));
         newMenu->addAction(CodeEditor::getActionManager()->getAction("new_file"));
 
-        QMenu *newDirectory = contextMenu->path("new/directory", tr("&Directory"));
+        QMenu *newDirectory = contextMenu->menu("new/directory", tr("&Directory"));
 
-        QMenu *search = contextMenu->path("search", tr("&Search"));
-        QMenu *deleteProject = contextMenu->path("delete", tr("&Delete project"));
-        QMenu *properties = contextMenu->path("properties", tr("&Properties"));
+        QMenu *search = contextMenu->menu("search", tr("&Search"));
+        QMenu *deleteProject = contextMenu->menu("delete", tr("&Delete project"));
+        QMenu *properties = contextMenu->menu("properties", tr("&Properties"));
 
     //Directory type item
     } else if (item->getType() == ProjectTreeItem::DirectoryItemType) {
-        QMenu *newMenu = contextMenu->path("new", tr("&New"));
+        QMenu *newMenu = contextMenu->menu("new", tr("&New"));
         newMenu->addAction(CodeEditor::getActionManager()->getAction("new_file"));
 
-        QMenu *newDirectory = contextMenu->path("new/directory", tr("&Directory"));
+        QMenu *newDirectory = contextMenu->menu("new/directory", tr("&Directory"));
 
-        QMenu *copy = contextMenu->path("copy", tr("&Copy"));
-        QMenu *cut = contextMenu->path("cut", tr("&Cut"));
-        QMenu *paste = contextMenu->path("paste", tr("&Paste"));
+        QMenu *copy = contextMenu->menu("copy", tr("&Copy"));
+        QMenu *cut = contextMenu->menu("cut", tr("&Cut"));
+        QMenu *paste = contextMenu->menu("paste", tr("&Paste"));
 
-        QMenu *search = contextMenu->path("search", tr("&Search"));
-        QMenu *deleteDirectory = contextMenu->path("delete", tr("&Delete"));
-        QMenu *properties = contextMenu->path("properties", tr("&Properties"));
+        QMenu *search = contextMenu->menu("search", tr("&Search"));
+        QMenu *deleteDirectory = contextMenu->menu("delete", tr("&Delete"));
+        QMenu *properties = contextMenu->menu("properties", tr("&Properties"));
 
     //File item type
     } else if (item->getType() == ProjectTreeItem::FileItemType) {
-        QMenu *open = contextMenu->path("open", tr("&Open"));
+        QMenu *open = contextMenu->menu("open", tr("&Open"));
 
-        QMenu *copy = contextMenu->path("copy", tr("&Copy"));
-        QMenu *cut = contextMenu->path("cut", tr("&Cut"));
+        QMenu *copy = contextMenu->menu("copy", tr("&Copy"));
+        QMenu *cut = contextMenu->menu("cut", tr("&Cut"));
 
-        QMenu *deleteFile = contextMenu->path("delete", tr("&Delete"));
-        QMenu *properties = contextMenu->path("properties", tr("&Properties"));
+        QMenu *deleteFile = contextMenu->menu("delete", tr("&Delete"));
+        QMenu *properties = contextMenu->menu("properties", tr("&Properties"));
     }
 
 

@@ -19,14 +19,6 @@ Plugin::~Plugin()
 
 }
 
-QHash <QString, Dock*> Plugin::getDocks()
-{
-    QHash <QString, Dock*> docks;
-    //docks["project_explorer"] = new ProjectExplorerDock(mProjectManager);
-
-    return docks;
-}
-
 
 bool Plugin::load()
 {
@@ -47,6 +39,15 @@ bool Plugin::load()
 bool Plugin::unLoad()
 {
     return true;
+}
+
+
+QHash <QString, Dock*> Plugin::getDocks()
+{
+    QHash <QString, Dock*> docks;
+    //docks["project_explorer"] = new ProjectExplorerDock(mProjectManager);
+
+    return docks;
 }
 
 void Plugin::onCreateSettingDialog(SettingsDialog *SettingsDialog)

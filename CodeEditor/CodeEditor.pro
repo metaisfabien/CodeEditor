@@ -103,11 +103,11 @@ FORMS += \
     ui/Setting/SettingFileAssociationExtensionDialog.ui
 
 win32 {
-LIB_FILES += $$DESTDIR/CodeEditor.dll
+LIB_FILES += {$$TARGET}.dll
 
 ## Define what files are 'extra_libs' and where to put them
 extra_libs.files = $$LIB_FILES
-extra_libs.path = $$DESTDIR
+extra_libs.path = $$PACKAGE_DESTDIR
 
 ## Tell qmake to add the moving of them to the 'install' target
 INSTALLS += extra_libs

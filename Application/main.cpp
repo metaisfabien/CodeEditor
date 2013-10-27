@@ -26,8 +26,8 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
     QTextStream out(&file);
     out << msg << "\n";
 
-      // optional, as QFile destructor will already do it:
-      file.close();
+    // optional, as QFile destructor will already do it:
+    file.close();
 }
 
 

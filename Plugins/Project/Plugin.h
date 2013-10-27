@@ -26,8 +26,10 @@ Q_INTERFACES(CE::PluginInterface)
 public:
     Plugin();
     ~Plugin();
+
     bool load();
     bool unLoad();
+
     QHash <QString, Dock*> getDocks();
 
 public slots:

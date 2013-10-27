@@ -1,15 +1,17 @@
 #ifndef WORKSPACE_DOCK_H
 #define WORKSPACE_DOCK_H
 
+#include "Export.h"
+
 #include <QString>
 #include <QDockWidget>
 
 namespace CE {
-class Dock : public QDockWidget {
+class CE_EXPORT Dock : public QDockWidget {
     Q_OBJECT
 public:
     Dock(QString id, QString title);
-    virtual ~Dock() = 0;
+    //~Dock() = 0;
     void loadWidget();
     QString getId() const { return mId; }
 

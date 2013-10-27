@@ -3,14 +3,24 @@
 
 #include <QTabWidget>
 
+QT_BEGIN_NAMESPACE
+class QDrag;
+QT_END_NAMESPACE
+
 namespace CE {
 class TabWidget : public QTabWidget
 {
 Q_OBJECT
 public:
-    TabWidget(QWidget* parent=0);
+    TabWidget(QString id, QWidget* parent=0);
+    QString getId() const { return mId; }
+
 public slots:
     void moveTab(int fromIndex, int toIndex);
+    void startDragTab(QDrag* drag);
+
+private:
+    QString mId;
 };
 }
 

@@ -1,6 +1,6 @@
 [
     {
-        "location": "/var/www/phpmyadmin",
-        "name": "phpmyadmin"
+        "location": "C:/wamp/www/zf2",
+        "name": "zf2"
     }
 ]

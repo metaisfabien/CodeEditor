@@ -33,7 +33,7 @@ Plugin::Plugin()
 
 Plugin::~Plugin()
 {
-    if (mNewProjectAction) delete mNewProjectAction;
+    //if (mNewProjectAction) delete mNewProjectAction;
     if (mProjectManager) delete mProjectManager;
     if (mNewProjectDialog) delete mNewProjectDialog;
 }
@@ -51,6 +51,7 @@ bool Plugin::load()
 
     QMenu *newFileMenu = CodeEditor::getMainWindow()->menuBar()->menu("file/new");
     newFileMenu->addAction(mNewProjectAction);
+
 
     return true;
 }

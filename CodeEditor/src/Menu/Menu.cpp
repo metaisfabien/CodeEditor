@@ -11,7 +11,7 @@ namespace CE {
 
   \sa QWidget::addAction(), QMenu::menuAction()
 */
-QMenu *Menu::path(const QString &path, const QString &title, const QIcon &icon)
+QMenu *Menu::menu(const QString &path, const QString &title, const QIcon &icon)
 {
     //if the menu does'nt exist
     if (!mMenus.contains(path)) {

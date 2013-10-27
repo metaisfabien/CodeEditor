@@ -4,7 +4,7 @@
 
 #include "CodeEditor.h"
 
-#include <QDockWidget>
+#include "Dock/Dock.h"
 
 namespace CE {
 namespace Project {

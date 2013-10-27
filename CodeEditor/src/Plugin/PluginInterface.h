@@ -1,7 +1,6 @@
 #ifndef PLUGININTERFACE_H
 #define PLUGININTERFACE_H
 
-#include "Export.h"
 
 #include <QString>
 #include <QPluginLoader>
@@ -9,11 +8,11 @@
 
 namespace CE {
 class Dock;
-class CE_EXPORT PluginInterface
+class PluginInterface
 {
 public:
     //virtual PluginInterface() = 0;
-    virtual ~PluginInterface() = 0;
+    //virtual ~PluginInterface() = 0;
 
     virtual bool load() = 0;
     virtual bool unLoad() = 0;

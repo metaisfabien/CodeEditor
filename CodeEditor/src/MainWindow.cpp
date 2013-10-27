@@ -39,11 +39,11 @@ MainWindow::MainWindow(ActionManager *actionManager, QWidget *parent) : QMainWin
     QSplitter *splitter = new QSplitter(parent);
 
 
-    mTabWidget = new TabWidget();
+    mTabWidget = new TabWidget("tab 1");
     mTabWidget->setTabsClosable(true);
 
     splitter->addWidget(mTabWidget);
-    TabWidget *tb = new TabWidget();
+    TabWidget *tb = new TabWidget("tab 2");
     tb->addTab(new QWidget(),"tab 1");
     tb->addTab(new QWidget(), "Tab 2");
     splitter->addWidget(tb);

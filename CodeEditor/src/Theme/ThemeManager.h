@@ -1,6 +1,8 @@
 #ifndef THEMEMANAGER_H
 #define THEMEMANAGER_H
 
+#include "Export.h"
+
 #include <QString>
 #include <map>
 
@@ -13,7 +15,7 @@ using namespace std;
 
 namespace CE {
 class Theme;
-class ThemeManager
+class CE_EXPORT ThemeManager
 {
 public:
     ThemeManager();

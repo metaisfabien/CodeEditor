@@ -25,7 +25,7 @@ INCLUDEPATH *= $${UI_DIR} # some qmake versions has bug and do not do it automat
 # define config mode paths
 CONFIG( debug, debug|release ) {
     message( Building in DEBUG for $${Q_TARGET_ARCH} )
-    CONFIG  *= console
+    #CONFIG  *= console
 } else {
     message( Building in RELEASE for $${Q_TARGET_ARCH} )
 }
