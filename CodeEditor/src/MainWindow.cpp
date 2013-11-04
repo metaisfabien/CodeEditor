@@ -8,7 +8,10 @@
 #include "Workspace/Perspective.h"
 #include "Menu/MenuBar.h"
 #include "Action/Manager.h"
-#include "Widget/TabWidget.h"
+
+
+#include "CentralWidget/TabWidgetManager.h"
+#include "CentralWidget/CentralWidget.h"
 
 #include <QCoreApplication>
 #include <QMenu>
@@ -20,10 +23,10 @@
 #include <QWindowStateChangeEvent>
 
 #include <QDebug>
-#include <QSplitter>
+
 
 namespace CE {
-MainWindow::MainWindow(ActionManager *actionManager, QWidget *parent) : QMainWindow(parent)
+MainWindow::MainWindow(ActionManager *actionManager, TabWidgetManager *tabWidgetManager, QWidget *parent) : QMainWindow(parent)
 {
     qDebug() << "MainWindow::MainWindow";
 
@@ -36,18 +39,8 @@ MainWindow::MainWindow(ActionManager *actionManager, QWidget *parent) : QMainWin
     createMenu();
     createMainToolBar();
 
-    QSplitter *splitter = new QSplitter(parent);
-
-
-    mTabWidget = new TabWidget("tab 1");
-    mTabWidget->setTabsClosable(true);
-
-    splitter->addWidget(mTabWidget);
-    TabWidget *tb = new TabWidget("tab 2");
-    tb->addTab(new QWidget(),"tab 1");
-    tb->addTab(new QWidget(), "Tab 2");
-    splitter->addWidget(tb);
-    setCentralWidget(splitter);
+    CentralWidget *centralWidget_ = new CentralWidget(tabWidgetManager, this);
+    setCentralWidget(centralWidget_);
 }
 
 MainWindow::~MainWindow()
@@ -57,7 +50,6 @@ MainWindow::~MainWindow()
     delete mSaveAction;
     delete mOpenFileAction,
     delete mNewFileAction;
-    delete mTabWidget;
 }
 
 

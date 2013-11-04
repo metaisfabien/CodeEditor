@@ -1,5 +1,10 @@
-#include "Widget/TabBar.h"
-#include "Widget/TabWidget.h"
+#include "CentralWidget/TabBar.h"
+#include "CentralWidget/TabWidget.h"
+#include "CentralWidget/Overlay.h"
+#include "CentralWidget/TabWidgetManager.h"
+#include "CentralWidget/Splitter.h"
+
+#include "CodeEditor.h"
 
 #include <QDrag>
 #include <QMimeData>
@@ -10,14 +15,14 @@
 
 namespace CE {
 
-TabBar::TabBar(TabWidget* parent)
+CentralWidgetTabBar::CentralWidgetTabBar(CentralWidgetTabWidget *parent)
     : QTabBar(parent)
 {
     mParent = parent;
-    setAcceptDrops(true);
+    //setAcceptDrops(true);
 }
 
-void TabBar::mousePressEvent(QMouseEvent* event)
+void CentralWidgetTabBar::mousePressEvent(QMouseEvent* event)
 {
     if (event->button() == Qt::LeftButton)
         mDragStartPos = event->pos();
@@ -25,10 +30,8 @@ void TabBar::mousePressEvent(QMouseEvent* event)
     QTabBar::mousePressEvent(event);
 }
 
-void TabBar::mouseMoveEvent(QMouseEvent* event)
+void CentralWidgetTabBar::mouseMoveEvent(QMouseEvent* event)
 {
-
-    qDebug() << "TabBar::mouseMoveEvent";
     // If the left button isn't pressed anymore then return
     if (!(event->buttons() & Qt::LeftButton))
         return;
@@ -40,16 +43,22 @@ void TabBar::mouseMoveEvent(QMouseEvent* event)
     // initiate Drag
     QDrag* drag = new QDrag(this);
     QMimeData* mimeData = new QMimeData;
-    qDebug() << "TabBar::mouseMoveEvent2";
     // a crude way to distinguish tab-reodering drags from other drags
     mimeData->setData("action", "drag-tab");
-    mimeData->setData("from", mParent->getId().toUtf8());
+
+    int parentTabWidgetIndex = CodeEditor::getTabWidgetManager()->indexOf(mParent);
+    mimeData->setData("from", QString::number(parentTabWidgetIndex).toUtf8());
+    mimeData->setData("index", QString::number(currentIndex()).toUtf8());
+
+
     drag->setMimeData(mimeData);
     emit startDrag(drag);
     drag->exec();
+
+    //mParent->getParentSplitter()->clean(mParent);
 }
 
-void TabBar::dragEnterEvent(QDragEnterEvent* event)
+void CentralWidgetTabBar::dragEnterEvent(QDragEnterEvent* event)
 {
     // Only accept if it's an tab-reordering request
     const QMimeData* m = event->mimeData();
@@ -58,7 +67,7 @@ void TabBar::dragEnterEvent(QDragEnterEvent* event)
         event->acceptProposedAction();
     }
 }
-
+/*
 void TabBar::dropEvent(QDropEvent* event)
 {
     const QMimeData* m = event->mimeData();
@@ -83,5 +92,5 @@ void TabBar::dropEvent(QDropEvent* event)
        emit tabMoveRequested(fromIndex, toIndex);
 
     event->acceptProposedAction();
-}
+}*/
 }

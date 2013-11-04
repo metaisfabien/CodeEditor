@@ -57,8 +57,12 @@ HEADERS += \
     src/Menu/Menu.h \
     src/Menu/MenuBar.h \
     src/Action/Manager.h \
-    src/Widget/TabBar.h \
-    src/Widget/TabWidget.h
+    src/CentralWidget/TabBar.h \
+    src/CentralWidget/TabWidget.h \
+    src/CentralWidget/CentralWidget.h \
+    src/CentralWidget/Overlay.h \
+    src/CentralWidget/Splitter.h \
+    src/CentralWidget/TabWidgetManager.h \
 
 SOURCES += \
     src/Plugin/PluginManager.cpp \
@@ -89,8 +93,12 @@ SOURCES += \
     src/Menu/Menu.cpp \
     src/Menu/MenuBar.cpp \
     src/Action/Manager.cpp \
-    src/Widget/TabBar.cpp \
-    src/Widget/TabWidget.cpp
+    src/CentralWidget/TabBar.cpp \
+    src/CentralWidget/TabWidget.cpp \
+    src/CentralWidget/CentralWidget.cpp \
+    src/CentralWidget/Overlay.cpp \
+    src/CentralWidget/Splitter.cpp \
+    src/CentralWidget/TabWidgetManager.cpp \
 
 FORMS += \
     ui/Plugin/PluginsDialog.ui \

@@ -7,14 +7,13 @@
 namespace CE {
 class MenuBar;
 class ActionManager;
+class TabWidgetManager;
 class CE_EXPORT MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-     MainWindow(ActionManager *actionManager, QWidget *parent = 0);
+     MainWindow(ActionManager *actionManager, TabWidgetManager *tabWidgetManager, QWidget *parent = 0);
     ~MainWindow();
-
-     QTabWidget* getTab() const { return mTabWidget; }
 
      MenuBar* menuBar();
 
@@ -42,8 +41,6 @@ private:
     QAction *mSaveAction;
     QAction *mToggleSearchAction;
     QAction *mSettingsAction;
-
-    QTabWidget *mTabWidget;
     QToolBar *mMainToolBar;
 
 

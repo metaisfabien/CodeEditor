@@ -1,7 +1,10 @@
 #include "Editor/Editor.h"
 
 #include "MainWindow.h"
+#include "CentralWidget/TabWidgetManager.h"
 #include "CodeEditor.h"
+
+#include "CentralWidget/TabWidget.h"
 
 #include <Qsci/qsciscintilla.h>
 #include <QTabWidget>
@@ -28,7 +31,7 @@ void Editor::openFile(QString path)
 
     QsciScintilla *scintilla = new QsciScintilla();
     scintilla->setText(fileContent);
-    CodeEditor::getMainWindow()->getTab()->addTab(scintilla, fileName);
+    CodeEditor::getTabWidgetManager()->getFirstTabWidget()->addTab(scintilla, fileName);
 }
 
 }

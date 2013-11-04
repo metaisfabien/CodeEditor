@@ -7,6 +7,7 @@
 #include "Dock/DockManager.h"
 #include "Workspace/Workspace.h"
 #include "Action/Manager.h"
+#include "CentralWidget/TabWidgetManager.h"
 
 
 #include <QDebug>
@@ -20,6 +21,7 @@ Workspace* CodeEditor::mWorkspace;
 EditorManager* CodeEditor::mEditorManager;
 DockManager* CodeEditor::mDockManager;
 ActionManager* CodeEditor::mActionManager;
+TabWidgetManager* CodeEditor::mTabWidgetManager;
 
 /**
  * @brief CodeEditor::MonkeyCodeEditor::init
@@ -34,7 +36,8 @@ void CodeEditor::init()
     mThemeManager = new ThemeManager();
     mActionManager = new ActionManager();
 
-    mMainWindow = new MainWindow(mActionManager);
+    mTabWidgetManager = new TabWidgetManager();
+    mMainWindow = new MainWindow(mActionManager, mTabWidgetManager);
 
     mPluginManager = new PluginManager;
     mDockManager = new DockManager(mPluginManager);

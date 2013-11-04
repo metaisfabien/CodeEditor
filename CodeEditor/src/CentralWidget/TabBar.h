@@ -1,5 +1,5 @@
-#ifndef WIDGET_TABBAR_H
-#define WIDGET_TABBAR_H
+#ifndef CENTRALWIDGET_TABBAR_H
+#define CENTRALWIDGET_TABBAR_H
 
 #include <QTabBar>
 
@@ -9,18 +9,18 @@ class QDrag;
 QT_END_NAMESPACE
 
 namespace CE {
-class TabWidget;
-class TabBar : public QTabBar
+class CentralWidgetTabWidget;
+class CentralWidgetTabBar : public QTabBar
 {
 Q_OBJECT
 public:
-    TabBar(TabWidget* parent);
+    CentralWidgetTabBar(CentralWidgetTabWidget *parent);
 
 protected:
     void mousePressEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
     void dragEnterEvent(QDragEnterEvent* event);
-    void dropEvent(QDropEvent* event);
+    //void dropEvent(QDropEvent* event);
 
 signals:
     void tabMoveRequested(int fromIndex, int toIndex);
@@ -29,7 +29,7 @@ signals:
 private:
     QPoint mDragStartPos;
     int mDragCurrentIndex;
-    TabWidget *mParent;
+    CentralWidgetTabWidget *mParent;
 };
 }
 #endif // WIDGET_TABBAR_H
