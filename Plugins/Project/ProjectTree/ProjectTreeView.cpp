@@ -59,6 +59,7 @@ void ProjectTreeView::onDoubleClick (const QModelIndex &index)
         ProjectTreeItem *item = static_cast<ProjectTreeItem*>(index.internalPointer());
         qDebug() << "Double click on item " + item->getPath();
         CodeEditor::getEditorManager()->openFile(item->getPath());
+        qDebug() << "/Double click on item " + item->getPath();
     }
 }
 

@@ -46,10 +46,13 @@ void Workspace::restoreWindowSize()
 
     Perspective *perspective = getCurrentPerspective();
 
+    qDebug() << "Restore window size2";
     mMainWindow->resize(perspective->getWindowSize());
+    qDebug() << "Restore window size4";
     if (perspective->getWindowState() == Qt::WindowMaximized) {
         mMainWindow->showMaximized();
     }
+    qDebug() << "Restore window size3";
 }
 
 void Workspace::addDocks()

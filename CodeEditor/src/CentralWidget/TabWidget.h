@@ -3,6 +3,8 @@
 
 #include <QTabWidget>
 
+#include "Export.h"
+
 QT_BEGIN_NAMESPACE
 class QDrag;
 QT_END_NAMESPACE
@@ -19,7 +21,7 @@ enum DropArea {
     CenterDropArea = 5
 };
 
-class CentralWidgetTabWidget : public QTabWidget
+class CE_EXPORT CentralWidgetTabWidget : public QTabWidget
 {
 Q_OBJECT
 public:

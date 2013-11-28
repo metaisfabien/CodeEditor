@@ -4,6 +4,7 @@
 namespace CE{
 class CentralWidgetDropOverlay : public QWidget
 {
+    Q_OBJECT
 public:
     CentralWidgetDropOverlay(QWidget *parent = 0);
 

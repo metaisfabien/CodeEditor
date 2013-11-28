@@ -4,6 +4,7 @@
 #include "Export.h"
 
 #include <QObject>
+#include <QHash>
 
 #include <map>
 
@@ -28,6 +29,8 @@ public slots:
 
 private:
 
+    QString getFileContent(QString path);
+    QHash<QString, QWidget*> mEditorWidgets;
     map<QString, Editor*> mEditors;
 };
 }

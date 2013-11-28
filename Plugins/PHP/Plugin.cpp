@@ -3,6 +3,10 @@
 #include "CodeEditor.h"
 #include "Setting/SettingManager.h"
 #include "Setting/SettingsDialog.h"
+#include "Editor/EditorManager.h"
+
+#include "Editor/PHPEditor.h"
+
 #include <QDebug>
 
 
@@ -23,6 +27,8 @@ Plugin::~Plugin()
 bool Plugin::load()
 {
     qDebug() << "Load php plugin";
+
+    CodeEditor::getEditorManager()->addEditor(new PHPEditor("php", "PHP editor"));
     /*
     mNewProjectAction = new QAction(QIcon(QApplication::applicationDirPath() +"/images/php_project.png"), tr("&PHP project"), this);
     mNewProjectAction->setStatusTip(tr("project"));

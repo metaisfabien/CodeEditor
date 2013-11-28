@@ -16,11 +16,9 @@ CONFIG(debug, debug|release) {
 DEFINES += CE_LIBRARY
 
 
-LIBS+= -L$$[QT_INSTALL_LIBS] -lqscintilla2
+LIBS+= -lqscintilla2
 
 INCLUDEPATH *= src
-INCLUDEPATH += $$PROJECT_PATH/dependencies/QScintilla/Qt4Qt5
-
 
 QT += core gui network
 
@@ -63,6 +61,9 @@ HEADERS += \
     src/CentralWidget/Overlay.h \
     src/CentralWidget/Splitter.h \
     src/CentralWidget/TabWidgetManager.h \
+    src/Editor/Default.h \
+    src/Editor/EditorWidget.h \
+    src/Editor/TextEditorWidget.h
 
 SOURCES += \
     src/Plugin/PluginManager.cpp \
@@ -99,6 +100,7 @@ SOURCES += \
     src/CentralWidget/Overlay.cpp \
     src/CentralWidget/Splitter.cpp \
     src/CentralWidget/TabWidgetManager.cpp \
+    src/Editor/Default.cpp
 
 FORMS += \
     ui/Plugin/PluginsDialog.ui \

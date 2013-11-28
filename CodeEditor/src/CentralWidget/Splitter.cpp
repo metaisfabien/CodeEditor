@@ -15,16 +15,26 @@ CentralWidgetSplitter::CentralWidgetSplitter(SplitterType type, CentralWidgetSpl
     if (type == VerticalSplitter) {
         setOrientation(Qt::Vertical);
     } else {
-        setAcceptDrops(true);
         setOrientation(Qt::Horizontal);
     }
+
+   // setAcceptDrops(true);
+
     if (parent) {
         mParentSplitter = parent;
     } else {
         mParentSplitter = 0;
     }
+    mDropAreaOverlay = 0;
+
+   // setStyleSheet(QStringLiteral("border: 2px solid #000;"));
 }
 
+void CentralWidgetSplitter::setParentSplitter(CentralWidgetSplitter *parent)
+{
+    mParentSplitter = parent;
+    setParent(parent);
+}
 
 void CentralWidgetSplitter::dropEvent(QDropEvent* event)
 {
@@ -66,7 +76,8 @@ void CentralWidgetSplitter::dragEnterEvent(QDragEnterEvent* event)
 
 void CentralWidgetSplitter::dragMoveEvent(QDragMoveEvent *event)
 {
-    if (event->pos().x() == 0 || event->pos().x() == geometry().width()) {
+    qDebug() << "Drag move " << event->pos().x() << " " << event->pos().x();
+    if ((event->pos().x() == 0 || event->pos().x() == geometry().width()) && orientation() == Qt::Vertical) {
         int width = geometry().width() / 2;
         int height = geometry().height();
 
@@ -87,6 +98,40 @@ void CentralWidgetSplitter::dragMoveEvent(QDragMoveEvent *event)
         mDropAreaOverlay->resize(width, height);
 
         event->acceptProposedAction();
+    } else if ((event->pos().y() == 0 || event->pos().y() == geometry().height()) && orientation() == Qt::Horizontal) {
+        int width = geometry().width() ;
+        int height = geometry().height() / 2;
+
+        int x = 0;
+        int y = 0;
+        if (event->pos().y() == geometry().height()) {
+            y = geometry().height() / 2;
+        }
+        //create the overlay to highlight the drop zone
+        if (!mDropAreaOverlay) {
+            mDropAreaOverlay = new CentralWidgetDropOverlay();
+            mDropAreaOverlay->setParent(this);
+            mDropAreaOverlay->raise();
+            mDropAreaOverlay->show();
+        }
+
+        mDropAreaOverlay->move(x, x);
+        mDropAreaOverlay->resize(width, height);
+
+        event->acceptProposedAction();
+    }
+}
+
+/**
+ * @brief CentralWidgetSplitter::dragLeaveEvent
+ *
+ * Remove the drop zone overlay
+ */
+void CentralWidgetSplitter::dragLeaveEvent(QDragLeaveEvent *)
+{
+    if (mDropAreaOverlay) {
+        delete mDropAreaOverlay;
+        mDropAreaOverlay = 0;
     }
 }
 
@@ -223,24 +268,57 @@ void CentralWidgetSplitter::clean(CentralWidgetTabWidget *fromTabWidget)
         if (numChild <=  1) {
             //move the widget to the parent splitter
             if (numChild == 1) {
+                int i = 0;
+                while (parentToDelete->widget(i)) {
+                    if (parentToDelete->widget(i)->isVisible()) {
+                        QList<int> sizesList = parentSplitter->sizes();
 
-                QList<int> sizesList = parentSplitter->sizes();
+                        int splitterIndex = parentSplitter->indexOf(parentToDelete);
+
+                        CentralWidgetTabWidget *tabWidget = qobject_cast<CentralWidgetTabWidget *>(parentToDelete->widget(i));
+                        if (tabWidget) {
+                            tabWidget->setParentSplitter(parentSplitter);
+                            parentSplitter->insertWidget(splitterIndex, tabWidget);
+                        } else {
+                           CentralWidgetSplitter *childSplitter = qobject_cast<CentralWidgetSplitter *>(parentToDelete->widget(i));
+                           if (childSplitter) {
+                               childSplitter->setParentSplitter(parentSplitter);
+                               parentSplitter->insertWidget(splitterIndex, childSplitter);
+                           } else {
+                               qDebug() << "invalid child";
+                           }
+                        }
 
 
-                CentralWidgetTabWidget *tabWidget = qobject_cast<CentralWidgetTabWidget *>(parentToDelete->widget(0));
-                tabWidget->setParentSplitter(parentSplitter);
-                int splitterIndex = parentSplitter->indexOf(parentToDelete);
-                parentSplitter->insertWidget(splitterIndex, tabWidget);
 
-                parentSplitter->setSizes(sizesList);
+                        parentSplitter->setSizes(sizesList);
 
-                qDebug() << "Move widget to parent splitter";
+                        qDebug() << "Move widget to parent splitter";
+                        ++i;
+
+                    }
+                }
             }
             qDebug() << "remove a splitter later";
+            parentToDelete->hide();
             parentToDelete->deleteLater();
         }
     }
+}
 
-
+/**
+ * @brief CentralWidgetSplitter::childEvent
+ *
+ * Overloded method to not add overlay in the splitter like other widget
+ *
+ * @param childEvent
+ */
+void CentralWidgetSplitter::childEvent(QChildEvent *childEvent)
+{
+    if (qobject_cast<CentralWidgetDropOverlay *>(childEvent->child())) {
+        QFrame::childEvent(childEvent);
+    } else {
+        QSplitter::childEvent(childEvent);
+    }
 }
 }

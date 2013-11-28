@@ -17,6 +17,8 @@ public:
     void removeTab(int index);
 
     CentralWidgetTabWidget *getFirstTabWidget() { return getTabWidget(0); }
+    QWidgetList *getTabWidgets() const { return mTabWidgets; }
+
 private:
     QWidgetList *mTabWidgets;
 };

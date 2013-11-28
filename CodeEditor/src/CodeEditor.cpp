@@ -39,11 +39,13 @@ void CodeEditor::init()
     mTabWidgetManager = new TabWidgetManager();
     mMainWindow = new MainWindow(mActionManager, mTabWidgetManager);
 
+    mEditorManager = new EditorManager;
+
     mPluginManager = new PluginManager;
     mDockManager = new DockManager(mPluginManager);
     mWorkspace = new Workspace(mMainWindow, mDockManager);
 
-    mEditorManager = new EditorManager;
+
 
     mMainWindow->show();
 }

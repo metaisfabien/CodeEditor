@@ -21,12 +21,15 @@ public:
     CentralWidgetSplitter(SplitterType type, CentralWidgetSplitter *parent = 0);
     void dropTab(DropArea dropArea, int tabWidgetIndex, int fromTabWidgetIndex, int tabIndex);
     CentralWidgetSplitter *getParentSplitter() const { return mParentSplitter; }
+    void setParentSplitter(CentralWidgetSplitter *parent);
 
 
 protected:
     void dropEvent(QDropEvent* event);
     void dragEnterEvent(QDragEnterEvent* event);
     void dragMoveEvent(QDragMoveEvent *event);
+    void dragLeaveEvent(QDragLeaveEvent *);
+    void childEvent(QChildEvent *childEvent);
 
 private:
     SplitterType mType;
