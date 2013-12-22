@@ -1,4 +1,4 @@
-#include "Setting/Section/SettingGeneralSection.h"
+#include "Setting/Section/General.h"
 #include "Setting/SettingsDialog.h"
 
 #include <QTreeWidget>

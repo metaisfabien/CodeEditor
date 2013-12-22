@@ -1,6 +1,5 @@
 lib
 bin
-build
 dependencies
 *.pro.user.*
 *.pro.user

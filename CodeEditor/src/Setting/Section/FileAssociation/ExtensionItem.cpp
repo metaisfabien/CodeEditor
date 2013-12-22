@@ -1,15 +1,11 @@
-#include "Setting/Section/ExtensionItem.h"
+#include "Setting/Section/FileAssociation/ExtensionItem.h"
 #include "Editor/Editor.h"
 
 #include <QLabel>
 #include <QHBoxLayout>
 
 namespace CE{
-namespace Setting{
-namespace Section{
-namespace FileAssociation {
-
-ExtensionItem::ExtensionItem(const QString &extension, Editor *editor)
+SettingFileAssociationExtensionItem::SettingFileAssociationExtensionItem(const QString &extension, Editor *editor)
 {
     mEditor = editor;
     mWidget = new QWidget;
@@ -27,12 +23,8 @@ ExtensionItem::ExtensionItem(const QString &extension, Editor *editor)
   //  mWidget->setLayout(layout);
 }
 
-QString ExtensionItem::getExtension() const
+QString SettingFileAssociationExtensionItem::getExtension() const
 {
     return mExtensionLabel->text();
-}
-
-}
-}
 }
 }

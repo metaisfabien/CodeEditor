@@ -28,7 +28,6 @@ public:
     bool load();
     bool unLoad();
 
-
 public slots:
     void showNewProjectDialog();
     void createNewProject(QString name,QString location);

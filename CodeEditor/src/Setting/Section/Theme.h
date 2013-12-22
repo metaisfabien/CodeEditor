@@ -1,5 +1,5 @@
-#ifndef SETTINGTHEMESECTION_H
-#define SETTINGTHEMESECTION_H
+#ifndef SETTING_SECTION_THEME_H
+#define SETTING_SECTION_THEME_H
 
 #include "ui_SettingThemeSection.h"
 #include "Setting/SettingsDialogSection.h"
@@ -15,6 +15,7 @@ namespace CE {
 class SettingsDialog;
 class SettingThemeSection : public SettingsDialogSection , public Ui::SettingThemeSection
 {
+Q_OBJECT
 public:
     SettingThemeSection(QString id, QTreeWidget *parent, SettingsDialog *settingsDialog);
     SettingThemeSection(QString id, SettingsDialogSection *parent, SettingsDialog *settingsDialog);
@@ -25,4 +26,4 @@ public:
 };
 }
 
-#endif // SETTINGTHEMESECTION_H
+#endif // SETTING_SECTION_THEME_H

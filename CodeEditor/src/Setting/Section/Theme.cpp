@@ -1,4 +1,4 @@
-#include "Setting/Section/SettingThemeSection.h"
+#include "Setting/Section/Theme.h"
 #include "Setting/SettingsDialog.h"
 
 #include "CodeEditor.h"

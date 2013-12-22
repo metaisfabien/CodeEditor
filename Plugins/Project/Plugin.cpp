@@ -24,7 +24,7 @@ namespace CE {
 namespace Project {
 Plugin::Plugin()
 {
-    id = "project";
+    mId = "project";
 
     mProjectManager = 0;
     mProjectTree = 0;

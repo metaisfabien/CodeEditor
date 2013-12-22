@@ -3,7 +3,6 @@
 #include "CodeEditor.h"
 #include "Setting/SettingManager.h"
 #include "Setting/SettingsDialog.h"
-
 #include <QDebug>
 
 
@@ -11,7 +10,7 @@ namespace CE {
 namespace PHP {
 Plugin::Plugin()
 {
-    id = "php";
+    mId = "php";
 
 }
 

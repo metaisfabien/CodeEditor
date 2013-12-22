@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>105</height>
+    <height>185</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,23 +17,7 @@
    <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="2">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="2">
-    <widget class="QLineEdit" name="extensionLineEdit"/>
-   </item>
-   <item row="0" column="0">
+   <item row="1" column="0">
     <widget class="QLabel" name="label">
      <property name="font">
       <font>
@@ -45,7 +29,7 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="2">
+   <item row="5" column="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -55,7 +39,14 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="2">
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Editor</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
     <widget class="QLabel" name="extensionErrorLabel">
      <property name="palette">
       <palette>
@@ -481,6 +472,25 @@
       <string>TextLabel</string>
      </property>
     </widget>
+   </item>
+   <item row="4" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="1" colspan="2">
+    <widget class="QLineEdit" name="extensionLineEdit"/>
+   </item>
+   <item row="3" column="1" colspan="2">
+    <widget class="QComboBox" name="comboBox"/>
    </item>
   </layout>
  </widget>

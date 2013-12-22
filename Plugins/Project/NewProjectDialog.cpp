@@ -1,6 +1,6 @@
 #include "NewProjectDialog.h"
 #include "ProjectManager.h"
-#include "plugin.h"
+#include "Plugin.h"
 
 #include "CodeEditor.h"
 

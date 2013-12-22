@@ -190,7 +190,8 @@ void PluginManager::loadPlugins()
                 if (pluginData && plugin["is_enabled"].toBool()) {
                     pluginData->setIsEnable(true);
                     loadPlugin(pluginData);
-                    qDebug() << "Enable plugin " + pluginData->getId();
+                } else {
+                    qDebug() << "Plugin " + pluginData->getId() + " is disable";
                 }
             }
         }
@@ -217,6 +218,7 @@ void PluginManager::loadPlugin(PluginData *pluginData)
     QString pluginPath = pluginData->getPath() + "/" + pluginData->getFileName() +".dll";
     #endif
 
+    qDebug() << "Load plugin " + pluginDir.absoluteFilePath(pluginPath);
     QPluginLoader loader(pluginDir.absoluteFilePath(pluginPath));
     QObject* plugin = loader.instance();
     if (plugin) {
@@ -229,6 +231,8 @@ void PluginManager::loadPlugin(PluginData *pluginData)
         }
     } else {
         qDebug() << "Can't' load plugin " + pluginPath;
+        qDebug() << "is loaded: " + loader.isLoaded();
+        qDebug() << "error: " +loader.errorString();
     }
 
 }

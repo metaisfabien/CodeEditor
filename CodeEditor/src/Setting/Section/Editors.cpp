@@ -1,4 +1,4 @@
-#include "Setting/Section/SettingEditorsSection.h"
+#include "Setting/Section/Editors.h"
 #include "Setting/SettingsDialog.h"
 #include "Setting/SettingManager.h"
 

@@ -1,9 +1,9 @@
 #include "Setting/SettingsDialog.h"
 #include "Setting/SettingsTreeItem.h"
-#include "Setting/Section/SettingEditorsSection.h"
-#include "Setting/Section/SettingFileAssociationSection.h"
-#include "Setting/Section/SettingGeneralSection.h"
-#include "Setting/Section/SettingThemeSection.h"
+#include "Setting/Section/Editors.h"
+#include "Setting/Section/FileAssociation.h"
+#include "Setting/Section/General.h"
+#include "Setting/Section/Theme.h"
 
 #include "MainWindow.h"
 

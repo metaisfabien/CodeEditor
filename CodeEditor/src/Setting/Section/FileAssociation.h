@@ -13,19 +13,8 @@ QT_END_NAMESPACE
 namespace CE {
 class Editor;
 class SettingsDialog;
-
-namespace Setting{
-namespace Section{
-namespace FileAssociation{
-class ExtensionItem;
-class ExtensionDialog;
-}
-}
-}
-
-using namespace Setting;
-using namespace Section;
-using namespace FileAssociation;
+class SettingFileAssociationExtensionItem;
+class SettingFileAssociationExtensionDialog;
 
 class SettingFileAssociationSection : public SettingsDialogSection , public Ui::SettingFileAssociationSection
 {
@@ -38,16 +27,15 @@ public:
 
     void setupUi(QWidget *widget);
 
-    ExtensionItem *addExtensionItem(QString extension = QString::null, Editor *editor = 0);
+    SettingFileAssociationExtensionItem *addExtensionItem(QString extension = QString::null, Editor *editor = 0);
 
 public slots:
     void addNewExtension();
     void onCurrentExtensionChange(QListWidgetItem* current,QListWidgetItem* last);
     void removeCurrentExtension();
-    void updateCurrentExtensionText(QString text);
 
 private:
-    ExtensionDialog *mExtensionDialog;
+    SettingFileAssociationExtensionDialog *mExtensionDialog;
 };
 }
 #endif // SETTINGFILEASSOCIATIONSECTION_H

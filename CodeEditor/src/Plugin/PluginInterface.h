@@ -4,25 +4,24 @@
 #include <QString>
 #include <QPluginLoader>
 
+#include "Export.h"
+
 namespace CE {
 class PluginInterface
 {
 public:
-   //virtual PluginInterface();
-    virtual ~PluginInterface() {}
+    //virtual PluginInterface() = 0;
+    virtual ~PluginInterface() = 0;
 
     virtual bool load() = 0;
     virtual bool unLoad() = 0;
 
-    QString getId(){ return id; }
-    bool getIsLoaded(){ return isLoaded; }
-    QString getVersion(){ return version; }
+    QString getId() const { return mId; }
+    bool getIsLoaded() const { return mIsLoaded; }
 
 protected:
-    QString id;
-    QString version;
-    bool isLoaded;
-
+    QString mId;
+    bool mIsLoaded;
 };
 
 }
