@@ -1,5 +1,7 @@
 #include "Theme/ThemeManager.h"
 #include "Theme/Theme.h"
+#include "MainWindow.h"
+#include "CodeEditor.h"
 
 #include <QDir>
 #include <QDebug>
@@ -13,7 +15,6 @@ namespace CE {
 ThemeManager::ThemeManager()
 {
     loadThemes();
-    mCurrentTheme = getTheme("default");
 }
 
 ThemeManager::~ThemeManager()
@@ -108,4 +109,19 @@ QIcon ThemeManager::getExtensionIcon(QString fileName)
 
 }
 
+void ThemeManager::setCurrentTheme(QString themeId)
+{
+    mCurrentTheme = getTheme(themeId);
+
+    QFile styleSheetFile(mCurrentTheme->getPath() + "/stylesheet.qss");
+    if (styleSheetFile.exists()) {
+        qDebug() << "Load stylesheet " << styleSheetFile.fileName();
+        styleSheetFile.open(QFile::ReadOnly);
+        QString styleSheet = QLatin1String(styleSheetFile.readAll());
+        //QApplication::instance()->
+        CodeEditor::getMainWindow()->setStyleSheet(styleSheet);
+    } else {
+        CodeEditor::getMainWindow()->setStyleSheet("");
+    }
+}
 }

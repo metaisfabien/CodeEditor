@@ -37,10 +37,13 @@ private:
     CentralWidgetSplitter *mParentSplitter;
 
     void clean(CentralWidgetTabWidget *fromTabWidget);
+    void cleanParentSplitter(CentralWidgetSplitter *parentToDelete, CentralWidgetSplitter *parentSplitter);
+
     void createChildSplitter(SplitterType type, CentralWidgetTabWidget *droppedTabWidget, CentralWidgetTabWidget *toTabWidget,
                                                                                DropArea dropArea, int toTabWidgetSpliterIndex);
     void resizeSplitter(int toTabWidgetSpliterIndex);
 
+    int getNumVisibleChild(CentralWidgetSplitter *parentToDelete);
 
 };
 }

@@ -3,12 +3,7 @@ PROJECT_PATH = $$PWD
 # helpers functions
 include( $$PROJECT_PATH/functions.pri )
 
-# package destdir
-CONFIG(debug, debug|release) {
-    PACKAGE_DESTDIR = $$PROJECT_PATH/bin/debug
-} else {
-    PACKAGE_DESTDIR = $$PROJECT_PATH/bin/release
-}
+PACKAGE_DESTDIR = $$PROJECT_PATH/bin/$$buildMode()
 
 # temporary path for building
 PACKAGE_BUILD_PATH  = $$PROJECT_PATH/build/CodeEditor/$$BUILD_DIR

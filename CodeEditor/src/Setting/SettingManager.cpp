@@ -28,6 +28,12 @@ void SettingManager::showSettingsDialog()
 {
     mSettingsDialog = new SettingsDialog(CodeEditor::getMainWindow());
     emit createSettingDialog(mSettingsDialog);
+    connect(mSettingsDialog, SIGNAL(updateSettings()), this , SLOT(onUpdateSettings()));
     mSettingsDialog->show();
+}
+
+void SettingManager::onUpdateSettings()
+{
+    emit updateSettings();
 }
 }

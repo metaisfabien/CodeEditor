@@ -1,12 +1,17 @@
 #include "MainWindow.h"
 #include "CodeEditor.h"
 
+#include "Project/ProjectManager.h"
+
 #include "Plugin/PluginManager.h"
 #include "Setting/SettingManager.h"
 #include "Theme/ThemeManager.h"
+
 #include "Workspace/Workspace.h"
 #include "Workspace/Perspective.h"
+
 #include "Menu/MenuBar.h"
+
 #include "Action/Manager.h"
 
 
@@ -61,10 +66,9 @@ MainWindow::~MainWindow()
 void MainWindow::createActions()
 {
     //Nouveau
-
-    mNewFileAction = mActionManager->createAction("new_file", tr("&File"), this, CodeEditor::getThemeManager()->getIcon("new.png"));
+    mNewFileAction = mActionManager->createAction("new_file", tr("&File"), CodeEditor::getThemeManager()->getIcon("new.png"), this);
     mNewFileAction->setShortcuts(QKeySequence::New);
-    mNewFileAction->setStatusTip(tr("file"));
+    mNewFileAction->setStatusTip(tr("New file"));
 
     //Ouvrir fichier
     mOpenFileAction = new QAction(CodeEditor::getThemeManager()->getIcon("open.png"), tr("&Open file"), this);
@@ -72,9 +76,10 @@ void MainWindow::createActions()
     mOpenFileAction->setStatusTip(tr("open file"));
 
     //Sauvegarder
-    mSaveAction = new QAction(CodeEditor::getThemeManager()->getIcon("save.png"), tr("&Save"), this);
+    mSaveAction = mActionManager->createAction("save", tr("&Save"), CodeEditor::getThemeManager()->getIcon("save.png"), this);
     mSaveAction->setShortcuts(QKeySequence::Save);
     mSaveAction->setStatusTip(tr("save"));
+    mSaveAction->setDisabled(true);
 
     //Rechercher
     mToggleSearchAction = new QAction(CodeEditor::getThemeManager()->getIcon("search.png"), tr("&Search"), this);

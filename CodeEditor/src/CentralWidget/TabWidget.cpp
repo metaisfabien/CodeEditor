@@ -3,8 +3,11 @@
 #include "CentralWidget/Overlay.h"
 #include "CentralWidget/Splitter.h"
 
+
 #include "CodeEditor.h"
 #include "TabWidgetManager.h"
+#include "Editor/EditorWidget.h"
+#include "Editor/EditorManager.h"
 
 #include <QDrag>
 #include <QDropEvent>
@@ -18,14 +21,17 @@ namespace CE {
 CentralWidgetTabWidget::CentralWidgetTabWidget(CentralWidgetSplitter* parent)
    : QTabWidget(parent)
 {
-    setAcceptDrops(true);
+
     mDropAreaOverlay = 0;
     mParentSplitter = parent;
 
     CentralWidgetTabBar* tabBar = new CentralWidgetTabBar(this);
     connect(tabBar, SIGNAL(tabMoveRequested(int, int)), this, SLOT(moveTab(int, int)));
     connect(tabBar, SIGNAL(startDrag(QDrag*)), this, SLOT(startDragTab(QDrag*)));
-    setTabBar(tabBar); // Replace default tab bar with our own
+    connect(tabBar, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
+
+    setAcceptDrops(true);
+    setTabBar(tabBar);
 }
 
 CentralWidgetTabWidget::~CentralWidgetTabWidget()
@@ -34,7 +40,92 @@ CentralWidgetTabWidget::~CentralWidgetTabWidget()
         delete mDropAreaOverlay;
         mDropAreaOverlay = 0;
     }
+}
 
+/**
+ * @brief CentralWidgetTabWidget::tabBar
+ *
+ * Return the CentralWidgetTabBar
+ *
+ * @return
+ */
+CentralWidgetTabBar *CentralWidgetTabWidget::tabBar()
+{
+    return qobject_cast<CentralWidgetTabBar *>(QTabWidget::tabBar());
+}
+
+/**
+ * @brief CentralWidgetTabWidget::addEditorWidget
+ *
+ * Add an editor widget to the tab widget and set is parent
+ *
+ * @param editorWidget
+ * @param label
+ */
+void CentralWidgetTabWidget::addEditorWidget(EditorWidget *editorWidget, QString label)
+{
+    editorWidget->setParentTabWidget(this);
+    editorWidget->setTabText(label);
+    addTab(editorWidget, label);
+}
+
+EditorWidget *CentralWidgetTabWidget::getEditorWidget(int tabIndex)
+{
+    EditorWidget *editorWidget = qobject_cast<EditorWidget *>(widget(tabIndex));
+    return editorWidget;
+}
+
+/**
+ * @brief CentralWidgetTabWidget::closeTab
+ *
+ * Close a tab
+ *
+ * @param index
+ */
+void CentralWidgetTabWidget::closeTab(const int& index)
+{
+    if (index == -1) {
+        return;
+    }
+
+    EditorWidget* editorWidget = getEditorWidget(index);
+    removeTab(index);
+
+    delete(editorWidget);
+    editorWidget = 0;
+}
+
+/**
+ * @brief CentralWidgetTabWidget::getEditorWidgetIndex
+ *
+ * Return the index of an editor widget
+ *
+ * @param editorWidget
+ * @return
+ */
+int CentralWidgetTabWidget::getEditorWidgetIndex(EditorWidget *editorWidget)
+{
+    int tabIndexFound = -1;
+    for(int i = 0; i < count(); ++i) {
+        if(editorWidget == getEditorWidget(i)) {
+            tabIndexFound = i;
+            break;
+        }
+    }
+
+    return tabIndexFound;
+}
+
+
+
+/**
+ * @brief CentralWidgetTabWidget::currentTabChanged
+ * @param tabIndex
+ */
+void CentralWidgetTabWidget::currentTabChanged(int tabIndex)
+{
+    EditorWidget *editorWidget = qobject_cast<EditorWidget *>(widget(tabIndex));
+    CodeEditor::getEditorManager()->setCurrentEditorWidget(editorWidget);
 }
 
 
@@ -218,5 +309,4 @@ void CentralWidgetTabWidget::setParentSplitter(CentralWidgetSplitter *parent)
     mParentSplitter = parent;
     setParent(parent);
 }
-
 }

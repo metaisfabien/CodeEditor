@@ -34,7 +34,7 @@ void SettingEditorsSection::setupUi(QWidget *settingEditorsSection)
 
     QSettings *settings = CodeEditor::getSettingManager()->getSettings();
     showLineNumber->setChecked(settings->value("editors/show_line_number").toBool());
-
+    insertSpaceForTab->setChecked(settings->value("editors/insert_space_for_tab").toBool());
 
     connect(mSettingsDialog, SIGNAL(updateSettings()), this , SLOT(updateSettings()));
 }
@@ -43,6 +43,7 @@ void SettingEditorsSection::updateSettings()
 {
     QSettings *settings = CodeEditor::getSettingManager()->getSettings();
     settings->setValue("editors/show_line_number", showLineNumber->isChecked());
+    settings->setValue("editors/insert_space_for_tab", insertSpaceForTab->isChecked());
 }
 }
 

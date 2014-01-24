@@ -4,6 +4,8 @@
 #include "CentralWidget/TabWidgetManager.h"
 #include "CentralWidget/Splitter.h"
 
+#include "Editor/EditorWidget.h"
+
 #include "CodeEditor.h"
 
 #include <QDrag>
@@ -18,12 +20,27 @@ namespace CE {
 CentralWidgetTabBar::CentralWidgetTabBar(CentralWidgetTabWidget *parent)
     : QTabBar(parent)
 {
-    mParent = parent;
+    mParentTabWidget = parent;
+    mStyleSheet = styleSheet();
+
+    setTabsClosable(true);
+
+    connect(this, SIGNAL(tabCloseRequested(int)), mParentTabWidget, SLOT(closeTab(int)));
     //setAcceptDrops(true);
+    //setShape(QTabBar::TriangularSouth);
 }
+
+void CentralWidgetTabBar::resetStyleSheet()
+{
+    setStyleSheet(mStyleSheet);
+}
+
 
 void CentralWidgetTabBar::mousePressEvent(QMouseEvent* event)
 {
+    EditorWidget *editorWidget = mParentTabWidget->getEditorWidget(currentIndex());
+    editorWidget->focus();
+
     if (event->button() == Qt::LeftButton)
         mDragStartPos = event->pos();
 
@@ -46,7 +63,7 @@ void CentralWidgetTabBar::mouseMoveEvent(QMouseEvent* event)
     // a crude way to distinguish tab-reodering drags from other drags
     mimeData->setData("action", "drag-tab");
 
-    int parentTabWidgetIndex = CodeEditor::getTabWidgetManager()->indexOf(mParent);
+    int parentTabWidgetIndex = CodeEditor::getTabWidgetManager()->indexOf(mParentTabWidget);
     mimeData->setData("from", QString::number(parentTabWidgetIndex).toUtf8());
     mimeData->setData("index", QString::number(currentIndex()).toUtf8());
 

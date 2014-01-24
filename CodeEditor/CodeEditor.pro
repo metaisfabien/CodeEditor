@@ -2,6 +2,7 @@ BUILD_DIR = CodeEditor
 
 # include config file
 include( ../config.pri )
+include( ../ctags/ctags.pri )
 
 TARGET = $$targetForMode("CodeEditor")
 TEMPLATE = lib
@@ -20,25 +21,41 @@ LIBS+= -lqscintilla2
 
 INCLUDEPATH *= src
 
-QT += core gui network
+QT += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 HEADERS += \
-    src/Plugin/PluginManager.h \
-    src/Plugin/PluginInterface.h \
+    src/Action/Manager.h \
     src/MainWindow.h \
     src/Export.h \
+    src/CentralWidget/TabBar.h \
+    src/CentralWidget/TabWidget.h \
+    src/CentralWidget/CentralWidget.h \
+    src/CentralWidget/Overlay.h \
+    src/CentralWidget/Splitter.h \
+    src/CentralWidget/TabWidgetManager.h \
     src/CodeEditor.h \
-    src/Workspace/Workspace.h \
-    src/Workspace/Perspective.h \
+    src/Dock/Dock.h \
+    src/Dock/DockManager.h \
+    src/Editor/EditorManager.h \
+    src/Editor/Editor.h \
+    src/Editor/Default.h \
+    src/Editor/EditorWidget.h \
+    src/Editor/DefaultEditorWidget.h \
+    src/Editor/TextEditorWidget.h \
+    src/Menu/Menu.h \
+    src/Menu/MenuBar.h \
     src/Plugin/PluginsDialog.h \
     src/Plugin/PluginItem.h \
     src/Plugin/PluginData.h \
-    src/Editor/EditorManager.h \
-    src/Editor/Editor.h \
-    src/Theme/ThemeManager.h \
-    src/Theme/Theme.h \
+    src/Plugin/PluginManager.h \
+    src/Plugin/PluginInterface.h \
+    src/Project/ProjectManager.h \
+    src/Project/ProjectExplorer.h \
+    src/Project/NewProjectDialog.h \
+    src/Project/Project.h \
+    src/Project/ProjectExplorerDock.h \
     src/Setting/SettingManager.h \
     src/Setting/SettingsDialog.h \
     src/Setting/SettingsTreeItem.h\
@@ -49,21 +66,19 @@ HEADERS += \
     src/Setting/Section/FileAssociation.h \
     src/Setting/Section/General.h \
     src/Setting/Section/Theme.h \
-    src/Dock/Dock.h \
-    src/Dock/DockManager.h \
+    src/Theme/ThemeManager.h \
+    src/Theme/Theme.h \
     src/Workspace/PerspectiveDock.h \
-    src/Menu/Menu.h \
-    src/Menu/MenuBar.h \
-    src/Action/Manager.h \
-    src/CentralWidget/TabBar.h \
-    src/CentralWidget/TabWidget.h \
-    src/CentralWidget/CentralWidget.h \
-    src/CentralWidget/Overlay.h \
-    src/CentralWidget/Splitter.h \
-    src/CentralWidget/TabWidgetManager.h \
-    src/Editor/Default.h \
-    src/Editor/EditorWidget.h \
-    src/Editor/TextEditorWidget.h
+    src/Workspace/Perspective.h \
+    src/Workspace/Workspace.h \
+    src/Project/Tree/Model.h \
+    src/Project/Tree/Item.h \
+    src/Project/Tree/View.h \
+    src/CTags/Indexer.h \
+    src/CTags/IndexFile.h \
+    src/CTags/IndexStorage.h \
+    src/CTags/IndexDbStorage.h \
+    src/Db/DbManager.h
 
 SOURCES += \
     src/Plugin/PluginManager.cpp \
@@ -100,11 +115,26 @@ SOURCES += \
     src/CentralWidget/Overlay.cpp \
     src/CentralWidget/Splitter.cpp \
     src/CentralWidget/TabWidgetManager.cpp \
-    src/Editor/Default.cpp
+    src/Editor/Default.cpp \
+    src/Editor/DefaultEditorWidget.cpp \
+    src/Editor/EditorWidget.cpp \
+    src/Editor/TextEditorWidget.cpp \
+    src/Project/ProjectManager.cpp \
+    src/Project/ProjectExplorer.cpp \
+    src/Project/NewProjectDialog.cpp \
+    src/Project/Project.cpp \
+    src/Project/ProjectExplorerDock.cpp \
+    src/Project/Tree/Model.cpp \
+    src/Project/Tree/Item.cpp \
+    src/Project/Tree/View.cpp \
+    src/CTags/Indexer.cpp \
+    src/CTags/IndexDbStorage.cpp \
+    src/Db/DbManager.cpp
 
 FORMS += \
     ui/Plugin/PluginsDialog.ui \
     ui/Plugin/PluginItem.ui \
+    ui/Project/NewProjectDialog.ui \
     ui/Setting/SettingsDialog.ui \
     ui/Setting/SettingEditorsSection.ui \
     ui/Setting/SettingGeneralSection.ui \

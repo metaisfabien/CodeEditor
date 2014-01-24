@@ -5,13 +5,14 @@
 
 
 namespace CE {
+class EditorWidget;
 namespace PHP {
 class PHPEditor : public Editor
 {
 public:
     PHPEditor(QString id, QString name) : Editor(id, name) { }
 
-    QWidget *getEditorWidget(QString fileContent, QString filePath);
+    EditorWidget *getEditorWidget();
 };
 }
 }

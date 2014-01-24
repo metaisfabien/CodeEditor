@@ -26,7 +26,7 @@ int TabWidgetManager::indexOf(CentralWidgetTabWidget *tabWidget)
 
 CentralWidgetTabWidget *TabWidgetManager::getTabWidget(int index)
 {
-    return  qobject_cast<CentralWidgetTabWidget *>(mTabWidgets->at(index));
+    return qobject_cast<CentralWidgetTabWidget *>(mTabWidgets->at(index));
 }
 
 void TabWidgetManager::removeTab(int index)

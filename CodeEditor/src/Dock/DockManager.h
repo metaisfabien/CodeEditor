@@ -5,16 +5,15 @@
 
 namespace CE {
 class Dock;
-class PluginManager;
 class DockManager
 {
 public:
-    DockManager(PluginManager *pluginManager);
-    void loadDocks();
+    DockManager();
     Dock *getDock(QString id);
+    void addDock(Dock *dock);
 
 private:
-    PluginManager *mPluginManager;
+
     QHash <QString, Dock*> mDocks;
 };
 }

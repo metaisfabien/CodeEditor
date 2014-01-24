@@ -15,6 +15,7 @@ class CentralWidgetTabBar : public QTabBar
 Q_OBJECT
 public:
     CentralWidgetTabBar(CentralWidgetTabWidget *parent);
+    void resetStyleSheet();
 
 protected:
     void mousePressEvent(QMouseEvent* event);
@@ -29,7 +30,8 @@ signals:
 private:
     QPoint mDragStartPos;
     int mDragCurrentIndex;
-    CentralWidgetTabWidget *mParent;
+    QString mStyleSheet;
+    CentralWidgetTabWidget *mParentTabWidget;
 };
 }
 #endif // WIDGET_TABBAR_H

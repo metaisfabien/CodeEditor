@@ -7,7 +7,6 @@
 #include <QHash>
 
 namespace CE {
-class Dock;
 class PluginInterface
 {
 public:
@@ -16,7 +15,6 @@ public:
 
     virtual bool load() = 0;
     virtual bool unLoad() = 0;
-    virtual QHash <QString, Dock*> getDocks() = 0;
 
     QString getId() const { return mId; }
     bool getIsLoaded() const { return mIsLoaded; }

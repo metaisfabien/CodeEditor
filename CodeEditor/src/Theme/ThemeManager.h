@@ -29,6 +29,7 @@ public:
 
     QIcon getIcon(QString fileName);
     QIcon getExtensionIcon(QString fileName);
+    void setCurrentTheme(QString themeId);
 
 private:
 

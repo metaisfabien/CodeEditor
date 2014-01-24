@@ -38,6 +38,7 @@ PluginManager::PluginManager()
     toolsMenu->addAction(mPluginsAction);
 }
 
+
 PluginManager::~PluginManager()
 {
     QHashIterator<QString, PluginInterface*> pluginIterator(mPlugins);
@@ -64,10 +65,10 @@ void PluginManager::loadPluginsData()
 {
     //get the path of the plugins dir
     QDir pluginsDir = QDir(QApplication::applicationDirPath() + "/plugins");
-    //pluginsDir.cd("plugins");
+
     qDebug() << "load plugins data from: " + pluginsDir.absolutePath();
     foreach (QString dirName, pluginsDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
-        //qDebug() << pluginsDir.absolutePath() + "/" + dirName + "/plugin.json";
+
         QFile *pluginConfigFile = new QFile(pluginsDir.absolutePath() + "/" + dirName + "/plugin.json");
 
         if (pluginConfigFile->exists()) {
@@ -183,7 +184,7 @@ void PluginManager::loadPlugins()
                 if (pluginData && plugin["is_enabled"].toBool()) {
                     pluginData->setIsEnable(true);
                     loadPlugin(pluginData);
-                } else {
+                } else if (pluginData) {
                     qDebug() << "Plugin " + pluginData->getId() + " is disable";
                 }
             }

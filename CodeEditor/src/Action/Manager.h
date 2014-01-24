@@ -15,7 +15,7 @@ namespace CE {
 class CE_EXPORT ActionManager
 {
 public:
-    QAction *createAction(QString id, QString name, QWidget *parent, QIcon icone = QIcon());
+    QAction *createAction(QString id, QString name, QIcon icone = QIcon(), QWidget *parent = 0);
     void addAction(QString id, QAction *action) { mActions[id] = action; }
 
     QAction *getAction(QString id);

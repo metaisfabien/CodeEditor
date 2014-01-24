@@ -2,6 +2,7 @@
 TEMPLATE = subdirs
 CONFIG *= ordered
 
-SUBDIRS = CodeEditor \
+SUBDIRS = ctags \
+    CodeEditor \
     Application \
     Plugins

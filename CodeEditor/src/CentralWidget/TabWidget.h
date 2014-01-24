@@ -2,6 +2,7 @@
 #define WIDGET_TABWIDGET_H
 
 #include <QTabWidget>
+#include <QTabBar>
 
 #include "Export.h"
 
@@ -12,6 +13,8 @@ QT_END_NAMESPACE
 namespace CE {
 class CentralWidgetDropOverlay;
 class CentralWidgetSplitter;
+class CentralWidgetTabBar;
+class EditorWidget;
 
 enum DropArea {
     TopDropArea = 1,
@@ -21,18 +24,25 @@ enum DropArea {
     CenterDropArea = 5
 };
 
-class CE_EXPORT CentralWidgetTabWidget : public QTabWidget
+class CentralWidgetTabWidget : public QTabWidget
 {
 Q_OBJECT
 public:
     CentralWidgetTabWidget(CentralWidgetSplitter* parent);
     ~CentralWidgetTabWidget();
 
+    EditorWidget *getEditorWidget(int tabIndex);
+    void addEditorWidget(EditorWidget *editorWidget, QString label);
+    CentralWidgetTabBar *tabBar();
+    int getEditorWidgetIndex(EditorWidget *editorWidget);
+
 public slots:
     void moveTab(int fromIndex, int toIndex);
     void startDragTab(QDrag* drag);
     void setParentSplitter(CentralWidgetSplitter *parent);
     CentralWidgetSplitter *getParentSplitter() const { return mParentSplitter; }
+    void currentTabChanged(int tabIndex);
+    void closeTab(const int& index);
 
 protected:
     void dropEvent(QDropEvent* event);
@@ -42,7 +52,9 @@ protected:
 
 
     DropArea getDropArea(QPoint point);
+
 private:
+    //QString mOriginalStyleSheet;
     CentralWidgetDropOverlay *mDropAreaOverlay;
     CentralWidgetSplitter *mParentSplitter;
 };

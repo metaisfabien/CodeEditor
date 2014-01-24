@@ -1,15 +1,10 @@
 #include "Editor/Default.h"
-//#include "Editor/TextEditorWidget.h"
-#include <Qsci/qsciscintilla.h>
+#include "Editor/DefaultEditorWidget.h"
 namespace CE {
 
-QWidget *DefaultEditor::getEditorWidget(QString fileContent, QString filePath)
+EditorWidget *DefaultEditor::getEditorWidget()
 {
-
-    QsciScintilla *widget = new QsciScintilla();
-    widget->setText(fileContent);
-
-    return widget;
+    return new DefaultEditorWidget();
 }
 
 }

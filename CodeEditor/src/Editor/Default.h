@@ -7,7 +7,7 @@ class DefaultEditor : public Editor
 {
 public:
     DefaultEditor(QString id, QString name) : Editor(id, name) {}
-    QWidget *getEditorWidget(QString fileContent, QString filePath);
+    EditorWidget *getEditorWidget();
 };
 }
 

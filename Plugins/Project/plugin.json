@@ -1,8 +1,0 @@
-{
-    "id": "project",
-    "name": "Project",
-    "decription": "Project plugin to manage project",
-    "version": "0.0.1",
-    "PHPEditorVersionMin": "0.0.1",
-    "fileName": "Project"
-}

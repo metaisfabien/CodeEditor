@@ -42,6 +42,7 @@ int main(int argc, char** argv)
     //si un instance est déja lancé on arrete celle ci
     if(application.haveAnotherInstance())return 0;
 
+    //application.addLibraryPath("/home/fabien/Projects/CodeEditor/lib/debug");
     CodeEditor::init();
 
     return application.exec();

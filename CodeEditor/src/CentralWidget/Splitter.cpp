@@ -147,12 +147,12 @@ void CentralWidgetSplitter::dropTab(DropArea dropArea, int toTabWidgetIndex, int
     //drop in the center area: no split
     if (dropArea == CenterDropArea) {
         if (toTabWidgetIndex != fromTabWidgetIndex) {
-            toTabWidget->addTab(fromTabWidget->widget(tabIndex), fromTabWidget->tabText(tabIndex));
+            toTabWidget->addEditorWidget(fromTabWidget->getEditorWidget(tabIndex), fromTabWidget->tabText(tabIndex));
         }
     } else {
         //create a new tab widget
         CentralWidgetTabWidget *droppedTabWidget = CodeEditor::getTabWidgetManager()->createTabWidget(this);
-        droppedTabWidget->addTab(fromTabWidget->widget(tabIndex), fromTabWidget->tabText(tabIndex));
+        droppedTabWidget->addEditorWidget(fromTabWidget->getEditorWidget(tabIndex), fromTabWidget->tabText(tabIndex));
 
         //Drop in top area or bottom area
         if (dropArea == TopDropArea || dropArea == BottomDropArea) {
@@ -177,7 +177,7 @@ void CentralWidgetSplitter::dropTab(DropArea dropArea, int toTabWidgetIndex, int
                 insertWidget(toTabWidgetSpliterIndex + 1, droppedTabWidget);
                 resizeSplitter(toTabWidgetSpliterIndex);
             } else {
-                    //if the parent splitter of the "to" tabWiget is not horizontal, it's necessary to create an horizontal splitter
+                //if the parent splitter of the "to" tabWiget is not horizontal, it's necessary to create an horizontal splitter
                 createChildSplitter(HorrizontalSplitter, droppedTabWidget, toTabWidget, dropArea, toTabWidgetSpliterIndex);
             }
         }
@@ -227,6 +227,28 @@ void CentralWidgetSplitter::resizeSplitter(int toTabWidgetSpliterIndex)
 }
 
 /**
+ * @brief CentralWidgetSplitter::getNumVisibleChild
+ *
+ * Return the number of the visible children of a CentralWidgetSplitter
+ *
+ * @param parentToDelete
+ * @return int
+ */
+int CentralWidgetSplitter::getNumVisibleChild(CentralWidgetSplitter *parentToDelete)
+{
+    //calcul the number of visible children
+    int numChild = 0;
+    int i = 0;
+    while (parentToDelete->widget(i)) {
+        if (parentToDelete->widget(i)->isVisible()) {
+            ++numChild;
+        }
+        ++i;
+    }
+    return numChild;
+}
+
+/**
  * @brief CentralWidgetSplitter::clean
  *
  * remove empty tabwidget and splitter with only one child widget
@@ -246,63 +268,69 @@ void CentralWidgetSplitter::clean(CentralWidgetTabWidget *fromTabWidget)
         fromTabWidget->hide();
     }
 
-
-
     //while the parent have a parent and it a CentralWidgetSplitter
     while (parentSplitter->getParentSplitter()) {
         CentralWidgetSplitter *parentToDelete = parentSplitter;
         parentSplitter = qobject_cast<CentralWidgetSplitter *>(parentSplitter->getParentSplitter());
 
-        //calcul the number of visible children
-        int numChild = 0;
-        int i = 0;
-        while (parentToDelete->widget(i)) {
-            if (parentToDelete->widget(i)->isVisible()) {
-                ++numChild;
-            }
-            ++i;
-        }
+        cleanParentSplitter(parentToDelete, parentSplitter);
+    }
+}
 
-        qDebug() << "num child " << numChild;
+/**
+ * @brief CentralWidgetSplitter::cleanParentSplitter
+ *
+ * Remove the empty splitters or the splitters who has only one child
+ *
+ * @param parentToDelete
+ * @param parentSplitter
+ */
+void CentralWidgetSplitter::cleanParentSplitter(CentralWidgetSplitter *parentToDelete, CentralWidgetSplitter *parentSplitter)
+{
+    int numChild = getNumVisibleChild(parentToDelete);
 
-        if (numChild <=  1) {
-            //move the widget to the parent splitter
-            if (numChild == 1) {
-                int i = 0;
-                while (parentToDelete->widget(i)) {
-                    if (parentToDelete->widget(i)->isVisible()) {
-                        QList<int> sizesList = parentSplitter->sizes();
+    qDebug() << "num child " << numChild;
 
-                        int splitterIndex = parentSplitter->indexOf(parentToDelete);
+    if (numChild <=  1) {
+        //move the widget to the parent splitter
+        if (numChild == 1) {
+            int i = 0;
+            while (parentToDelete->widget(i)) {
+                if (parentToDelete->widget(i)->isVisible()) {
+                    QList<int> sizesList = parentSplitter->sizes();
 
-                        CentralWidgetTabWidget *tabWidget = qobject_cast<CentralWidgetTabWidget *>(parentToDelete->widget(i));
-                        if (tabWidget) {
-                            tabWidget->setParentSplitter(parentSplitter);
-                            parentSplitter->insertWidget(splitterIndex, tabWidget);
-                        } else {
-                           CentralWidgetSplitter *childSplitter = qobject_cast<CentralWidgetSplitter *>(parentToDelete->widget(i));
-                           if (childSplitter) {
-                               childSplitter->setParentSplitter(parentSplitter);
-                               parentSplitter->insertWidget(splitterIndex, childSplitter);
-                           } else {
-                               qDebug() << "invalid child";
-                           }
-                        }
+                    int splitterIndex = parentSplitter->indexOf(parentToDelete);
 
-
-
-                        parentSplitter->setSizes(sizesList);
-
-                        qDebug() << "Move widget to parent splitter";
-                        ++i;
-
+                    CentralWidgetTabWidget *tabWidget = qobject_cast<CentralWidgetTabWidget *>(parentToDelete->widget(i));
+                    //if it's a CentralWidgetTabWidget
+                    if (tabWidget) {
+                        qDebug() << "Move tab widget to parent splitter";
+                        tabWidget->setParentSplitter(parentSplitter);
+                        parentSplitter->insertWidget(splitterIndex, tabWidget);
+                    } else {
+                       CentralWidgetSplitter *childSplitter = qobject_cast<CentralWidgetSplitter *>(parentToDelete->widget(i));
+                       //if it's a CentralWidgetSplitter
+                       if (childSplitter) {
+                           qDebug() << "Move child splitter to parent splitter";
+                           childSplitter->setParentSplitter(parentSplitter);
+                           parentSplitter->insertWidget(splitterIndex, childSplitter);
+                       } else {
+                           qDebug() << "invalid child";
+                       }
                     }
+
+                    //add the size of the hidden widget in the sizes list
+                    sizesList.insert(splitterIndex + 1, 0);
+
+                    parentSplitter->setSizes(sizesList);
+                    qDebug() << parentSplitter->sizes();
                 }
+                ++i;
             }
-            qDebug() << "remove a splitter later";
-            parentToDelete->hide();
-            parentToDelete->deleteLater();
         }
+        qDebug() << "remove a splitter later";
+        parentToDelete->hide();
+        parentToDelete->deleteLater();
     }
 }
 

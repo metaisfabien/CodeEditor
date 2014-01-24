@@ -3,13 +3,10 @@
 
 #include "Export.h"
 
-QT_BEGIN_NAMESPACE
-class QWidget;
-QT_END_NAMESPACE
-
 #include <QString>
 
 namespace CE {
+class EditorWidget;
 class CE_EXPORT Editor
 {
 public:
@@ -18,11 +15,9 @@ public:
     QString getId() const { return mId; }
     QString getName() const { return mName; }
 
-    void openFile(QString path);
-    virtual QWidget *getEditorWidget(QString fileContent, QString filePath) = 0;
+    virtual EditorWidget *getEditorWidget() = 0;
 
 protected:
-    QString getFileContent(QString path);
 
 private:
     QString mId;

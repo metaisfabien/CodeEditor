@@ -16,6 +16,8 @@ class Workspace;
 class DockManager;
 class ActionManager;
 class TabWidgetManager;
+class ProjectManager;
+class DbManager;
 
 class CE_EXPORT CodeEditor : public QObject
 {
@@ -31,6 +33,8 @@ public:
     static DockManager* getDockManager() { return mDockManager; }
     static ActionManager* getActionManager() { return mActionManager; }
     static TabWidgetManager *getTabWidgetManager() { return mTabWidgetManager; }
+    static ProjectManager *getProjectManager() { return mProjectManager; }
+    static DbManager *getDbManager() { return mDbManager; }
 
     static SettingManager *mSettingManager;
     static ThemeManager *mThemeManager;
@@ -41,6 +45,8 @@ public:
     static DockManager *mDockManager;
     static ActionManager *mActionManager;
     static TabWidgetManager *mTabWidgetManager;
+    static ProjectManager *mProjectManager;
+    static DbManager *mDbManager;
 };
 
 }

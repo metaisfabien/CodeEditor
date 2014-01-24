@@ -9,6 +9,7 @@
 
 namespace CE {
 class SettingsDialog;
+class Project;
 namespace PHP {
 class Plugin : public QObject, PluginInterface
 {
@@ -22,10 +23,9 @@ class Plugin : public QObject, PluginInterface
         bool load();
         bool unLoad();
 
-        QHash <QString, Dock*> getDocks();
-
     public slots:
         void onCreateSettingDialog(SettingsDialog *SettingsDialog);
+        void buildProject(Project* project);
 };
 }
 }

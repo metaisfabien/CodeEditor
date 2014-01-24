@@ -19,9 +19,11 @@ public:
 
 public slots:
     void showSettingsDialog();
+    void onUpdateSettings();
 
 signals:
     void createSettingDialog(SettingsDialog *settingsDialog);
+    void updateSettings();
 
 private:
     QSettings *mSettings;

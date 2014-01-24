@@ -3,7 +3,7 @@
 #include <QAction>
 
 namespace CE {
-QAction *ActionManager::createAction(QString id, QString name, QWidget *parent, QIcon icon)
+QAction *ActionManager::createAction(QString id, QString name, QIcon icon, QWidget *parent)
 {
     QAction *action = new QAction(icon, name, parent);
     addAction(id, action);

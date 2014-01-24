@@ -52,14 +52,14 @@
     </spacer>
    </item>
    <item row="2" column="0">
-    <widget class="QCheckBox" name="insertSpaceForTable">
+    <widget class="QCheckBox" name="insertSpaceForTab">
      <property name="font">
       <font>
        <pointsize>10</pointsize>
       </font>
      </property>
      <property name="text">
-      <string>Insert space for table</string>
+      <string>Insert space for tab</string>
      </property>
     </widget>
    </item>

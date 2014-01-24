@@ -14,14 +14,12 @@ public:
     //~Dock() = 0;
     void loadWidget();
     QString getId() const { return mId; }
+    virtual QWidget *getChildWidget() = 0;
 
 public slots:
     void locationChanged(Qt::DockWidgetArea area);
 
 protected:
-    virtual QWidget *getChildWidget() = 0;
-
-private:
     QString mId;
     bool mIsLoaded;
 };

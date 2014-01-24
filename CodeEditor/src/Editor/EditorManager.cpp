@@ -1,28 +1,32 @@
 #include "Editor/EditorManager.h"
 #include "Editor/Editor.h"
+#include "Editor/EditorWidget.h"
 #include "Editor/Default.h"
 #include "CodeEditor.h"
 #include "Setting/SettingManager.h"
-
 #include "CentralWidget/TabWidgetManager.h"
 #include "CentralWidget/TabWidget.h"
-
-#include "Editor/TextEditorWidget.h"
-
-#include <QTextEdit>
+#include "CentralWidget/TabBar.h"
+#include "Action/Manager.h"
 
 #include <QSettings>
+#include <QDebug>
+#include <QAction>
 #include <QFile>
 #include <QFileInfo>
-#include <QDebug>
+#include <QTabBar>
 
-#include <Qsci/qsciscintilla.h>
+#include <QStyle>
 
 namespace CE {
 
 EditorManager::EditorManager()
 {
+    mCurrentEditorWidget = 0;
     addEditor(new DefaultEditor("text", "Text editor"));
+
+    QAction *saveAction = CodeEditor::getActionManager()->getAction("save");
+    QObject::connect(saveAction, SIGNAL(triggered()), this, SLOT(saveFile()));
 }
 
 EditorManager::~EditorManager()
@@ -53,8 +57,6 @@ void EditorManager::openFile(QString path)
 
         //if the file in no already open
         if (!mEditorWidgets.contains(path)) {
-            QString fileContent = getFileContent(path);
-
             //Get the editor instance
             QString extension = QFileInfo(path).suffix();
             Editor *editor = getEditorByExtension(extension);
@@ -62,13 +64,14 @@ void EditorManager::openFile(QString path)
                 editor = getEditorById("text");
             }
 
-            QWidget *widget = editor->getEditorWidget(fileContent, path);
+            EditorWidget *editorWidget = editor->getEditorWidget();
 
             CentralWidgetTabWidget *tabWidget = tabWidgetManager->getFirstTabWidget();
 
-            tabWidget->addTab(widget, QFileInfo(path).fileName());
-            tabWidget->setCurrentWidget(widget);
-            mEditorWidgets[path] = widget;
+            tabWidget->addEditorWidget(editorWidget, QFileInfo(path).fileName());
+            editorWidget->openFile(path);
+            tabWidget->setCurrentWidget(editorWidget);
+            mEditorWidgets[path] = editorWidget;
         } else {
             //the file is already open
             QWidget *widget = mEditorWidgets[path];
@@ -91,13 +94,12 @@ void EditorManager::openFile(QString path)
 }
 
 
-QString EditorManager::getFileContent(QString path)
+void EditorManager::saveFile()
 {
-    QFile file(path);
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    return file.readAll();
+    if (mCurrentEditorWidget && mCurrentEditorWidget->isModified()) {
+        mCurrentEditorWidget->save();
+    }
 }
-
 
 void EditorManager::addEditor(Editor *editor)
 {
@@ -133,6 +135,45 @@ Editor* EditorManager::getEditorById(QString id)
 map<QString, Editor*> EditorManager::getEditors()
 {
     return mEditors;
+}
+
+/**
+ * @brief EditorManager::setCurrentEditorWidget
+ *
+ * Set the current editor widget focus
+ *
+ * @param editorWidget
+ */
+void EditorManager::setCurrentEditorWidget(EditorWidget *editorWidget)
+{
+    if (editorWidget && mCurrentEditorWidget != editorWidget) {
+        QAction *saveAction = CodeEditor::getActionManager()->getAction("save");
+        if (editorWidget->isModified()) {
+            saveAction->setDisabled(false);
+        } else {
+            saveAction->setDisabled(true);
+        }
+
+       if (mCurrentEditorWidget) {
+            CentralWidgetTabWidget *currentTabWidget = mCurrentEditorWidget->getParentTabWidget();
+
+            //update the style
+            currentTabWidget->tabBar()->setProperty("currentTabBar", false);
+            currentTabWidget->tabBar()->style()->unpolish(currentTabWidget->tabBar());
+            currentTabWidget->tabBar()->style()->polish(currentTabWidget->tabBar());;
+            currentTabWidget->tabBar()->update();
+        }
+
+        CentralWidgetTabWidget *tabWidget = editorWidget->getParentTabWidget();
+
+        //update the style
+        tabWidget->tabBar()->setProperty("currentTabBar", true);
+        tabWidget->tabBar()->style()->unpolish(tabWidget->tabBar());
+        tabWidget->tabBar()->style()->polish(tabWidget->tabBar());;
+        tabWidget->tabBar()->update();
+    }
+
+    mCurrentEditorWidget = editorWidget;
 }
 
 }

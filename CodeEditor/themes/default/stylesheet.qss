@@ -1,0 +1,4 @@
+QTabBar[currentTabBar="true"]::tab:selected{
+   font-weight: bold;
+}
+

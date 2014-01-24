@@ -1,13 +1,23 @@
 #ifndef PHPEDITORWIDGET_H
 #define PHPEDITORWIDGET_H
 
+#include "Editor/TextEditorWidget.h"
+
 #include <Qsci/qsciscintilla.h>
-#include <QTextEdit>
+
 namespace CE {
-class PHPEditorWidget : public  QTextEdit
+class SettingManager;
+class PHPEditorWidget : public  TextEditorWidget
 {
+    Q_OBJECT
 public:
-    PHPEditorWidget() {}
+    PHPEditorWidget();
+
+public slots:
+    void onUpdateSettings();
+
+private:
+    SettingManager *mSettingManager;
 };
 }
 

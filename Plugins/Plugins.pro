@@ -1,3 +1,2 @@
 TEMPLATE    = subdirs
-SUBDIRS = PHP \
-	Project
+SUBDIRS = PHP 
