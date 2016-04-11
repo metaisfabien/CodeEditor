@@ -19,11 +19,10 @@ DEFINES += CE_LIBRARY
 
 LIBS+= -lqscintilla2
 
-INCLUDEPATH *= src
+INCLUDEPATH *= src \
+    $$PROJECT_PATH/dependencies/QScintilla-gpl-2.9.1/Qt4Qt5
 
-QT += core gui sql
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += core widgets gui sql
 
 HEADERS += \
     src/Action/Manager.h \

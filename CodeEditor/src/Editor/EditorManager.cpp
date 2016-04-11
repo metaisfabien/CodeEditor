@@ -103,7 +103,7 @@ void EditorManager::saveFile()
 
 void EditorManager::addEditor(Editor *editor)
 {
-    mEditors.insert(std::make_pair<QString, Editor*>(editor->getId(), editor));
+    mEditors.insert(std::make_pair(editor->getId(), editor));
 }
 
 Editor* EditorManager::getEditorByExtension(QString extension)

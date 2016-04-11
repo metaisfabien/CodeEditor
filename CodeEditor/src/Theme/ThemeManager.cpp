@@ -59,7 +59,7 @@ void ThemeManager::loadTheme(QFile *configFile, QString path)
                 QString name = themeConfig["name"].toString();
 
                 Theme *theme = new Theme(id, name, path);
-                mThemes.insert(std::make_pair<QString, Theme*>(id, theme));
+                mThemes.insert(std::make_pair(id, theme));
             } else {
                 qDebug() << "theme " + id + " already exist in the theme map";
             }
